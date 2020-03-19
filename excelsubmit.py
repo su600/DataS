@@ -10,7 +10,7 @@ def upload_file():
         aa=jsonify({"result": request.get_array(field_name='file')})
         bb = request.get_array(field_name='file')
         bb=zip(*bb)
-        
+
         print(bb)
         return aa
     return render_template("ee.html")
