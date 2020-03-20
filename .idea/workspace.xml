@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/LANScan.py" afterDir="false" />
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update pylogix rockwell">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/excelsubmit.py" beforeDir="false" afterPath="$PROJECT_DIR$/excelsubmit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qq.py" beforeDir="false" afterPath="$PROJECT_DIR$/qq.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ee.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ee.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rockwell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rockwell.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/siemens.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/siemens.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,16 +185,25 @@
       <option name="presentableId" value="Default" />
       <updated>1581907290326</updated>
     </task>
+    <task id="LOCAL-00001" summary="update pylogix rockwell">
+      <created>1584694502745</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584694502745</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="update pylogix rockwell" />
+    <option name="LAST_COMMIT_MESSAGE" value="update pylogix rockwell" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="345" y="-1065" width="816" height="810" key="CommitChangelistDialog2" timestamp="1584694501651">
+    <state x="345" y="-1065" width="816" height="810" key="CommitChangelistDialog2" timestamp="1584694730135">
       <screen x="0" y="-1080" width="1549" height="840" />
     </state>
-    <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1584694501651" />
+    <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1584694730135" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
     <state x="2508" y="158" key="FileChooserDialogImpl" timestamp="1584424245581">
       <screen x="1920" y="0" width="1549" height="840" />
