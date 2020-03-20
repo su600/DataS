@@ -205,10 +205,53 @@ def beckoff():
     #     aa=request.files.get("ss")
     return render_template("beckoff.html")
 
-@app.route("/rockwell")
+@app.route("/rockwellscan")
+@is_login
+def rockwellscan():
+    with PLC() as comm:
+        # 设备扫描
+        deviceip = []
+        devicename = []
+
+        devices = comm.Discover()
+        for device in devices.Value:
+            # print(devices)
+            deviceip.append(device.IPAddress)
+            devicename.append(device.ProductName + ' ' + device.IPAddress)
+        device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
+        dev_list=list(device_dict)
+    return render_template("rockerwell.html",dev_list=dev_list)
+
+@app.route("/rockwell",methods=["POST","GET"])
 @is_login
 def rockwell():
-    # return render_template("b.html")
+    ## Rockwell AB PLC
+    # #108厂房设备
+    if request.method == "POST":
+        flash("run", "run")
+        forminfo = request.form.to_dict()
+        # 该页面的表单信息，只要submit都传到这里
+        # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
+
+        if len(forminfo) == 1:  # AB PLC 连接信息 只需要IP
+            print(forminfo)
+
+        if len(forminfo) == 2:  # 变量地址
+            print(forminfo)
+            data = s7read(plc, forminfo["iqm"], forminfo["address"])
+            print(data)
+            # return data
+
+        elif len(forminfo) == 4:  # influxdb连接信息
+            print(forminfo)
+            influxdbip = forminfo["influxdb"]
+            token = forminfo["token"]
+            measurement = forminfo["measurement"]
+            cycle = forminfo["cycle"]
+            influxDB(influxdbip, token, measurement, cycle)
+        # flash(forminfo,"connect1")
+        return redirect("#")
+        # return render_template("siemens.html")
     return render_template("rockwell.html")
 
 @app.route("/opcua")
@@ -222,7 +265,7 @@ def opcua():
 def a():
     print("ssssssssssssssss")
     ss="sssssssssssssssssssssssss"
-    return redirect("/siemens#influxdbsetting")
+    return redirect("#")
     # return render_template("siemens.html",ss=ss)
 
 
@@ -316,6 +359,7 @@ def s7read(plc,iqm,address):
 @app.route("/influxDB",methods=("POST","GET"))
 @is_login
 def influxDB(influxdbip,token,measurement,cycle):
+    print("11111111111111111111111111")
     a=1
     bucket = "test"
     token="HTvG6oIApfABybjjYd_6Jehf8AEWkLStYw0qftanx9ijF05-UsLZ9pVqI604PwuRlhv8IkuIZshYaqVFTC0DXA=="
@@ -338,8 +382,5 @@ def influxDB(influxdbip,token,measurement,cycle):
         except Exception as e:
             print(e)
             break
-
-
-
 ##################################################
 app.run(host="0.0.0.0",port=5000)

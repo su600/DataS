@@ -37,7 +37,30 @@
 				</div>
 </nav>
 
-<div class="container-fluid" style="margin-top:80px" id="说明" >
+<div class="container-fluid" style="padding-top: 80px;">
+	<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
+		<div class="row">
+			<div class="col-md-5" style="text-align: justify;">
+				<img class="img-fluid w-100" src="/static/siemens.png" alt="Siemens" />
+			</div>
+			<div class="col-md-6">
+				<strong style="">
+					{% with messages = get_flashed_messages(category_filter=["run"]) %}
+						{% if messages %}
+							{% for message in messages %}
+								{% if message%}
+									<h5>S7协议采集，写入InfluxDB<span class="badge badge-success">Running</span></h5>		
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					{% endwith %}	
+				</strong>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="container-fluid" style="margin-top:80px" id="说明" >
 	<div class="row" >
 				<div class="col-sm-4">
 					<img class="img-fluid w-100" src="/static/siemens.png" alt="Siemens" />
@@ -54,11 +77,11 @@
 					{% endwith %}	
 			</div>
 		</div>
-</div>
+</div> -->
 
 		<div class="container-fluid" id="connection">
 
-			<!-- action暂未用到 具体用处暂不清楚 -->
+			<!-- action暂未用到 具体用处暂不清楚 Javascript-->
 			<!-- action="{{url_for('siemens')}}" -->
 			<!-- form-control属性很重要 -->
 			<form class="form-inline"  method="POST">
@@ -141,14 +164,19 @@
 						</script> -->
 						
 				</form>
-			
+				<div class="form-group">
+					<label for="file">导入变量表</label>
+					<input type="file"  class="form-control-file btn" name="file" id="file" placeholder="" aria-describedby="fileHelpId">
+					<!-- <small id="fileHelpId" class="form-text text-muted">Help text</small> -->
+					<button type="submit" class="btn btn-primary">上传</button>
+				</div>
 		</div>	
 
 <div class="container-fluid" style="margin-top:20px;" id="数据结果">
 	<div class="row">
 		<div class="col-lg-6">
 		<h4>数据读取结果</h4>
-		<table class="table table-hover ">
+		<table class="table table-responsive table-hover ">
 			<thead class="thead-dark">
 			<tr>
 				<th>Time</th>
@@ -202,7 +230,7 @@
 	<h4>
 		数据库列表
 	</h4>
-	<table class="table table-hover " style="background: rgb(169, 185, 201);color: white;">
+	<table class="table table-responsive table-hover " style="background: rgb(169, 185, 201);color: white;">
 		<thead class="thead-dark" >
 		<tr>
 			<th>Variable</th>
@@ -243,9 +271,9 @@
 				<label for="cycle"><h5>采集周期（ms）</h5></label>
 				<input type="text" name="cycle" id="cycle" class="form-control" placeholder="100"  >
 
-				<button class="btn btn-primary form-control"  href="#influxdbsetting" style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb">   开始写入   </button>
+				<button class="btn btn-primary form-control"  href="/influxDB" style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb">   开始写入   </button>
 				<!-- 开始写入后应禁用写入按钮 在页面上方显示运行状态 根据表单字典长度区分表单提交按钮-->
-				<a class="btn btn-danger form-control" href="a" style="padding-block: 30px; margin: 10px; " type="button" role="button">   停止写入   </a>
+				<a class="btn btn-danger form-control" href="/influxDB" style="padding-block: 30px; margin: 10px; " type="button" role="button">   停止写入   </a>
 				{% with messages = get_flashed_messages(category_filter=["influx"]) %}
 						{% if messages %}
 							{% for message in messages %}
