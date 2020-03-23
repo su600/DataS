@@ -57,7 +57,7 @@
 					<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
 				</div>
 				<div class="col-md-6">
-					<strong style="">
+					<strong >
 						基于PyLogix扫描AB PLC，获取变量表，读取变量表内容并写入InfluxDB数据库 </br>
 						支持EtherNet/IP转换为OPC UA
 					</strong>
@@ -68,33 +68,30 @@
 
 
 	<div class="container-fluid" style="margin: 10px;">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="form-group">
-					<a button type="button" href="rockwellscan" class="btn btn-primary" style="padding:6px 50px;"> 扫描设备
-					</a>
-					<div class="btn-group" style="padding: 6px 0px; ">
-						<button class="btn btn-outline-secondary dropdown-toggle" type="button" id="triggerId"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							This dropdown's menu is right-aligned
-						</button>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item " href="#">Disabled action</a>
-							<h6 class="dropdown-header">Section header</h6>
-							<a class="dropdown-item" href="#">Action</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">After divider action</a>
-						</div>
-					</div>
-					<button type="submit" class="btn btn-primary">开始连接</button>
-					<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-					<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
-					<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表（文件下载）</a>
-				</div>
+		<form method="POST">
+			<div class="row">
+				<div class="col-md-10">
+					<div class="form-group">
+						<a button type="button" href="rockwellscan" class="btn btn-primary" style="padding:6px 50px;">
+							扫描设备
+						</a>
 
+						<select name="devicelist" class="btn btn-outline-secondary form-control"
+							style="width: 300px;">请选择设备
+							{% for dev in dev_list %}
+							<option value="{{dev[deviceip]}}">{{dev}}</option>
+							{% endfor %}
+						</select>
+
+						<button type="submit" class="btn btn-primary">开始连接</button>
+						<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+						<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
+						<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
+					</div>
+
+				</div>
 			</div>
-		</div>
+		</form>
 		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
 		{% if messages %}
 		{% for message in messages %}
@@ -310,17 +307,17 @@
 					style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb"> 开始写入 </button>
 				<!-- 开始写入后应禁用写入按钮 在页面上方显示运行状态 根据表单字典长度区分表单提交按钮-->
 				<a class="btn btn-danger form-control" href="a" style="padding-block: 30px; margin: 10px; "
-					type="button" role="button"> 停止写入 </a>
-				{% with messages = get_flashed_messages(category_filter=["influx"]) %}
-				{% if messages %}
-				{% for message in messages %}
-				{% if message%}
-				<p><span class="badge badge-success">开始写入</span></p>
-				{% endif %}
-				{% endfor %}
-				{% endif %}
-				{% endwith %}
-				<!-- <a name="" id="" class="btn btn-primary" href="#" role="button"></a> -->
+					type="button" role="button"> 停止写入 </!-->
+					{% with messages = get_flashed_messages(category_filter=["influx"]) %}
+					{% if messages %}
+					{% for message in messages %}
+					{% if message%}
+					<p><span class="badge badge-success">开始写入</span></p>
+					{% endif %}
+					{% endfor %}
+					{% endif %}
+					{% endwith %}
+					<!-- <a name="" id="" class="btn btn-primary" href="#" role="button"></a> -->
 			</form>
 		</div>
 		<!-- <div class="container-fluid" style="margin:0px ; background:rgb(2, 70, 148);" >

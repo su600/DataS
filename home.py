@@ -45,6 +45,7 @@ users = [
 ]
 
 app = Flask(__name__)
+Bootstrap(app)
 
 ## 设置密钥可以有效防止跨站请求伪造的攻击
 app.config['SECRET_KEY'] = 'myproject'
@@ -205,7 +206,7 @@ def beckoff():
     #     aa=request.files.get("ss")
     return render_template("beckoff.html")
 
-@app.route("/rockwellscan")
+@app.route("/rockwellscan",methods=["POST","GET"])
 @is_login
 def rockwellscan():
     with PLC() as comm:
@@ -215,12 +216,13 @@ def rockwellscan():
 
         devices = comm.Discover()
         for device in devices.Value:
-            # print(devices)
             deviceip.append(device.IPAddress)
             devicename.append(device.ProductName + ' ' + device.IPAddress)
         device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
-        dev_list=list(device_dict)
-    return render_template("rockerwell.html",dev_list=dev_list)
+        # dev_list=str(device_dict)
+        # return redirect(url_for(rockwell))
+    return render_template("rockwell.html",dev_list=device_dict)
+    # return render_template("rockwell.html")
 
 @app.route("/rockwell",methods=["POST","GET"])
 @is_login
@@ -232,7 +234,7 @@ def rockwell():
         forminfo = request.form.to_dict()
         # 该页面的表单信息，只要submit都传到这里
         # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-
+        print("1111111")
         if len(forminfo) == 1:  # AB PLC 连接信息 只需要IP
             print(forminfo)
 
