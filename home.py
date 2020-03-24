@@ -1,10 +1,14 @@
-from flask import Flask,render_template,request,redirect, url_for, flash, session
+from flask import Flask,render_template,request,redirect, url_for, flash, session, send_from_directory
 from flask_bootstrap import Bootstrap
 import random,datetime
 from functools import wraps
 import time
 import functools
 import os
+from werkzeug.utils import secure_filename
+import csv
+import pandas as pd
+import numpy as np
 
 '''
 西门子库文件 python-snap7
@@ -19,6 +23,7 @@ from snap7.snap7types import *
 罗克韦尔AB Pylogix
 '''
 from pylogix import *
+from pylogix import PLC
 
 '''
 倍福库文件 PyADS
@@ -162,136 +167,75 @@ def delete(username):
 def setting():
     return render_template("setting.html")
 
+###################### 西门子 #######################################
 @app.route("/siemens",methods=("GET","POST"))
 @is_login
 def siemens():
     ## 反馈系统运行状态
+    def s7connect(ip, rack, slot):
+        try:
+            plc = client.Client()
+            # print(ip,rack,slot)
+            plc.connect(ip, rack, slot)
+        except Exception as e:
+            flash("连接失败，请确认IP或网络连通性", "connect0")
+        else:
+            state = plc.get_cpu_state()
+            flash(ip + " 连接成功", "connect1")
+            return plc
 
     if request.method =="POST":
-            flash("run", "run")
-            forminfo = request.form.to_dict()
-            # 该页面的表单信息，只要submit都传到这里，其中包括plc的连接信息 ip[str] rack[int] slot[int]
-            # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-            global plc
-            # plc=1## 用全局变量传递plc client
-            if len(forminfo)==3: #PLC 连接信息
-                print(forminfo)
-                plc=s7connect(str(forminfo["ipaddress"]),int(forminfo["rack"]),int(forminfo["slot"])) #数据类型转换
-                # ip=forminfo["ipaddress"]
-                # print(ip)
-                # print(plc)
-            if len(forminfo)==2: #变量地址
-                print(forminfo)
-                data=s7read(plc,forminfo["iqm"],forminfo["address"])
-                print(data)
-                    # return data
-
-            elif len(forminfo)==4: # influxdb连接信息
-                print(forminfo)
-                influxdbip = forminfo["influxdb"]
-                token = forminfo["token"]
-                measurement = forminfo["measurement"]
-                cycle=forminfo["cycle"]
-                influxDB(influxdbip,token,measurement,cycle)
-            # flash(forminfo,"connect1")
-            return redirect("#")
-            # return render_template("siemens.html")
-    return render_template("siemens.html")
-
-@app.route("/beckoff",methods=["POST","GET"])
-@is_login
-def beckoff():
-    # return render_template("b.html")
-    # if request.method=='POST':
-    #     aa=request.files.get("ss")
-    return render_template("beckoff.html")
-
-@app.route("/rockwellscan",methods=["POST","GET"])
-@is_login
-def rockwellscan():
-    with PLC() as comm:
-        # 设备扫描
-        deviceip = []
-        devicename = []
-
-        devices = comm.Discover()
-        for device in devices.Value:
-            deviceip.append(device.IPAddress)
-            devicename.append(device.ProductName + ' ' + device.IPAddress)
-        device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
-        # dev_list=str(device_dict)
-        # return redirect(url_for(rockwell))
-    return render_template("rockwell.html",dev_list=device_dict)
-    # return render_template("rockwell.html")
-
-@app.route("/rockwell",methods=["POST","GET"])
-@is_login
-def rockwell():
-    ## Rockwell AB PLC
-    # #108厂房设备
-    if request.method == "POST":
-        flash("run", "run")
+        # flash("run", "run")
+        # print("222222222")
         forminfo = request.form.to_dict()
-        # 该页面的表单信息，只要submit都传到这里
+        # print(forminfo)
+
+        # 该页面的表单信息，只要submit都传到这里，其中包括plc的连接信息 ip[str] rack[int] slot[int]
         # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-        print("1111111")
-        if len(forminfo) == 1:  # AB PLC 连接信息 只需要IP
-            print(forminfo)
+        global plc
+        if (forminfo)=={}: #上传变量表
+            try:
+                f = request.files.get('file') ## 获取文件
+                print(f.filename)
+                f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+            except Exception as e:
+                print(e)
+                flash(e,"uploadstatus")
+            else:
+                ## 保存测试
+                flash("变量表上传成功", "uploadstatus")
+                # try:
+                #     f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+                # except Exception as e:
+                #     print(e)
+                #     flash(e, "uploadstatus")
+                # else:
+                #     flash("变量表上传成功","uploadstatus")
 
-        if len(forminfo) == 2:  # 变量地址
+        if len(forminfo)==3: #PLC 连接信息
             print(forminfo)
-            data = s7read(plc, forminfo["iqm"], forminfo["address"])
+            plc=s7connect(str(forminfo["ipaddress"]),int(forminfo["rack"]),int(forminfo["slot"])) #数据类型转换
+            # ip=forminfo["ipaddress"]
+        if len(forminfo)==2: #变量地址
+            print(forminfo)
+            data=s7read(plc,forminfo["iqm"],forminfo["address"])
             print(data)
-            # return data
+                # return data
 
-        elif len(forminfo) == 4:  # influxdb连接信息
+        elif len(forminfo)==4: # influxdb连接信息
             print(forminfo)
             influxdbip = forminfo["influxdb"]
             token = forminfo["token"]
             measurement = forminfo["measurement"]
-            cycle = forminfo["cycle"]
-            influxDB(influxdbip, token, measurement, cycle)
+            cycle=forminfo["cycle"]
+            influxDB(influxdbip,token,measurement,cycle)
         # flash(forminfo,"connect1")
         return redirect("#")
         # return render_template("siemens.html")
-    return render_template("rockwell.html")
-
-@app.route("/opcua")
-@is_login
-def opcua():
-    # return render_template("b.html")
-    return render_template("opcua.html")
-
-@app.route("/a")
-@is_login
-def a():
-    print("ssssssssssssssss")
-    ss="sssssssssssssssssssssssss"
-    return redirect("#")
-    # return render_template("siemens.html",ss=ss)
+    return render_template("siemens.html")
 
 
-@app.route("/",methods=("POST","GET"))
-@is_login
-def c():
-    if request.method == "POST":
-        aa=request.form.to_dict()
-        print(aa)
-        return render_template("c.html")
-
-def s7connect(ip,rack,slot):
-    try:
-        plc = client.Client()
-        # print(ip,rack,slot)
-        plc.connect(ip, rack, slot)
-    except Exception as e:
-        flash("连接失败，请确认IP或网络连通性","connect0")
-    else:
-        state=plc.get_cpu_state()
-        flash(ip+" 连接成功","connect1")
-        return plc
-
-@app.route("/dis",methods=("POST","GET"))
+@app.route("/siemensdisconnect",methods=("POST","GET"))
 @is_login
 def s7disconnect():
     try:
@@ -304,7 +248,7 @@ def s7disconnect():
         flash("已断开连接","connect1") ## connect1 操作成功提示
     return redirect("/siemens#connection")
 
-@app.route("/siemens",methods=("POST","GET"))
+@app.route("/s7read",methods=("POST","GET"))
 @is_login
 def s7read(plc,iqm,address):
 
@@ -357,7 +301,114 @@ def s7read(plc,iqm,address):
     #     pass
     #     redirect("#iqmselect")
 
+########################### 倍福 ################################
+@app.route("/beckoff",methods=["POST","GET"])
+@is_login
+def beckoff():
+    # return render_template("b.html")
+    # if request.method=='POST':
+    #     aa=request.files.get("ss")
+    return render_template("beckoff.html")
 
+######################### 罗克韦尔 ##############################
+@app.route("/rockwell",methods=["POST","GET"])
+@is_login
+def rockwell():
+    ## Rockwell AB PLC
+    # #108厂房设备
+    if request.method == "POST":
+        flash("run", "run")
+        forminfo = request.form.get()
+        # 该页面的表单信息，只要submit都传到这里
+        # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
+        print("1111111")
+        print(forminfo)
+        if len(forminfo) == 1:  # AB PLC 连接信息 只需要IP
+            print(forminfo)
+            ip=request.form.getlist("devicelist")
+            print(ip)
+
+        if (forminfo)=={}: #上传变量表
+            try:
+                f = request.files.get('file') ## 获取文件
+                print(f.filename)
+                f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+            except Exception as e:
+                print(e)
+                flash(e,"uploadstatus")
+            else:
+                ## 保存测试
+                flash("变量表上传成功", "uploadstatus")
+
+        if len(forminfo) == 2:  # 变量地址
+            print(forminfo)
+            data = s7read(plc, forminfo["iqm"], forminfo["address"])
+            print(data)
+            # return data
+
+        elif len(forminfo) == 4:  # influxdb连接信息
+            print(forminfo)
+            influxdbip = forminfo["influxdb"]
+            token = forminfo["token"]
+            measurement = forminfo["measurement"]
+            cycle = forminfo["cycle"]
+            influxDB(influxdbip, token, measurement, cycle)
+        # flash(forminfo,"connect1")
+        return redirect("#")
+    return render_template("rockwell.html")
+
+@app.route("/rockwellscan",methods=["POST","GET"])
+@is_login
+def rockwellscan():
+    with PLC() as comm:
+        # 设备扫描
+        deviceip = []
+        devicename = []
+
+        devices = comm.Discover()
+        for device in devices.Value:
+            deviceip.append(device.IPAddress)
+            devicename.append(device.ProductName + ' ' + device.IPAddress)
+        device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
+        # dev_list=str(device_dict)
+        # return redirect(url_for(rockwell)) # url_for函数跳转
+        # flash(device_dict,"device_dict") #设备扫描结果显示到前端页面下拉列表
+        return render_template("rockwell.html",dev_list=device_dict) #设备扫描结果显示到前端页面下拉列表
+    ## 定向页面逻辑，此处要在rockwellscan中处理POST请求
+    ## 前端调用后台程序 href=“xx” 通过路由调用，还有没有别的方法 采用url_for()跳转 参考登录函数处理方法
+    # return redirect("#")
+
+@app.route("/rockwell_get_all_vars",methods=["POST","GET"])
+@is_login
+def rockwell_get_all_vars(): #传递设备ip
+    with PLC() as comm:
+        print("111111111111")
+        comm.IPAddress = '192.168.100.200'
+        # comm.IPAddress = ip # 还在调试中
+        tags = comm.GetTagList() #输出是Response结构体类型
+        tagname=[]
+        tagtype=[]
+        head=["TagName","TagType"]
+        for t in tags.Value:
+            tagname.append(t.TagName)
+            tagtype.append(t.DataType)
+        taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
+        print(taglist)
+        tt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        filepath=("D:/Taglist"+tt)
+        ## 变量表文件暂存
+        taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
+    ## 变量表文件下载
+    return send_from_directory(r"D:/",filename="Taglist.xlsx",as_attachment=True)
+
+######################## OPC UA ####################################
+@app.route("/opcua")
+@is_login
+def opcua():
+    # return render_template("b.html")
+    return render_template("opcua.html")
+
+######################## InfluxDB 共用函数 #############################
 @app.route("/influxDB",methods=("POST","GET"))
 @is_login
 def influxDB(influxdbip,token,measurement,cycle):
@@ -384,5 +435,6 @@ def influxDB(influxdbip,token,measurement,cycle):
         except Exception as e:
             print(e)
             break
-##################################################
+
+################### app 主程序 （测试用） 部署版本采用nginx托管 ##########################
 app.run(host="0.0.0.0",port=5000)

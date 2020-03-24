@@ -13,7 +13,8 @@ app=Flask(__name__)
 def upload_file():
     if request.method == 'POST':
         # aa=jsonify({"result": request.get_array(field_name='file')})
-        file = request.files.get('file')
+        file = request.files.get('file2')
+        print(file.filename)
         data = pd.DataFrame(pd.read_excel(file))
         data2 = pd.read_excel(file,usecols=[0],header=None) ##第一列 无表头 输出为DataFrame格式 带索引
         data2=data2.to_numpy().tolist() #转数组 转列表

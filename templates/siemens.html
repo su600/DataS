@@ -26,7 +26,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top " id="导航栏">
 		<a class="navbar-brand" href="#">
-			<img src="/static/avic.png"  width="35px">
+			<img src="/static/avic.png" width="35px">
 		</a>
 		<a class="navbar-brand" href="/#">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -170,20 +170,40 @@
 						</script> -->
 
 		</form>
-		<div class="form-group">
-			<label for="file">导入变量表</label>
-			<div class="row">
-				<div class="col-md-6">
 
-					<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
-						placeholder="" aria-describedby="fileHelpId">
+		<div>
+			<label for="file">导入变量表</label>
+			<form method="POST" action="">
+				<div class="row">
+					<div class="col-md-4">
+						<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
+							placeholder="" aria-describedby="fileHelpId">
+					</div>
+					<div class="col-md-6">
+						<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+							value="上传"></input>
+						<a button href="s7multiread" style="padding-left: 40px;padding-right: 40px;"
+							class=" btn btn-primary">批量读取</a>
+					</div>
 				</div>
-				<div class="col-md-2">
-					<!-- <small id="fileHelpId" class="form-text text-muted">Help text</small> -->
-					<button type="submit" style="padding: 8px 10px;" class="btn btn-secondary form-control">上传</button>
-				</div>
-			</div>
+			</form>
 		</div>
+
+		{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-primary alert-dismissible fade show" style="margin: 10px;" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				<span class="sr-only">Close</span>
+			</button>
+			<strong>{{message}}</strong>
+		</div>
+
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+
 	</div>
 
 	<div class="container-fluid" style="margin-top:20px;" id="数据结果">

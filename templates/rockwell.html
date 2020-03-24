@@ -57,7 +57,7 @@
 					<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
 				</div>
 				<div class="col-md-6">
-					<strong >
+					<strong>
 						基于PyLogix扫描AB PLC，获取变量表，读取变量表内容并写入InfluxDB数据库 </br>
 						支持EtherNet/IP转换为OPC UA
 					</strong>
@@ -66,30 +66,21 @@
 		</div>
 	</div>
 
-
 	<div class="container-fluid" style="margin: 10px;">
-		<form method="POST">
-			<div class="row">
-				<div class="col-md-10">
-					<div class="form-group">
-						<a button type="button" href="rockwellscan" class="btn btn-primary" style="padding:6px 50px;">
-							扫描设备
-						</a>
-
-						<select name="devicelist" class="btn btn-outline-secondary form-control"
-							style="width: 300px;">请选择设备
-							{% for dev in dev_list %}
-							<option value="{{dev[deviceip]}}">{{dev}}</option>
-							{% endfor %}
-						</select>
-
-						<button type="submit" class="btn btn-primary">开始连接</button>
-						<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-						<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
-						<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
-					</div>
-
-				</div>
+		<form class="form-inline" method="POST">
+			<div class="form-group">
+				<a button type="button" href="rockwellscan" class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
+				<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
+					<!-- {% for dev in dev_list %}
+					<option value="{{dev[deviceip]}}">{{dev}}</option>
+					{% endfor %} -->
+					<option value="192.168.100.1">111111</option>
+					<option value="192.168.100.12">2222222</option>
+				</select>
+				<button type="submit" class="btn btn-primary">开始连接</button>
+				<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+				<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
+				<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
 			</div>
 		</form>
 		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
@@ -123,75 +114,40 @@
 	</div>
 	</div>
 
-	<div class="container-fluid" id="connection">
-		<div class="form-group" style="margin: 10px;">
-			<label for="file">上传变量表批量读取</label>
-			<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.3批量读取的数量上限？之前是20个</p>
-			<div class="row">
-				<div class="col-md-6">
+	<div class="container-fluid" style="margin: 10px;">
+		<label for="file">导入变量表</label>
+		<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.3批量读取的数量上限？之前是20个</p>
 
+		<form method="POST" action="">
+			<div class="row">
+				<div class="col-md-4">
 					<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
 						placeholder="" aria-describedby="fileHelpId">
 				</div>
-				<div class="col-md-2">
-					<!-- <small id="fileHelpId" class="form-text text-muted">Help text</small> -->
-					<button type="submit" style="padding: 8px 10px;" class="btn btn-secondary form-control">上传</button>
+				<div class="col-md-6">
+					<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+						value="上传"></input>
+					<a button href="s7multiread" style="padding-left: 40px;padding-right: 40px;"
+						class=" btn btn-primary">批量读取</a>
 				</div>
 			</div>
-
-
-
-			{% with messages = get_flashed_messages(category_filter=["upload1"]) %}
-			{% if messages %}
-			{% for message in messages %}
-			<div class="alert alert-success alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px;"
-				role="alert">
-				<strong>{{message}}</strong>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			{% endfor %}
-			{% endif %}
-			{% endwith %}
-
-			{% with messages = get_flashed_messages(category_filter=["upload0"]) %}
-			{% if messages %}
-			{% for message in messages %}
-			<div class="alert alert-danger alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px;"
-				role="alert">
-				<strong>{{message}}</strong>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			{% endfor %}
-			{% endif %}
-			{% endwith %}
-
-			<!-- <script>
-		window.setTimeout(function(){
-			  $('[data-dismiss="alert"]').alert('close');},4000);
-		</script> -->
-			<!-- 提示框定时消失 -->
-			</form>
+		</form>
+		{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-primary alert-dismissible fade show" style="margin: 10px;" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				<span class="sr-only">Close</span>
+			</button>
+			<strong>{{message}}</strong>
 		</div>
 
-
-		<!-- action="{{url_for('s7read')}}"  -->
-		<form class="form-inline" method="POST" style="margin: 10px;" id="varsetting">
-			<!-- url_for区分按钮动作的调用函数 -->
-			<!-- 表单添加name属性，写入字典 -->
-			<label for="var">变量名称：</label>
-			<input type="text" placeholder="Program.Abc" name="var" class="form-control required" id="var">
-
-			<button type="submit" id="read" class="btn btn-outline-primary">CIP Read</button>
-			<button type="button" id="write" class="btn btn-outline-secondary" disabled>CIP Write</button>
-			<button type="button" class="btn"
-				style="background-color: teal; color: white; margin-left: 10px;padding-left:30px;padding-right:30px">加入列表</button>
-		</form>
-
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
 	</div>
+
 
 	<div class="container-fluid" style="margin-top:20px;" id="数据结果">
 		<div class="row">
@@ -244,33 +200,30 @@
 				</table>
 			</div>
 
-
-			</iframe>
-
 			<div class="col-md-6">
 				<h4>
 					批量读取列表
 				</h4>
-				<table class="table table-responsive  table-hover " style="color: white;">
+				<table class="table table-responsive  table-hover " style="color: rgb(17, 17, 17);">
 					<thead class="thead-dark">
 						<tr>
 							<th>Variable</th>
-							<th>ssss</th>
+							<th>ssssss</th>
 						</tr>
 					</thead>
 					<tbody>
 						<td>
-							aaaa
+							aaaaaa
 						</td>
 						<td>
-							11111
+							111111111
 						</td>
 					<tbody>
 						<td>
-							bbbb
+							bbbbbbb
 						</td>
 						<td>
-							2222
+							2222222222
 						</td>
 					</tbody>
 
@@ -306,18 +259,18 @@
 				<button class="btn btn-primary form-control" href="#influxdbsetting"
 					style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb"> 开始写入 </button>
 				<!-- 开始写入后应禁用写入按钮 在页面上方显示运行状态 根据表单字典长度区分表单提交按钮-->
-				<a class="btn btn-danger form-control" href="a" style="padding-block: 30px; margin: 10px; "
-					type="button" role="button"> 停止写入 </!-->
-					{% with messages = get_flashed_messages(category_filter=["influx"]) %}
-					{% if messages %}
-					{% for message in messages %}
-					{% if message%}
-					<p><span class="badge badge-success">开始写入</span></p>
-					{% endif %}
-					{% endfor %}
-					{% endif %}
-					{% endwith %}
-					<!-- <a name="" id="" class="btn btn-primary" href="#" role="button"></a> -->
+				<a class="btn btn-danger form-control" href="/influxDB" style="padding-block: 30px; margin: 10px; "
+					type="button" role="button"> 停止写入 </a>
+				{% with messages = get_flashed_messages(category_filter=["influx"]) %}
+				{% if messages %}
+				{% for message in messages %}
+				{% if message%}
+				<p><span class="badge badge-success">开始写入</span></p>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+				{% endwith %}
+				<!-- <a name="" id="" class="btn btn-primary" href="#" role="button"></a> -->
 			</form>
 		</div>
 		<!-- <div class="container-fluid" style="margin:0px ; background:rgb(2, 70, 148);" >
