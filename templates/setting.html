@@ -1,101 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    	  <link href="/static/favicon.ico" rel="SHORTCUT ICON" />
-	  <link rel="apple-touch-icon" href="/static/ico.jpg">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<link href="/static/favicon.ico" rel="SHORTCUT ICON" />
+	<link rel="apple-touch-icon" href="/static/ico.jpg">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>数据采集系统</title>
+	<title>数据采集系统</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="Su600" content="Su">
+	<meta name="description" content="Source code generated using layoutit.com">
+	<meta name="Su600" content="Su">
 
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/style.css" rel="stylesheet">
-		<style>
-		  body {
-			  position: relative;} 
-		  </style>
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/style.css" rel="stylesheet">
+	<style>
+		body {
+			position: relative;
+		}
+	</style>
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top ">
-				  <!-- Brand -->
-				<a class="navbar-brand" href="#">
-					<img src="static/avic.png" width="35px">
-				</a>
-  				<a class="navbar-brand" href="/#">Home</a>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top ">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">
+			<img src="static/avic.png" width="35px">
+		</a>
+		<a class="navbar-brand" href="/#">Home</a>
 
-				 <!-- Toggler/collapsibe Button -->
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-</nav>
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</nav>
 
+	<div class="jumbotron jumbotron-fluid" style="margin: 10px; height:200px;" >
+		
+			<h1 style="margin-left: 30px;margin-top: 20px;" >请从下方按钮选择设备类型</h1>
+			<p style="margin-left: 30px;margin-top:10px;" >OPC UA/西门子/罗克韦尔/倍福/库卡机器人/UR机器人</p>
+	</div>
 
-<div class="container-fluid" style="padding:80px 20px 20px 20px">
-			<div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-5" style="padding:10px">
+	<div class="container-fluid" style="padding:20px 20px 20px 20px">
+		<div class="row">
+			<div class="col-md-4" style="padding:10px">
+				<div class="card" style="padding: 20px;">
 					<img class="img-fluid center-block" src="static/opcua.png" alt="OPC UA" />
 					<a class="btn btn-outline-primary btn-block btn-lg" href="opcua">OPC UA</a>
 				</div>
+			</div>
 
-				<div class="col-md-5" style="padding:10px ">
+			<div class="col-md-4" style="padding:10px ">
+				<div class="card" style="padding: 20px;">
 					<img class="img-fluid " src="static/siemens.png" alt="Siemens" />
 					<a class="btn btn-success btn-block btn-lg" href="siemens">西门子系统</a>
 				</div>
-                 <div class="col-md-1"></div>
-				 <div class="col-md-1"></div>
-                <div class="col-md-5 " style="padding:10px">
+
+			</div>
+
+			<div class="col-md-4 " style="padding:10px">
+				<div class="card" style="padding: 20px;">
+					<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
+					<a class="btn btn-info btn-block btn-lg" href="rockwell">罗克韦尔</a>
+				</div>
+			</div>
+
+			<div class="col-md-4 " style="padding:10px">
+				<div class="card" style="padding: 20px;">
 					<img class="img-fluid" src="static/beckoff.png" alt="Beckoff" />
 					<a class="btn btn-danger btn-block btn-lg" href="beckoff">倍福系统</a>
 				</div>
 
-				<div class="col-md-5 " style="padding:10px">
-					<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
-					<a class="btn btn-info btn-block btn-lg" href="rockwell">罗克韦尔</a>
+			</div>
+
+			<div class="col-md-4 " style="padding:10px">
+				<div class="card" style="padding: 20px;">
+					<img class="img-fluid" src="static/kuka.png" alt="Rockwell" />
+					<a class="btn btn-info btn-block btn-lg" href="rockwell">库卡机器人</a>
 				</div>
-                 <div class="col-md-1"></div>
+			</div>
+
+			<div class="col-md-4 " style="padding:10px">
+				<div class="card" style="padding: 20px;">
+					<img class="img-fluid" src="static/ur.png" alt="Rockwell" />
+					<a class="btn btn-info btn-block btn-lg" href="rockwell">UR机器人</a>
+				</div>
 			</div>
 
 		</div>
 
-<div class="container-fluid">
-	<footer class="footer">
+	</div>
 
-		<div class="container-fluid" style="height:20px;">
-  			<!--<h2>混合色彩进度条</h2>-->
-  			<!--<p>进度条可以设置多种颜色:</p> -->
-  			<div class="progress" style="height:10px; ">
+	<div class="container-fluid">
+		<footer class="footer">
+
+			<div class="container-fluid" style="height:20px;">
+				<!--<h2>混合色彩进度条</h2>-->
+				<!--<p>进度条可以设置多种颜色:</p> -->
+				<div class="progress" style="height:10px; ">
 
 
-				<div class="progress-bar" style="width:33.33%">
-				  <!--Free Space-->
+					<div class="progress-bar" style="width:33.33%">
+						<!--Free Space-->
+					</div>
+					<div class="progress-bar bg-warning" style="width:33.33%">
+						<!--Warning-->
+					</div>
+					<div class="progress-bar bg-danger" style="width:33.33%">
+						<!--Danger-->
+					</div>
 				</div>
-				<div class="progress-bar bg-warning" style="width:33.33%">
-				  <!--Warning-->
-				</div>
-				<div class="progress-bar bg-danger" style="width:33.33%">
-				  <!--Danger-->
-				</div>
-			  </div>
-		</div>
+			</div>
 
-		<div class="container-fluid" style="height:50px;text-align:center">
+			<div class="container-fluid" style="height:50px;text-align:center">
 				<!--<footer style=" ">-->
-					<p style="padding-top:25px" >
-						<!--<kbd>-->
-							Copyright © 2020 Su600, Inc.
-						<!--</kbd>-->
-					</p>
+				<p style="padding-top:25px">
+					<!--<kbd>-->
+					Copyright © 2020 Su600, Inc.
+					<!--</kbd>-->
+				</p>
 				<!--</footer>-->
-		</div>
-	</footer>
-</div>
+			</div>
+		</footer>
+	</div>
 
 </body>
 
