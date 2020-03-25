@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect, url_for, flash, session, send_from_directory
+from flask import Flask,render_template,request,redirect, url_for, flash, session, send_from_directory,send_file
 from flask_bootstrap import Bootstrap
 import random,datetime
 from functools import wraps
@@ -314,92 +314,117 @@ def beckoff():
 @app.route("/rockwell",methods=["POST","GET"])
 @is_login
 def rockwell():
-    ## Rockwell AB PLC
-    # #108厂房设备
-    if request.method == "POST":
-        flash("run", "run")
-        forminfo = request.form.get()
-        # 该页面的表单信息，只要submit都传到这里
-        # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-        print("1111111")
-        print(forminfo)
-        if len(forminfo) == 1:  # AB PLC 连接信息 只需要IP
-            print(forminfo)
-            ip=request.form.getlist("devicelist")
-            print(ip)
-
-        if (forminfo)=={}: #上传变量表
-            try:
-                f = request.files.get('file') ## 获取文件
-                print(f.filename)
-                f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
-            except Exception as e:
-                print(e)
-                flash(e,"uploadstatus")
-            else:
-                ## 保存测试
-                flash("变量表上传成功", "uploadstatus")
-
-        if len(forminfo) == 2:  # 变量地址
-            print(forminfo)
-            data = s7read(plc, forminfo["iqm"], forminfo["address"])
-            print(data)
-            # return data
-
-        elif len(forminfo) == 4:  # influxdb连接信息
-            print(forminfo)
-            influxdbip = forminfo["influxdb"]
-            token = forminfo["token"]
-            measurement = forminfo["measurement"]
-            cycle = forminfo["cycle"]
-            influxDB(influxdbip, token, measurement, cycle)
-        # flash(forminfo,"connect1")
-        return redirect("#")
+    ## Rockwell AB PLC # #108厂房设备
     return render_template("rockwell.html")
+
+def rockwellread():
+    pass
+    '读取函数'
+
+def rockwellreadexcel(f):
+    pass
+    '''
+    用pd、np读取excel文件，然后调用读取函数
+    '''
+    # rockwellread(taglist)
 
 @app.route("/rockwellscan",methods=["POST","GET"])
 @is_login
 def rockwellscan():
+    global rockwellip
+    rockwellip=''
     with PLC() as comm:
         # 设备扫描
         deviceip = []
         devicename = []
-
         devices = comm.Discover()
         for device in devices.Value:
             deviceip.append(device.IPAddress)
             devicename.append(device.ProductName + ' ' + device.IPAddress)
         device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
+        scanresult="扫描到"+str(len(device_dict))+"台设备"
+        print(scanresult)
+        flash(scanresult,"scanresult") #扫描完成flash提示
         # dev_list=str(device_dict)
         # return redirect(url_for(rockwell)) # url_for函数跳转
         # flash(device_dict,"device_dict") #设备扫描结果显示到前端页面下拉列表
-        return render_template("rockwell.html",dev_list=device_dict) #设备扫描结果显示到前端页面下拉列表
+
+        if request.method == "POST":
+            flash("run", "run")
+            # 该页面的表单信息，只要submit都传到这里
+            forminfo=request.form.get('devicelist') # 获取不到value?？？？？？？？？？？？？
+            # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
+            print(type(forminfo))
+            print(forminfo)
+            print(len(forminfo))
+            if type(forminfo) == 'method':  # AB PLC 连接信息 只需要IP
+                # print(forminfo)
+                rockwellip = request.form.getlist("devicelist")
+                print(rockwellip)
+
+            if (forminfo) == {}:  # 上传变量表
+                try:
+                    f = request.files.get('file')  ## 获取文件
+                    print(f.filename)
+                    f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+                    rockwellread(f) # 变量表读取并读取变量函数
+                except Exception as e:
+                    print(e)
+                    flash(e, "uploadstatus")
+                else:
+                    ## 保存测试
+                    flash("变量表上传成功", "uploadstatus")
+
+            if len(forminfo) == 2:  # 变量地址
+                print(forminfo)
+                data = s7read(plc, forminfo["iqm"], forminfo["address"])
+                print(data)
+                # return data
+
+            elif len(forminfo) == 4:  # influxdb连接信息
+                print(forminfo)
+                influxdbip = forminfo["influxdb"]
+                token = forminfo["token"]
+                measurement = forminfo["measurement"]
+                cycle = forminfo["cycle"]
+                influxDB(influxdbip, token, measurement, cycle)
+            # flash(forminfo,"connect1")
+            return redirect("#")
+
+    return render_template("rockwell.html",dev_list=device_dict)#设备扫描结果显示到前端页面下拉列表
     ## 定向页面逻辑，此处要在rockwellscan中处理POST请求
     ## 前端调用后台程序 href=“xx” 通过路由调用，还有没有别的方法 采用url_for()跳转 参考登录函数处理方法
     # return redirect("#")
 
-@app.route("/rockwell_get_all_vars",methods=["POST","GET"])
+@app.route("/rockwell_get_all_vars")
 @is_login
 def rockwell_get_all_vars(): #传递设备ip
+    # print("111111111111111")
     with PLC() as comm:
         print("111111111111")
-        comm.IPAddress = '192.168.100.200'
-        # comm.IPAddress = ip # 还在调试中
-        tags = comm.GetTagList() #输出是Response结构体类型
-        tagname=[]
-        tagtype=[]
-        head=["TagName","TagType"]
-        for t in tags.Value:
-            tagname.append(t.TagName)
-            tagtype.append(t.DataType)
-        taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
-        print(taglist)
-        tt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        filepath=("D:/Taglist"+tt)
-        ## 变量表文件暂存
-        taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
-    ## 变量表文件下载
-    return send_from_directory(r"D:/",filename="Taglist.xlsx",as_attachment=True)
+        ####### 无法连续运行重复获取变量表？ ##############
+        if rockwell=='':
+            print("请先选择设备IP地址")
+        else:
+            # comm.IPAddress = rockwellip #全局变量
+            comm.IPAddress="192.168.100.200"
+            tags = comm.GetTagList() #输出是Response结构体类型
+            tagname=[]
+            tagtype=[]
+            head=["TagName","TagType"]
+            for t in tags.Value:
+                tagname.append(t.TagName)
+                tagtype.append(t.DataType)
+            taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
+            print(taglist)
+            tt = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S') #时间标识符
+            filepath=("D:/Taglist "+tt+".xlsx")
+            print(filepath)
+            ## 变量表文件暂存以备发送和自动读取
+            taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
+            ## 变量表文件下载
+            return send_file(filepath,as_attachment=True) #向前端发送文件 下载
+    # return send_from_directory(filepath,as_attachment=True) #
 
 ######################## OPC UA ####################################
 @app.route("/opcua")

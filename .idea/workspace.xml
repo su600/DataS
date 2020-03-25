@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="add DataFrame_to_excel test">
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update home.html,add kuka/UR,dir for test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/rockwell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rockwell.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/setting.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/setting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/siemens.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/siemens.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +57,7 @@
       <recent name="C:\Users\su514\Desktop\Framework\flask\templates\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.home">
+  <component name="RunManager" selected="Python.opcServer">
     <configuration name="23_get_all_tags" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,27 +79,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="excelsubmit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/excelsubmit.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="home" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -109,6 +92,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/home.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="opcServer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Production-Data-App-master/data_acquisition" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Production-Data-App-master/data_acquisition/opcServer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -161,18 +165,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.home" />
-      <item itemvalue="Python.excelsubmit" />
       <item itemvalue="Python.23_get_all_tags" />
       <item itemvalue="Python.qq" />
       <item itemvalue="Python.yuyinhecheng" />
+      <item itemvalue="Python.opcServer" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.opcServer" />
         <item itemvalue="Python.home" />
         <item itemvalue="Python.23_get_all_tags" />
         <item itemvalue="Python.yuyinhecheng" />
         <item itemvalue="Python.qq" />
-        <item itemvalue="Python.excelsubmit" />
       </list>
     </recent_temporary>
   </component>
@@ -233,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585060202554</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="update home.html,add kuka/UR,dir for test">
+      <created>1585100158764</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1585100158764</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -252,7 +263,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -264,13 +277,15 @@
     <MESSAGE value="add rockwell devices scan" />
     <MESSAGE value="add Pylogix Taglist download" />
     <MESSAGE value="add DataFrame_to_excel test" />
-    <option name="LAST_COMMIT_MESSAGE" value="add DataFrame_to_excel test" />
+    <MESSAGE value="update home.html,add kuka/UR,dir for test" />
+    <option name="LAST_COMMIT_MESSAGE" value="update home.html,add kuka/UR,dir for test" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2" timestamp="1585060269028">
+    <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2" timestamp="1585100157810">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1584949645420" />
+    <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
     <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1585060269028" />
     <state x="251" y="-904" width="989" height="504" key="DiffContextDialog" timestamp="1584694860944">
@@ -281,35 +296,35 @@
       <screen x="1920" y="0" width="1549" height="840" />
     </state>
     <state x="2508" y="158" key="FileChooserDialogImpl/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424245581" />
-    <state width="1528" height="171" key="GridCell.Tab.0.bottom" timestamp="1585060438929">
+    <state width="1324" height="171" key="GridCell.Tab.0.bottom" timestamp="1585124564306">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1323" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585023802390" />
-    <state width="1528" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585040573890" />
+    <state width="1324" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585124564306" />
     <state width="1152" height="134" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
     <state width="1331" height="213" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1585060438929" />
-    <state width="1528" height="171" key="GridCell.Tab.0.center" timestamp="1585060438929">
+    <state width="1324" height="171" key="GridCell.Tab.0.center" timestamp="1585124564306">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1323" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585023802390" />
-    <state width="1528" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585040573889" />
+    <state width="1324" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585124564306" />
     <state width="1152" height="134" key="GridCell.Tab.0.center/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
     <state width="1331" height="213" key="GridCell.Tab.0.center/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1585060438929" />
-    <state width="1528" height="171" key="GridCell.Tab.0.left" timestamp="1585060438928">
+    <state width="1324" height="171" key="GridCell.Tab.0.left" timestamp="1585124564306">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1323" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585023802390" />
-    <state width="1528" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585040573889" />
+    <state width="1324" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585124564306" />
     <state width="1152" height="134" key="GridCell.Tab.0.left/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
     <state width="1331" height="213" key="GridCell.Tab.0.left/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1585060438928" />
-    <state width="1528" height="171" key="GridCell.Tab.0.right" timestamp="1585060438929">
+    <state width="1324" height="171" key="GridCell.Tab.0.right" timestamp="1585124564306">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1323" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585023802390" />
-    <state width="1528" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585040573890" />
+    <state width="1324" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585124564306" />
     <state width="1152" height="134" key="GridCell.Tab.0.right/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
     <state width="1331" height="213" key="GridCell.Tab.0.right/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1585060438929" />
@@ -319,18 +334,20 @@
     <state x="2098" y="-455" key="SettingsEditor/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584585010543" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424238393" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1584204338230" />
-    <state x="367" y="153" key="Vcs.Push.Dialog.v2" timestamp="1585060207152">
+    <state x="367" y="153" key="Vcs.Push.Dialog.v2" timestamp="1585100171266">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
+    <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1585060207152" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585059790685">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="2478" y="-150" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590087152" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840@0.0.1549.840" timestamp="1585059790685" />
-    <state x="2389" y="161" width="672" height="678" key="search.everywhere.popup" timestamp="1584424797388">
-      <screen x="1920" y="0" width="1549" height="840" />
+    <state x="469" y="161" width="672" height="678" key="search.everywhere.popup" timestamp="1585123356568">
+      <screen x="0" y="0" width="1549" height="840" />
     </state>
+    <state x="469" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585123356568" />
     <state x="2389" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424797388" />
   </component>
 </project>
