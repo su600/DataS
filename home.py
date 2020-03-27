@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 import csv
 import pandas as pd
 import numpy as np
+from struct import pack, unpack_from # Pylogix 结构体解析
 
 '''
 西门子库文件 python-snap7
@@ -20,10 +21,31 @@ from snap7.util import *
 from snap7.snap7types import *
 
 '''
-罗克韦尔AB Pylogix
+罗克韦尔AB Pylogix 0.6.2
 '''
 from pylogix import *
 from pylogix import PLC
+
+class Timer(object):
+
+    def __init__(self, data):
+        self.PRE = unpack_from('<i', data, 6)[0]
+        self.ACC = unpack_from('<i', data, 10)[0]
+        bits = unpack_from('<i', data, 2)[0]
+        self.EN = get_bit(bits, 31)
+        self.TT = get_bit(bits, 30)
+        self.DN = get_bit(bits, 29)
+
+
+def get_bit(value, bit_number):
+    '''
+    Returns the specific bit of a word
+    '''
+    mask = 1 << bit_number
+    if (value & mask):
+        return True
+    else:
+        return False
 
 '''
 倍福库文件 PyADS
@@ -317,7 +339,9 @@ def rockwell():
     ## Rockwell AB PLC # #108厂房设备
     return render_template("rockwell.html")
 
-def rockwellread():
+def rockwellread(taglist):
+    with PLC() as comm:
+        comm.Read(taglist)
     pass
     '读取函数'
 
@@ -328,11 +352,12 @@ def rockwellreadexcel(f):
     '''
     # rockwellread(taglist)
 
+global rockwellip,rockwell_device_list
+rockwellip=''
+
 @app.route("/rockwellscan",methods=["POST","GET"])
 @is_login
 def rockwellscan():
-    global rockwellip
-    rockwellip=''
     with PLC() as comm:
         # 设备扫描
         deviceip = []
@@ -341,26 +366,40 @@ def rockwellscan():
         for device in devices.Value:
             deviceip.append(device.IPAddress)
             devicename.append(device.ProductName + ' ' + device.IPAddress)
-        device_dict = dict(zip(devicename, deviceip))  # 创建设备字典
-        scanresult="扫描到"+str(len(device_dict))+"台设备"
+        global rockwell_device_list
+        rockwell_device_list = dict(zip(devicename, deviceip))  # 创建设备字典 写入全局变量
+        scanresult="扫描到"+str(len(rockwell_device_list))+"台设备"
         print(scanresult)
         flash(scanresult,"scanresult") #扫描完成flash提示
+        return redirect(url_for('rockwellscan2'))
         # dev_list=str(device_dict)
         # return redirect(url_for(rockwell)) # url_for函数跳转
         # flash(device_dict,"device_dict") #设备扫描结果显示到前端页面下拉列表
 
+@app.route("/rockwellscan2",methods=["POST","GET"])
+@is_login
+def rockwellscan2():
         if request.method == "POST":
             flash("run", "run")
+            forminfo=request.form.to_dict() ## to_dict()加括号
             # 该页面的表单信息，只要submit都传到这里
-            forminfo=request.form.get('devicelist') # 获取不到value?？？？？？？？？？？？？
+            # forminfo=request.form.get('devicelist') # 获取到的value是str字符串
             # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-            print(type(forminfo))
             print(forminfo)
-            print(len(forminfo))
-            if type(forminfo) == 'method':  # AB PLC 连接信息 只需要IP
-                # print(forminfo)
-                rockwellip = request.form.getlist("devicelist")
-                print(rockwellip)
+            print(type(forminfo))
+            # aa=type(forminfo)
+
+            ######## 每次“开始连接”实际只是获取选择的设备ip并写入全局变量
+            # 程序逻辑调整为rockwellscan运行后跳转rockwellscan2 但是页面会整体刷新造成列表变化~~~~~~~~~~~
+            if len(forminfo)==1 : # AB PLC 连接信息 只需要IP
+                print(forminfo)
+                aa=(forminfo["devicelist"]).split(" ")
+                aa=aa[len(aa)-1] #获取ip
+                global rockwellip # 全局变量 要先声明globa 再修改
+                rockwellip=aa
+                ss=("已连接到 "+str(forminfo["devicelist"]))
+                flash(ss, "scanresult")  # 连接完成
+                # print(rockwellip)
 
             if (forminfo) == {}:  # 上传变量表
                 try:
@@ -382,6 +421,7 @@ def rockwellscan():
                 # return data
 
             elif len(forminfo) == 4:  # influxdb连接信息
+                # print("11111111111")
                 print(forminfo)
                 influxdbip = forminfo["influxdb"]
                 token = forminfo["token"]
@@ -389,9 +429,8 @@ def rockwellscan():
                 cycle = forminfo["cycle"]
                 influxDB(influxdbip, token, measurement, cycle)
             # flash(forminfo,"connect1")
-            return redirect("#")
-
-    return render_template("rockwell.html",dev_list=device_dict)#设备扫描结果显示到前端页面下拉列表
+            # return redirect("#")
+        return render_template("rockwell.html",dev_list=rockwell_device_list)#设备扫描结果显示到前端页面下拉列表
     ## 定向页面逻辑，此处要在rockwellscan中处理POST请求
     ## 前端调用后台程序 href=“xx” 通过路由调用，还有没有别的方法 采用url_for()跳转 参考登录函数处理方法
     # return redirect("#")
@@ -401,30 +440,37 @@ def rockwellscan():
 def rockwell_get_all_vars(): #传递设备ip
     # print("111111111111111")
     with PLC() as comm:
-        print("111111111111")
+        # print("111111111111")
         ####### 无法连续运行重复获取变量表？ ##############
-        if rockwell=='':
+        print(rockwellip)
+        if rockwellip=='':
             print("请先选择设备IP地址")
         else:
-            # comm.IPAddress = rockwellip #全局变量
-            comm.IPAddress="192.168.100.200"
-            tags = comm.GetTagList() #输出是Response结构体类型
-            tagname=[]
-            tagtype=[]
-            head=["TagName","TagType"]
-            for t in tags.Value:
-                tagname.append(t.TagName)
-                tagtype.append(t.DataType)
-            taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
-            print(taglist)
-            tt = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S') #时间标识符
-            filepath=("D:/Taglist "+tt+".xlsx")
-            print(filepath)
-            ## 变量表文件暂存以备发送和自动读取
-            taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
-            ## 变量表文件下载
-            return send_file(filepath,as_attachment=True) #向前端发送文件 下载
-    # return send_from_directory(filepath,as_attachment=True) #
+            print(rockwellip)
+            comm.IPAddress = rockwellip #全局变量
+            # comm.IPAddress="192.168.100.200"
+            try:
+                tags = comm.GetTagList() #输出是Response结构体类型
+            except Exception as e:
+                print(e)
+                #缺一个return ，读取错误的错误处理
+            else:
+                tagname=[]
+                tagtype=[]
+                head=["TagName","TagType"]
+                for t in tags.Value:
+                    tagname.append(t.TagName)
+                    tagtype.append(t.DataType)
+                taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
+                print(taglist)
+                tt = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S') #时间标识符
+                filepath=("D:/Taglist "+tt+".xlsx")
+                print(filepath)
+                ## 变量表文件暂存以备发送和自动读取
+                taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
+                ## 变量表文件下载
+                return send_file(filepath,as_attachment=True) #向前端发送文件 下载 比send_from_directory简化
+                # return send_from_directory(filepath,as_attachment=True) #
 
 ######################## OPC UA ####################################
 @app.route("/opcua")

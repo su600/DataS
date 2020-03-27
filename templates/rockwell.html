@@ -71,11 +71,11 @@
 		
 				<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
 				<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
-					<!-- {% for dev in dev_list %}
-					<option value="{{dev[deviceip]}}">{{dev}}</option>
-					{% endfor %} -->
-					<option value="192.168.100.1">111111</option>
-					<option value="192.168.100.12">2222222</option>
+					{% for dev in dev_list %}
+					<option value="{{dev}}">{{dev}}</option>
+					{% endfor %}
+					<!-- <option value="192.168.100.1">111111</option>
+					<option value="192.168.100.12">2222222</option> -->
 				</select>
 				<button type="submit" class="btn btn-primary">开始连接</button>
 				<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
@@ -128,12 +128,11 @@
 		{% endif %}
 		{% endwith %}
 	</div>
-	</div>
-	</div>
+
 
 	<div class="container-fluid" style="margin: 10px;">
 		<label for="file">导入变量表</label>
-		<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.3批量读取的数量上限？之前是20个</p>
+		<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p>
 
 		<form method="POST" action="">
 			<div class="row">
@@ -325,10 +324,7 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
-
-
 	</div>
 
 	<div class="container-fluid" style="height:20px;">
