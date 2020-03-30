@@ -68,22 +68,22 @@
 
 	<div class="container-fluid" style="margin: 10px;">
 		<form class="form-inline" method="POST">
-		
-				<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
-				<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
-					{% for dev in dev_list %}
-					<option value="{{dev}}">{{dev}}</option>
-					{% endfor %}
-					<!-- <option value="192.168.100.1">111111</option>
+
+			<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
+			<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
+				{% for dev in dev_list %}
+				<option value="{{dev}}">{{dev}}</option>
+				{% endfor %}
+				<!-- <option value="192.168.100.1">111111</option>
 					<option value="192.168.100.12">2222222</option> -->
-				</select>
-				<button type="submit" class="btn btn-primary">开始连接</button>
-				<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
-				<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
-				<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-				<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
-				<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
-			
+			</select>
+			<button type="submit" class="btn btn-primary">开始连接</button>
+			<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
+			<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
+			<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+			<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
+			<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
+
 		</form>
 
 		{% with messages = get_flashed_messages(category_filter=["scanresult"]) %}
@@ -141,10 +141,13 @@
 						placeholder="" aria-describedby="fileHelpId">
 				</div>
 				<div class="col-md-6">
+				
 					<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
 						value="上传"></input>
 					<a button href="s7multiread" style="padding-left: 40px;padding-right: 40px;"
-						class=" btn btn-primary">批量读取</a>
+						class=" btn btn-primary">批量读取</a>	
+						<!-- 增加一个按钮 区分不同表单 -->
+					<input type="text" class="" name="" id="" style="visibility: hidden;" aria-describedby="helpId" placeholder="">
 				</div>
 			</div>
 		</form>

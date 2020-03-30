@@ -401,11 +401,12 @@ def rockwellscan2():
                 flash(ss, "scanresult")  # 连接完成
                 # print(rockwellip)
 
-            if (forminfo) == {}:  # 上传变量表
+            if len(forminfo)==2:  # 上传变量表 #
+                # print("22222222222")
                 try:
                     f = request.files.get('file')  ## 获取文件
                     print(f.filename)
-                    f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+                    f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
                     rockwellread(f) # 变量表读取并读取变量函数
                 except Exception as e:
                     print(e)
@@ -414,11 +415,11 @@ def rockwellscan2():
                     ## 保存测试
                     flash("变量表上传成功", "uploadstatus")
 
-            if len(forminfo) == 2:  # 变量地址
-                print(forminfo)
-                data = s7read(plc, forminfo["iqm"], forminfo["address"])
-                print(data)
-                # return data
+            # if len(forminfo) == 2:  # 变量地址
+            #     print(forminfo)
+            #     data = s7read(plc, forminfo["iqm"], forminfo["address"])
+            #     print(data)
+            #     # return data
 
             elif len(forminfo) == 4:  # influxdb连接信息
                 # print("11111111111")
@@ -437,10 +438,11 @@ def rockwellscan2():
 
 @app.route("/rockwell_get_all_vars")
 @is_login
+#### 获取所有变量 并下载 # 待办，剔除程序名称，编写变量读取函数，连续获取变量表 时间不变bug
 def rockwell_get_all_vars(): #传递设备ip
     # print("111111111111111")
     with PLC() as comm:
-        # print("111111111111")
+        print("111111111111")
         ####### 无法连续运行重复获取变量表？ ##############
         print(rockwellip)
         if rockwellip=='':
@@ -449,8 +451,10 @@ def rockwell_get_all_vars(): #传递设备ip
             print(rockwellip)
             comm.IPAddress = rockwellip #全局变量
             # comm.IPAddress="192.168.100.200"
+            print("2222222222")
             try:
-                tags = comm.GetTagList() #输出是Response结构体类型
+                tags = comm.GetTagList() #输出是Response结构体类型需要解析
+                # comm.Close()
             except Exception as e:
                 print(e)
                 #缺一个return ，读取错误的错误处理
@@ -461,23 +465,32 @@ def rockwell_get_all_vars(): #传递设备ip
                 for t in tags.Value:
                     tagname.append(t.TagName)
                     tagtype.append(t.DataType)
-                taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype})
-                print(taglist)
+                taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype}) #采用Pandas格式化
+                # print(taglist)
                 tt = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S') #时间标识符
                 filepath=("D:/Taglist "+tt+".xlsx")
                 print(filepath)
                 ## 变量表文件暂存以备发送和自动读取
-                taglist.to_excel(filepath, encoding='utf-8', index=False, header=head)
+                taglist.to_excel(filepath, encoding='utf-8', index=False, header=head) #写入excel
                 ## 变量表文件下载
                 return send_file(filepath,as_attachment=True) #向前端发送文件 下载 比send_from_directory简化
                 # return send_from_directory(filepath,as_attachment=True) #
 
-######################## OPC UA ####################################
+######################## OPC UA Client 用于写入InfluxDB ####################################
 @app.route("/opcua")
 @is_login
 def opcua():
     # return render_template("b.html")
     return render_template("opcua.html")
+
+######################## OPC UA Server 用于转换为OPC UA格式数据
+# basic server仅支持UA expert Prosys还不支持 ########################
+@app.route("/opcuaserver")
+@is_login
+def opcuaserver():
+    # return render_template("b.html")
+    return render_template("opcua.html")
+
 
 ######################## InfluxDB 共用函数 #############################
 @app.route("/influxDB",methods=("POST","GET"))
