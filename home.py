@@ -199,6 +199,7 @@ def setting():
     return render_template("setting.html")
 
 ###################### 西门子 #######################################
+
 @app.route("/siemens",methods=("GET","POST"))
 @is_login
 def siemens():
@@ -283,17 +284,7 @@ def s7disconnect():
 @is_login
 def s7read(plc,iqm,address):
 
-    # t = (address[0])
-
-    # if request.methods=="POST":
-    #     aa=request.form.to_dict
-    #     print(aa)
-    #     iqm=aa[("iqm")]
-    #     address=aa[("address")]
-    #     t=iqm
-    #     b = int((address.split(".")[0][1:]))
-    #     c = int((address.split(".")[1]))
-    tt=""
+    ss=""  # 标识I/Q/M
     t=areas[iqm]
     # print(address)
     if address=='':
@@ -301,29 +292,32 @@ def s7read(plc,iqm,address):
     else:
         address2=(float(address))
     if t ==129:
-        tt = "I "
+        ss = "I "
     if t == 130:
-        tt = "Q "
+        ss = "Q "
     if t == 131:
-        tt = "M "
+        ss = "M "
 
     b = (int(address2))
     c = (int((address2-b)*10))
 
     print(t,b,c)
     try:
-        variable = tt + address
+        variable = ss + address
         print(variable)
         timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         result=plc.read_area(t,0,b,8)  ## 变量类型，0，地址起始，固定8位
         data = get_bool(result, 0, c)  ## 地址偏移值
+        ttt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     except Exception as e:
         print(e)
     else:
-        flash(data, "value")
-        flash(timenow, "time")
-        flash(variable,"variable")
-        return data
+        # flash(data, "value")
+        # flash(timenow, "time")
+        # flash(variable,"variable")
+        siemensdata = dict(zip(variable, data))
+        print(siemensdata)
+    return render_template("rockwell.html", siemensdata=siemensdata, ttt=ttt)
 
     # except Exception as e:
     #     print(e)

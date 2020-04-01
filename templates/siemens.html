@@ -207,42 +207,44 @@
 
 	<div class="container-fluid" style="margin-top:20px;" id="数据结果">
 		<div class="row">
-			<div class="col-lg-6" >
+			<div class="col-lg-6">
 				<h4>数据读取结果</h4>
-				<table class="table table-responsive table-hover " style="height:300px;overflow-y: auto;background: rgb(237, 238, 240);">
+				<table class="table table-responsive table-hover"
+					style="background: rgb(237, 238, 240);height: 300px;overflow-y: auto;" id="ii">
 					<thead class="thead-dark">
 						<tr>
-							<th>Time</th>
-							<th>Variable</th>
-							<th>Value</th>
+							<th style="width: 240px;">Time</th>
+							<th style="width: 300px;">Tagname</th>
+							<th style="width: 100px;">Value</th>
 						</tr>
 					</thead>
 					<tbody>
+						{% for data in siemensdata %}
 						<tr>
-							<td> {% with messages = get_flashed_messages(category_filter=["time"]) %}
-								{% if messages %}
-								{% for message in messages %}
-								{{message}}
-								{% endfor %}
-								{% endif %}
-								{% endwith %}
-							</td>
-							<td>{% with messages = get_flashed_messages(category_filter=["variable"]) %}
-								{% if messages %}
-								{% for message in messages %}
-								{{message}}
-								{% endfor %}
-								{% endif %}
-								{% endwith %} </td>
-							<td>{% with messages = get_flashed_messages(category_filter=["value"]) %}
-								{% if messages %}
-								{% for message in messages %}
-								{{message}}
-								{% endfor %}
-								{% endif %}
-								{% endwith %} </td>
+							<td>{{ttt}}</td>
+							<td>{{data}}</td>
+							<td>{{siemensdata[data]}}</td>
 						</tr>
-						<!-- <tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<!-- </div> -->
+			</div>
+			<!-- Js设置 变量True False颜色不同 -->
+			<script type="text/javascript">
+				var table1 = document.getElementById("ii"); //table id
+				var len = table1.tBodies[0].rows.length;
+
+				for (i = 0; i < len; i++) {
+					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+						table1.tBodies[0].rows[i].cells[2].style.color = "red";
+					}
+					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+						table1.tBodies[0].rows[i].cells[2].style.color = "green";
+					}
+				}
+			</script>
+			<!-- <tr>
 				<td>Mary</td>
 				<td>Moe</td>
 				<td>mary@example.com</td>
@@ -252,43 +254,44 @@
 				<td>Dooley</td>
 				<td>july@example.com</td>
 			</tr> -->
-					</tbody>
-				</table>
-			</div>
-
-
-			</iframe>
-
-			<div class="col-lg-6">
-				<h4>
-					数据库列表
-				</h4>
-				<table class="table table-responsive table-hover " style="height:300px;overflow-y: auto; background: rgb(237, 238, 240);color: white;">
-					<thead class="thead-dark">
-						<tr>
-							<th>Variable</th>
-						</tr>
-					</thead>
-					<tbody>
-						<td>
-							aaaa
-						</td>
-						<td>
-							11111
-						</td>
-					<tbody>
-						<td>
-							bbbb
-						</td>
-						<td>
-							2222
-						</td>
-					</tbody>
-
-					</tbody>
-				</table>
-			</div>
+			</tbody>
+			</table>
 		</div>
+
+
+		</iframe>
+
+		<div class="col-lg-6">
+			<h4>
+				数据库列表
+			</h4>
+			<table class="table table-responsive table-hover "
+				style="height:300px;overflow-y: auto; background: rgb(237, 238, 240);color: white;">
+				<thead class="thead-dark">
+					<tr>
+						<th>Variable</th>
+					</tr>
+				</thead>
+				<tbody>
+					<td>
+						aaaa
+					</td>
+					<td>
+						11111
+					</td>
+				<tbody>
+					<td>
+						bbbb
+					</td>
+					<td>
+						2222
+					</td>
+				</tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
 	</div>
 
 	<div class="container-fluid " style="color: white;" id="influxdbsetting">
