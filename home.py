@@ -36,6 +36,15 @@ class Timer(object):
         self.TT = get_bit(bits, 30)
         self.DN = get_bit(bits, 29)
 
+class Motion(object): # Su 仿照Timer类型添加Motion类型 ToDo
+
+    def __init__(self, data):
+        self.PRE = unpack_from('<i', data, 6)[0]
+        self.ACC = unpack_from('<i', data, 10)[0]
+        bits = unpack_from('<i', data, 2)[0]
+        self.EN = get_bit(bits, 31)
+        self.TT = get_bit(bits, 30)
+        self.DN = get_bit(bits, 29)
 
 def get_bit(value, bit_number):
     '''
@@ -333,27 +342,47 @@ def beckoff():
     return render_template("beckoff.html")
 
 ######################### 罗克韦尔 ##############################
+global rockwellip,rockwell_device_list,taglist
+rockwellip=''
+
 @app.route("/rockwell",methods=["POST","GET"])
 @is_login
 def rockwell():
     ## Rockwell AB PLC # #108厂房设备
     return render_template("rockwell.html")
 
-def rockwellread(taglist):
+@app.route("/rockwellread")
+@is_login
+def rockwellread():    #'读取函数'
+    print("readlist")
+    print(taglist)
     with PLC() as comm:
-        comm.Read(taglist)
-    pass
-    '读取函数'
+        tagname=[]
+        tagvalue=[]
+        comm.IPAddress=rockwellip
+        aa=comm.Read(taglist)
+        ttt=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        print(aa)
+        for a in aa:
+            tagname.append(a.TagName)
+            tagvalue.append(a.Value)
+        # 输出到前端页面
+        rockwelldata=dict(zip(tagname,tagvalue))
+        print(rockwelldata)
+        # redirect("/rockwellscan2")
+    return render_template("rockwell.html",rockwelldata=rockwelldata,ttt=ttt)
+    # return render_template("rockwell.html")
 
-def rockwellreadexcel(f):
-    pass
-    '''
-    用pd、np读取excel文件，然后调用读取函数
-    '''
-    # rockwellread(taglist)
-
-global rockwellip,rockwell_device_list
-rockwellip=''
+def rockwellreadexcel(file):
+    print("readexcel"+file.filename)
+    # data = pd.DataFrame(pd.read_excel(file))
+    data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
+    data2=data2.dropna() ##剔除异常的nan
+    ##剔除程序名和未知类型
+    data2 = data2.to_numpy().tolist()  # 转数组 转列表
+    global taglist
+    taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
+    print(taglist)
 
 @app.route("/rockwellscan",methods=["POST","GET"])
 @is_login
@@ -386,7 +415,7 @@ def rockwellscan2():
             # forminfo=request.form.get('devicelist') # 获取到的value是str字符串
             # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
             print(forminfo)
-            print(type(forminfo))
+            # print(type(forminfo))
             # aa=type(forminfo)
 
             ######## 每次“开始连接”实际只是获取选择的设备ip并写入全局变量
@@ -401,18 +430,18 @@ def rockwellscan2():
                 flash(ss, "scanresult")  # 连接完成
                 # print(rockwellip)
 
-            if len(forminfo)==2:  # 上传变量表 #
-                # print("22222222222")
+            # if (forminfo)=={}:  # 上传变量表 #
+            if len(forminfo)==2: #### 是excel就调用readexcel
+                print("22222222222")
                 try:
-                    f = request.files.get('file')  ## 获取文件
-                    print(f.filename)
-                    f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
-                    rockwellread(f) # 变量表读取并读取变量函数
+                    file = request.files.get('file')
+                    file.save('D:/' + secure_filename(file.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
+                    rockwellreadexcel(file)
                 except Exception as e:
                     print(e)
                     flash(e, "uploadstatus")
                 else:
-                    ## 保存测试
+                    # 保存测试
                     flash("变量表上传成功", "uploadstatus")
 
             # if len(forminfo) == 2:  # 变量地址
@@ -430,7 +459,10 @@ def rockwellscan2():
                 cycle = forminfo["cycle"]
                 influxDB(influxdbip, token, measurement, cycle)
             # flash(forminfo,"connect1")
-            # return redirect("#")
+        # return redirect("#")
+        # flash(rockwell_device_list,"dev_list") # flash只能传递字符串
+        # return jsonify()
+        # return redirect(url_for("rockwell"))
         return render_template("rockwell.html",dev_list=rockwell_device_list)#设备扫描结果显示到前端页面下拉列表
     ## 定向页面逻辑，此处要在rockwellscan中处理POST请求
     ## 前端调用后台程序 href=“xx” 通过路由调用，还有没有别的方法 采用url_for()跳转 参考登录函数处理方法
@@ -439,11 +471,11 @@ def rockwellscan2():
 @app.route("/rockwell_get_all_vars")
 @is_login
 #### 获取所有变量 并下载 # 待办，剔除程序名称，编写变量读取函数，连续获取变量表 时间不变bug
-def rockwell_get_all_vars(): #传递设备ip
+def rockwell_get_all_vars(): #
     # print("111111111111111")
     with PLC() as comm:
-        print("111111111111")
-        ####### 无法连续运行重复获取变量表？ ##############
+        # print("111111111111")
+        ####### 无法连续运行重复获取变量表？ 连续点击不进入循环 直接下载附件？？ 如果要刷新变量表需要再次“开始连接”##############
         print(rockwellip)
         if rockwellip=='':
             print("请先选择设备IP地址")
@@ -454,7 +486,7 @@ def rockwell_get_all_vars(): #传递设备ip
             print("2222222222")
             try:
                 tags = comm.GetTagList() #输出是Response结构体类型需要解析
-                # comm.Close()
+                comm.Close()
             except Exception as e:
                 print(e)
                 #缺一个return ，读取错误的错误处理

@@ -4,5 +4,9 @@ print(get)
 
 a=[1,2,3,4]
 b=["a","b","c","d"]
-c=[a,b]
-print(c)
+c=dict(zip(a,b))
+print((c))
+
+for a in c:
+    print(a,c[a])
+    # print(c.items())
