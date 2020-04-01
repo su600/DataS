@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="fix global rockwellip,add &quot;rockwellscan2&quot;">
-      <change afterPath="$PROJECT_DIR$/ui.png" afterDir="false" />
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="fix excel-read/tabledisplay,iOS homescreen App">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/rockwell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rockwell.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/setting.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/setting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/excelsubmit.py" beforeDir="false" afterPath="$PROJECT_DIR$/excelsubmit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/qq.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/qq.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/siemens.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/siemens.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,27 +86,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="05_read_multiple_tags" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../车间物联网数据采集/AB PLC/pylogix0.6.2/examples" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../车间物联网数据采集/AB PLC/pylogix0.6.2/examples/05_read_multiple_tags.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="excelsubmit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -155,6 +128,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../flask-pwa/app/controller" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../flask-pwa/app/controller/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="qq" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -178,18 +172,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.home" />
-      <item itemvalue="Python.05_read_multiple_tags" />
       <item itemvalue="Python.02_read_simple" />
       <item itemvalue="Python.excelsubmit" />
       <item itemvalue="Python.qq" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.home" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.qq" />
         <item itemvalue="Python.excelsubmit" />
         <item itemvalue="Python.02_read_simple" />
-        <item itemvalue="Python.05_read_multiple_tags" />
       </list>
     </recent_temporary>
   </component>
@@ -278,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585297891729</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix excel-read/tabledisplay,iOS homescreen App">
+      <created>1585706094971</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1585706094972</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -314,16 +315,17 @@
     <MESSAGE value="update home.html,add kuka/UR,dir for test" />
     <MESSAGE value="get rockwell selected ip" />
     <MESSAGE value="fix global rockwellip,add &quot;rockwellscan2&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix global rockwellip,add &quot;rockwellscan2&quot;" />
+    <MESSAGE value="fix excel-read/tabledisplay,iOS homescreen App" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix excel-read/tabledisplay,iOS homescreen App" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2265" y="-719" width="609" height="764" key="CommitChangelistDialog2" timestamp="1585706077607">
+    <state x="2265" y="-719" width="609" height="764" key="CommitChangelistDialog2" timestamp="1585706093614">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706077607" />
+    <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706093614" />
     <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1585212700201" />
     <state x="251" y="-904" width="989" height="504" key="DiffContextDialog" timestamp="1584694860944">
       <screen x="0" y="-1080" width="1549" height="840" />
@@ -333,44 +335,44 @@
       <screen x="1920" y="0" width="1549" height="840" />
     </state>
     <state x="2508" y="158" key="FileChooserDialogImpl/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424245581" />
-    <state width="1326" height="170" key="GridCell.Tab.0.bottom" timestamp="1585706077646">
+    <state width="1326" height="170" key="GridCell.Tab.0.bottom" timestamp="1585715463629">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
     <state width="1326" height="170" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585702788492" />
-    <state width="1326" height="170" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706077646" />
+    <state width="1326" height="170" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585715463629" />
     <state width="1331" height="213" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1585534361374" />
-    <state width="1326" height="170" key="GridCell.Tab.0.center" timestamp="1585706077646">
+    <state width="1326" height="170" key="GridCell.Tab.0.center" timestamp="1585715463629">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.center/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
     <state width="1326" height="170" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585702788491" />
-    <state width="1326" height="170" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706077646" />
+    <state width="1326" height="170" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585715463629" />
     <state width="1331" height="213" key="GridCell.Tab.0.center/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1585534361374" />
-    <state width="1326" height="170" key="GridCell.Tab.0.left" timestamp="1585706077646">
+    <state width="1326" height="170" key="GridCell.Tab.0.left" timestamp="1585715463629">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315647" />
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.left/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
     <state width="1326" height="170" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585702788491" />
-    <state width="1326" height="170" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706077646" />
+    <state width="1326" height="170" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585715463629" />
     <state width="1331" height="213" key="GridCell.Tab.0.left/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1585534361373" />
-    <state width="1326" height="170" key="GridCell.Tab.0.right" timestamp="1585706077646">
+    <state width="1326" height="170" key="GridCell.Tab.0.right" timestamp="1585715463629">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.right/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
     <state width="1326" height="170" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585702788491" />
-    <state width="1326" height="170" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706077646" />
+    <state width="1326" height="170" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585715463629" />
     <state width="1331" height="213" key="GridCell.Tab.0.right/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
     <state width="1528" height="171" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1585534361374" />
     <state width="1326" height="232" key="GridCell.Tab.1.bottom" timestamp="1585641761383">
@@ -395,11 +397,12 @@
     <state x="2098" y="-455" key="SettingsEditor/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584585010543" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424238393" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1584204338230" />
-    <state x="367" y="-927" key="Vcs.Push.Dialog.v2" timestamp="1585297894034">
-      <screen x="0" y="-1080" width="1549" height="840" />
+    <state x="2287" y="-581" key="Vcs.Push.Dialog.v2" timestamp="1585706098575">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
+    <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585706098575" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1585212707919" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585059790685">
       <screen x="0" y="0" width="1549" height="840" />
