@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>test</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <table id="ii" class="table table-responsive table-hover"
+            style="background: rgb(237, 238, 240);overflow-y: auto;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Time</th>
+                    <th>Tagname</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>False</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<!-- <script type="text/javascript">
+	var id = document.getElementById('ii').innerHTML;
+				var reg = new RegExp('(False)');
+				var reg2= new RegExp('(True)');
+                
+				id = id.replace(reg, '<font color="red">$1</font>');
+				id = id.replace(reg2, '<font color="green">$1</font>');
+				document.getElementById('ii').innerHTML = id;
+  
+    </script> -->
+
+<script type="text/javascript">
+    var table1 = document.getElementById("ii");
+    var len = table1.tBodies[0].rows.length;
+
+    for (i = 0; i < len; i++) {
+        if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+            table1.tBodies[0].rows[i].cells[2].style.color = "red";
+        }
+        if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+            table1.tBodies[0].rows[i].cells[2].style.color = "green";
+        }
+    }
+</script>
+
+</html>

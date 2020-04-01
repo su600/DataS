@@ -204,13 +204,17 @@
 
 			<!-- Js设置 变量True False颜色不同 -->
 			<script type="text/javascript">
-				//记得放到最后，因为必须等表格呈现之后才可以改变样式颜色
-				var id = document.getElementById('ii').innerHTML;
-				var reg = new RegExp('(False)');
-				var reg2= new RegExp('(True)');
-				id = id.replace(reg, '<font color="red">$1</font>');
-				id = id.replace(reg2, '<font color="green">$1</font>');
-				document.getElementById('ii').innerHTML = id;
+				var table1 = document.getElementById("ii");
+				var len = table1.tBodies[0].rows.length;
+			
+				for (i = 0; i < len; i++) {
+					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+						table1.tBodies[0].rows[i].cells[2].style.color = "red";
+					}
+					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+						table1.tBodies[0].rows[i].cells[2].style.color = "green";
+					}
+				}
 			</script>
 
 			<div class="col-md-6">

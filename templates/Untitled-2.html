@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <table id="tb1" border="1px solid red"  width="500px" height="50px" align="center" >
+        <thead>
+            <tr>
+                <td>序号</td>
+                <td>姓名</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>显示器</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>鼠标</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>键盘</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>鼠标垫</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>视屏线</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>电脑桌</td>
+            </tr>
+ 
+        </tbody>
+    </table>
+    </form>
+    <script>window.onload = function () {
+    var table1 = document.getElementById("tb1");
+    var len = table1.tBodies[0].rows.length;
+    for (i = 0; i < len; i++) {
+        if (i % 2 == 0) {
+            table1.tBodies[0].rows[i].style.color = "silver";
+        } else {
+            table1.tBodies[0].rows[i].style.color = "yellow";
+        }
+    }
+}       
+    </script>
+</body>
+</html>
