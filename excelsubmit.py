@@ -29,11 +29,9 @@ def upload_file():
     return render_template("ee.html")
 
 
-@app.route("/export", methods=['GET'])
+@app.route("/base", methods=['GET'])
 def export_records():
-    excel.make_response_from_array()
-    return excel.make_response_from_array([[1, 2], [3, 4]], "xlsx",
-                                          file_name="export_data")
+    return render_template("exc.html")
 
 
 if __name__ == "__main__":

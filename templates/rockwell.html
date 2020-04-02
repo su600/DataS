@@ -1,354 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-	<link href="/static/favicon.ico" rel="SHORTCUT ICON" />
-	<link rel="apple-touch-icon" href="static/ico.jpg">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block title %}AB PLC{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
 
-	<!-- 苹果是否启用全屏模式 -->
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<!-- 安卓 主屏幕应用全屏 -->
-	<meta name="mobile-web-app-capable" content="yes">　　
-	<!-- 全屏时状态 颜色设置 -->
-	<meta name="apple-mobile-web-status-bar-style" content="black">
+{% block navlist %}
+<a class="btn btn-dark" href="/setting">Back to Setting</a>
+{% endblock navlist %}
 
-	<title>罗克韦尔数据采集</title>
-
-	<meta name="description" content="Source code generated using layoutit.com">
-	<meta name="Su600" content="Su">
-
-	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/static/css/style.css" rel="stylesheet">
-	<style>
-		body {
-			position: relative;
-		}
-	</style>
-</head>
-
-<body>
-
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top ">
-		<!-- Brand -->
-		<a class="navbar-brand" href="#">
-			<img src="static/avic.png" width="35px">
-		</a>
-		<a class="navbar-brand" href="/#">Home</a>
-
-		<!-- Toggler/collapsibe Button -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
-				<li class="nav-item ">
-					<a class="nav-link" href="/setting">Back to Setting</a>
-				</li>
-				<li>
-					<a class="btn btn-dark" href="/logout">Logout</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-
-	<div class="container-fluid" style="padding-top: 80px;">
-		<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
-			<div class="row">
-				<div class="col-md-5" style="text-align: justify;">
-					<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
-				</div>
-				<div class="col-md-6">
-					<strong>
-						基于PyLogix扫描AB PLC，获取变量表，读取变量表内容并写入InfluxDB数据库 </br>
-						支持EtherNet/IP转换为OPC UA
-					</strong>
-				</div>
+{% block content %}
+<div class="container-fluid" style="">
+	<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
+		<div class="row">
+			<div class="col-md-5" style="text-align: justify;">
+				<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
+			</div>
+			<div class="col-md-6">
+				<strong>
+					基于PyLogix扫描AB PLC，获取变量表，读取变量表内容并写入InfluxDB数据库 </br>
+					支持EtherNet/IP转换为OPC UA
+				</strong>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div class="container-fluid" style="">
-		<form class="form-inline" method="POST">
+<div class="container-fluid" style="">
+	<form class="form-inline" method="POST">
 
-			<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
-			<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
-				{% for dev in dev_list %}
-				<option value="{{dev}}">{{dev}}</option>
-				{% endfor %}
-				<!-- <option value="192.168.100.1">111111</option>
+		<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
+		<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
+			{% for dev in dev_list %}
+			<option value="{{dev}}">{{dev}}</option>
+			{% endfor %}
+			<!-- <option value="192.168.100.1">111111</option>
 					<option value="192.168.100.12">2222222</option> -->
-			</select>
-			<button type="submit" class="btn btn-primary">开始连接</button>
-			<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
-			<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
-			<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-			<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
-			<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
+		</select>
+		<button type="submit" class="btn btn-primary">开始连接</button>
+		<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
+		<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
+		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+		<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
+		<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
 
-		</form>
+	</form>
 
-		{% with messages = get_flashed_messages(category_filter=["scanresult"]) %}
-		{% if messages %}
-		{% for message in messages %}
-		<div class="alert alert-success alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				<span class="sr-only">Close</span>
-			</button>
-			<strong>{{message}}</strong>
-		</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
-
-		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
-		{% if messages %}
-		{% for message in messages %}
-		<div class="alert alert-success alert-dismissible fade show form-control"
-			style="width: 50%;margin:0px 0px 0px 10px;" role="alert">
-			<strong>{{message}}</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
-
-		{% with messages = get_flashed_messages(category_filter=["connect0"]) %}
-		{% if messages %}
-		{% for message in messages %}
-		<div class="alert alert-danger alert-dismissible fade show form-control"
-			style="width: 50%;margin:0px 0px 0px 10px;" role="alert">
-			<strong>{{message}}</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
+	{% with messages = get_flashed_messages(category_filter=["scanresult"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-success alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<strong>{{message}}</strong>
 	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
 
-
-	<div class="container-fluid" style="">
-		<label for="file">导入变量表</label>
-		<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p>
-
-		<form method="POST" action="" enctype=multipart/form-data>
-			<div class="row">
-				<div class="col-md-4">
-					<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
-						placeholder="" aria-describedby="fileHelpId">
-				</div>
-				<div class="col-md-6">
-
-					<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
-						value="上传"></input>
-					<a button href="rockwellread" style="padding-left: 40px;padding-right: 40px;"
-						class=" btn btn-primary">批量读取</a>
-					<!--  增加2个按钮 区分不同表单  file不算长度 -->
-					<input type="text" class="" name="len1" id="" style="visibility: hidden;" aria-describedby="helpId"
-						placeholder="">
-					<input type="text" class="" name="len2" id="" style="visibility: hidden;" aria-describedby="helpId"
-						placeholder="">
-				</div>
-			</div>
-		</form>
-		{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
-		{% if messages %}
-		{% for message in messages %}
-		<div class="alert alert-primary alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				<span class="sr-only">Close</span>
-			</button>
-			<strong>{{message}}</strong>
-		</div>
-
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
+	{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-success alert-dismissible fade show form-control"
+		style="width: 50%;margin:0px 0px 0px 10px;" role="alert">
+		<strong>{{message}}</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+
+	{% with messages = get_flashed_messages(category_filter=["connect0"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-danger alert-dismissible fade show form-control" style="width: 50%;margin:0px 0px 0px 10px;"
+		role="alert">
+		<strong>{{message}}</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+</div>
 
 
-	<div class="container-fluid" style="margin:10px;" id="数据结果">
+<div class="container-fluid" style="">
+	<label for="file">导入变量表</label>
+	<p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p>
+
+	<form method="POST" action="" enctype=multipart/form-data>
 		<div class="row">
-			<div class="col-md-6">
-				<h4>数据读取结果</h4>
-				<!-- <div class="card border-second"> -->
-				<table class="table table-responsive table-hover"
-					style="background: rgb(237, 238, 240);height: 300px;overflow-y: auto;" id="ii">
-					<thead class="thead-dark">
-						<tr>
-							<th style="width: 240px;">Time</th>
-							<th style="width: 300px;">Tagname</th>
-							<th style="width: 100px;">Value</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for data in rockwelldata %}
-						<tr>
-							<td>{{ttt}}</td>
-							<td>{{data}}</td>
-							<td>{{rockwelldata[data]}}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-				<!-- </div> -->
+			<div class="col-md-4">
+				<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
+					placeholder="" aria-describedby="fileHelpId">
 			</div>
+			<div class="col-md-6">
 
-			<!-- Js设置 变量True False颜色不同 -->
-			<script type="text/javascript">
-				var table1 = document.getElementById("ii");
-				var len = table1.tBodies[0].rows.length;
-			
-				for (i = 0; i < len; i++) {
-					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
-						table1.tBodies[0].rows[i].cells[2].style.color = "red";
-					}
-					if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
-						table1.tBodies[0].rows[i].cells[2].style.color = "green";
-					}
+				<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+					value="上传"></input>
+				<a button href="rockwellread" style="padding-left: 40px;padding-right: 40px;"
+					class=" btn btn-primary">批量读取</a>
+				<!--  增加2个按钮 区分不同表单  file不算长度 -->
+				<input type="text" class="" name="len1" id="" style="visibility: hidden;" aria-describedby="helpId"
+					placeholder="">
+				<input type="text" class="" name="len2" id="" style="visibility: hidden;" aria-describedby="helpId"
+					placeholder="">
+			</div>
+		</div>
+	</form>
+	{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-primary alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<strong>{{message}}</strong>
+	</div>
+
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+</div>
+
+
+<div class="container-fluid" style="margin:10px;" id="数据结果">
+	<div class="row">
+		<div class="col-md-6">
+			<h4>数据读取结果</h4>
+			<!-- <div class="card border-second"> -->
+			<table class="table table-responsive table-hover"
+				style="background: rgb(237, 238, 240);height: 300px;overflow-y: auto;" id="ii">
+				<thead class="thead-dark">
+					<tr>
+						<th style="width: 240px;">Time</th>
+						<th style="width: 300px;">Tagname</th>
+						<th style="width: 100px;">Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for data in rockwelldata %}
+					<tr>
+						<td>{{ttt}}</td>
+						<td>{{data}}</td>
+						<td>{{rockwelldata[data]}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<!-- </div> -->
+		</div>
+
+		<!-- Js设置 变量True False颜色不同 -->
+		<script type="text/javascript">
+			var table1 = document.getElementById("ii");
+			var len = table1.tBodies[0].rows.length;
+
+			for (i = 0; i < len; i++) {
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "red";
 				}
-			</script>
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "green";
+				}
+			}
+		</script>
 
-			<div class="col-md-6">
-				<h4>
-					批量读取列表
-				</h4>
-				<table class="table table-responsive  table-hover "
-					style="height: 300px;overflow-y: auto;background: rgb(237, 238, 240);color: rgb(0, 0, 0);">
-					<thead class="thead-dark">
-						<tr>
-							<th style="width:700px;">Variable</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for data in rockwelldata %}
-						<tr>
-							<td>{{data}}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+		<div class="col-md-6">
+			<h4>
+				批量读取列表
+			</h4>
+			<table class="table table-responsive  table-hover "
+				style="height: 300px;overflow-y: auto;background: rgb(237, 238, 240);color: rgb(0, 0, 0);">
+				<thead class="thead-dark">
+					<tr>
+						<th style="width:700px;">Variable</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for data in rockwelldata %}
+					<tr>
+						<td>{{data}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
-
-	<div class="container-fluid " style="color: white;" id="influxdbsetting">
-		<div class="container-fluid" style="margin:0px;padding:30px ; background:rgb(2, 70, 148);">
-			<form class="form-inline " style="padding: 20px" method="POST">
-				<label for="influxdb">
-					<h5>InfluxDB地址：</h5>
-				</label>
-				<input type="text" name="influxdb" id="influxdb" class="form-control" placeholder=""
-					aria-describedby="InfluxDB">
-				<label for="token">
-					<h5>Token：</h5>
-				</label>
-				<input type="password" name="token" id="token" class="form-control" placeholder=""
-					aria-describedby="InfluxDB">
-				<label for="measurement">
-					<h5>Measurement：</h5>
-				</label>
-				<input type="text" name="measurement" id="measurement" class="form-control" placeholder="设备名称"
-					aria-describedby="InfluxDB">
-				<label for="cycle">
-					<h5>采集周期（ms）</h5>
-				</label>
-				<input type="text" name="cycle" id="cycle" class="form-control" placeholder="100">
-
-				<button class="btn btn-primary form-control" href="#influxdbsetting"
-					style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb"> 开始写入 </button>
-				<!-- 开始写入后应禁用写入按钮 在页面上方显示运行状态 根据表单字典长度区分表单提交按钮-->
-				<a class="btn btn-danger form-control" href="/influxDB" style="padding-block: 30px; margin: 10px; "
-					type="button" role="button"> 停止写入 </a>
-				{% with messages = get_flashed_messages(category_filter=["influx"]) %}
-				{% if messages %}
-				{% for message in messages %}
-				{% if message%}
-				<p><span class="badge badge-success">开始写入</span></p>
-				{% endif %}
-				{% endfor %}
-				{% endif %}
-				{% endwith %}
-				<!-- <a name="" id="" class="btn btn-primary" href="#" role="button"></a> -->
-			</form>
-		</div>
-		<!-- <div class="container-fluid" style="margin:0px ; background:rgb(2, 70, 148);" >
-	<div class="form-inline" style="padding:20px" method="POST">
-		<label for="field"><h6>Field：</h6></label>
-			<input type="text"  id="field" class="form-control" placeholder="默认即为变量名" aria-describedby="InfluxDB">
-			<label for="tag"><h6>Tag：</h6></label>
-			<input type="text"  id="tag" class="form-control" placeholder="" aria-describedby="InfluxDB">
-			
-	</div>
-</div> -->
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6">
-				<table class="table">
-					<thead>
-						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td scope="row"></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td scope="row"></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<div class="container-fluid" style="height:20px;">
-		<!--<h2>混合色彩进度条</h2>-->
-		<!--<p>进度条可以设置多种颜色:</p> -->
-		<div class="progress" style="height:10px; ">
-			<div class="progress-bar" style="width:33.33%">
-				<!--Free Space-->
-			</div>
-			<div class="progress-bar bg-warning" style="width:33.33%">
-				<!--Warning-->
-			</div>
-			<div class="progress-bar bg-danger" style="width:33.33%">
-				<!--Danger-->
-			</div>
-		</div>
-	</div>
-
-	<div class="container-fluid" style="height:50px;">
-		<footer style="text-align:center ">
-			<p style="padding-top:25px">
-				<!--<kbd>-->
-				Copyright © 2020 Su600, Inc.
-				<!--</kbd>-->
-			</p>
-		</footer>
-	</div>
-
-</body>
-
-<script src="/static/js/jquery.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/scripts.js"></script>
-
-
-</html>
+</div>
+{% endblock %}
