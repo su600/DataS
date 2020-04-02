@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<script
+	type="module"
+	src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwainstall"
+  ></script>
+  <pwa-install></pwa-install>
+  
+<head>
+	<!-- 用模板 所有页面继承 -->
+	<link href="/static/favicon.ico" rel="SHORTCUT ICON" />
+	<link rel="apple-touch-icon" href="/static/ico.jpg">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 苹果是否启用全屏模式 -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- 安卓 主屏幕应用全屏 -->
+	<meta name="mobile-web-app-capable" content="yes">　　
+	<!-- 全屏时状态 颜色设置 -->
+	<meta name="apple-mobile-web-status-bar-style" content="black">
+	
+	<link rel="apple-touch-startup-image" sizes="2048x1496" href="icon-2048x1496.png"
+		media="screen and (min-device-width: 1025px) and (max-device-width: 2048px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio: 2)">
+	<link rel="apple-touch-startup-image" sizes="1536x2008" href="icon-1536x2008.png"
+		media="screen and (min-device-width: 1025px) and (max-device-width: 2048px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio: 2)">
+	<link rel="apple-touch-startup-image" sizes="1024x748" href="icon-1024x748.png"
+		media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+	<link rel="apple-touch-startup-image" sizes="768x1004" href="/static/ico.jpg"
+		media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+	<link rel="apple-touch-startup-image" sizes="640x920" href="/static/ico.jpg"
+		media="screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)">
+	<link rel="apple-touch-startup-image" sizes="320x460" href="icon-320x460.png"
+		media="screen and (max-device-width: 320)">
+
+	<title>数据采集系统</title>
+
+	<meta name="description" content="Source code generated using layoutit.com">
+	<meta name="Su600" content="Su">
+
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/style.css" rel="stylesheet">
+	<style>
+		body {
+			position: relative;
+		}
+	</style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">
+			<img src="static/avic.png" width="35px">
+		</a>
+		<a class="navbar-brand" href="#">Home</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item ">
+					<a class="nav-link" href="#s">Su600</a>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="#idlogin">Login</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="s" class="container-fluid" style="padding:75px 20px 0px 20px">
+		<div class="jumbotron" style="padding:50px 20px 20px 20px;">
+			<p class="display-4 ont-weight-blod">
+				<small>
+					工业互联网数据采集系统
+				</small>
+			</p>
+			<p class="text-justify">
+				基于Python Snap7、PyADS、Pylogix、OPC UA等，实现西门子S7系列PLC、西门子840D数控系统，倍福PLC、罗克韦尔AB
+				PLC、UR机器人、KUKA机器人平台的数据采集与控制。<br />
+				可跨平台部署于嵌入式边缘计算设备，应用于106室超塑成型设备、工业机器人集成应用平台(KUKA)、发动机空心叶片智能制造系统的数据采集、状态监控、系统集成。
+
+			</p>
+			<div style="text-align:right">
+				<p>
+					<button class="btn type-button btn-primary btn-lg">工业网络与自动化实验室</button>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8" style="padding:0px 20px 20px 20px">
+				<div class="carousel slide" id="carousel-724707">
+					<ol class="carousel-indicators ">
+						<li data-slide-to="0" data-target="#carousel-724707" class="active">
+						</li>
+						<li data-slide-to="1" data-target="#carousel-724707">
+						</li>
+						<li data-slide-to="2" data-target="#carousel-724707">
+						</li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img class="d-block w-100 " alt="Carousel Bootstrap First" src="static/1.jpg" />
+							<div class="carousel-caption ">
+								<h5>
+									First Thumbnail label
+								</h5>
+								<p class="text-justify">
+									Cras justo odio, dapibus ac facilisis in
+								</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100" alt="Carousel Bootstrap Second" src="static/2.jpg" />
+							<div class="carousel-caption">
+								<h5>
+									Second Thumbnail label
+								</h5>
+								<p>
+									Cras justo odio, dapibus ac facilisis in
+								</p>
+							</div>
+						</div>
+						<div class="carousel-item ">
+							<img class="d-block w-100" alt="Carousel Bootstrap Third" src="static/3.jpg" />
+							<div class="carousel-caption">
+								<h5>
+									Third Thumbnail label
+								</h5>
+								<p>
+									Cras justo odio, dapibus ac facilisis in
+								</p>
+							</div>
+						</div>
+					</div> <a class="carousel-control-prev" href="#carousel-724707" data-slide="prev"><span
+							class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a
+						class="carousel-control-next" href="#carousel-724707" data-slide="next"><span
+							class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
+				</div>
+			</div>
+
+			<div id="idlogin" class="col-md-4" style="padding:30px 20px">
+				<div class="container">
+					<h2>
+						登录系统
+					</h2>
+					<h6>
+						没有账号? 请联系设备管理员 <a href="register">注册</a>
+					</h6>
+
+					<form action="{{ url_for('login') }}" method="POST">
+						<div class="form-group">
+							<label for="exam eInputEmail1">用户名</label>
+							<input name='username' type="text" class="form-control" id="exampleInputEmail1"
+								placeholder="Username">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">密码</label>
+							<input name='password' type="password" class="form-control" id="exampleInputPassword1"
+								placeholder="Password">
+						</div>
+
+						<div class="checkbox">
+							<label>
+								<input type="checkbox"> 记住密码
+							</label>
+						</div>
+
+						{% with messages = get_flashed_messages(category_filter=["wrong"]) %}
+						{% if messages %}
+						{% for message in messages %}
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<p>{{message}}</p>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						{% endfor %}
+
+						{% endif %}
+						{% endwith %}
+
+						{% with messages = get_flashed_messages(category_filter=["none"]) %}
+						{% if messages %}
+
+						{% for message in messages %}
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<p>{{message}}</p>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						{% endfor %}
+
+						{% endif %}
+						{% endwith %}
+
+						<button type="submit" class="btn btn-success btn-block">登录</button>
+					</form>
+
+				</div>
+			</div>
+			<div class="container-fluid">
+				<footer class="footer">
+
+					<div class="container-fluid" style="height:20px; padding:25px 10px">
+						<!--<h2>混合色彩进度条</h2>-->
+						<!--<p>进度条可以设置多种颜色:</p> -->
+						<div class="progress" style="height:10px; ">
+
+
+							<div class="progress-bar" style="width:33.33%">
+								<!--Free Space-->
+							</div>
+							<div class="progress-bar bg-warning" style="width:33.33%">
+								<!--Warning-->
+							</div>
+							<div class="progress-bar bg-danger" style="width:33.33%">
+								<!--Danger-->
+							</div>
+						</div>
+					</div>
+
+					<div class="container-fluid" style="height:50px;text-align:center">
+						<!--<footer style=" ">-->
+						<div class="w-1000 copyright">
+							<p style="padding-top:25px">
+								<!--<kbd>-->
+								Copyright © 2020 Su600, Inc.
+								<!--</kbd>-->
+							</p>
+							<!--</footer>-->
+						</div>
+					</div>
+				</footer>
+			</div>
+
+			<script src="/static/js/jquery.min.js"></script>
+			<script src="/static/js/bootstrap.min.js"></script>
+			<script src="/static/js/scripts.js"></script>
+
+
+
+		</div>
+	</div>
+</body>
+
+</html>
