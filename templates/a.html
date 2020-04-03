@@ -14,8 +14,29 @@
           <option value="2">222222</option>
           <option value="3">3333333</option>
       </select>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit"  action="a()" class="btn btn-primary">Submit</button>
   </form>
 
 </body>
+
+<script type="text/javascript">
+function a()
+    $.ajax({
+    url: "{{ url_for('login') }}",
+    type: "post",
+    async: true,
+    data: JSON.stringify({'username': 'admin', 'password': 'admin'}),
+    processData: false,
+    contentType: "application/json",
+    dataType: "json",
+    success: function (data) {
+        alert('登录成功!');
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        alert('登录失败!');
+    }
+});
+
+</script>
+
 </html>

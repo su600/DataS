@@ -1,0 +1,26 @@
+<form id="demo_form">
+	输入框： <input type="text" name="nick_name" />
+	<input type="submit" value="ajax请求"/>
+</form>
+
+<script type="text/javascript">
+$("#demo_form").submit(function(e){
+	e.preventDefault();
+
+    $.ajax({
+        url:"/demo",
+        type:'POST',
+        data: $(this).serialize(),   // 这个序列化传递很重要
+        headers:{
+            "X-CSRF-Token": getCookie('csrf_token')
+        },
+        success:function (resp) {
+            // window.location.href = "/admin/page";
+            if(resp.error){
+                console.log(resp.errmsg);
+            }
+        }
+    })
+});
+</script>
+

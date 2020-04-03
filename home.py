@@ -172,7 +172,6 @@ def login():
 def list():
     return render_template('list.html', users=users)
 
-
 @app.route('/logout')
 def logout():
     #  将用户存储到session中的信息删除;
