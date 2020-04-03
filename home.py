@@ -335,8 +335,11 @@ def beckoff():
     return render_template("beckoff.html")
 
 ######################### 罗克韦尔 ##############################
+
 global rockwellip,rockwell_device_list,taglist
 rockwellip=''
+rockwelldata=()
+ttt=''
 
 @app.route("/rockwell",methods=["POST","GET"])
 @is_login
@@ -349,11 +352,29 @@ def rockwell():
 def rockwellread():    #'读取函数'
     print("readlist")
     print(taglist)
+
+    ### 分批读取函数 每次读取10个变量
+    def readten(tags_list):
+        l = len(tags_list)  # 变量表长度，如果大于10 必须分批读取保证不报错
+        x = l // 10  # 取整
+        y = l % 10  # 取余数
+        a = 0  # 每一组变量的上标
+        val = []  # 初始化列表 每一组变量值
+        for n in range(x):
+            if n < x:
+                val = val + comm.Read(tags_list[10 * a:10 * (a + 1)])
+                a += 1
+                n += 1
+            if n == x and y != 0:
+                val = val + comm.Read(tags_list[10 * a:10 * a + y])
+        vall = val
+        return vall
+
     with PLC() as comm:
         tagname=[]
         tagvalue=[]
         comm.IPAddress=rockwellip
-        aa=comm.Read(taglist)
+        aa=readten(taglist) #调用函数分批读取变量
         ttt=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         print(aa)
         for a in aa:
@@ -362,19 +383,23 @@ def rockwellread():    #'读取函数'
         # 输出到前端页面
         rockwelldata=dict(zip(tagname,tagvalue))
         print(rockwelldata)
-        # redirect("/rockwellscan2")
+        # return redirect("#data")
     return render_template("rockwell.html",rockwelldata=rockwelldata,ttt=ttt)
     # return render_template("rockwell.html")
 
 def rockwellreadexcel(file):
     print("readexcel"+file.filename)
     # data = pd.DataFrame(pd.read_excel(file))
-    data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
-    data2=data2.dropna() ##剔除异常的nan
-    ##剔除程序名和未知类型
-    data2 = data2.to_numpy().tolist()  # 转数组 转列表
+    # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
+    data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
+    # data2=data2.dropna() ##剔除异常的nan
+    data2 = data2[data2['TagType'].isin(["BOOL"])] ##可以读取的类型 ["BOOL", "TIMER", "REAL"]
+    ##剔除程序名和已知类型之外的数据
+    data2 = data2['TagName']
+    print(data2)
     global taglist
-    taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
+    taglist = data2.to_numpy().tolist()  # 转数组 转列表
+    # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
     print(taglist)
 
 @app.route("/rockwellscan",methods=["POST","GET"])
