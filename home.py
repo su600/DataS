@@ -59,6 +59,11 @@ def get_bit(value, bit_number):
 '''
 倍福库文件 PyADS
 '''
+# todo
+'''
+opcua库文件 
+'''
+# todo
 '''
 influxDB 库文件
 '''
@@ -541,20 +546,72 @@ def opcuaserver():
     # return render_template("b.html")
     return render_template("opcua.html")
 
+########################################## 多线程测试
+import threading
+global www
+www=1
+@app.route("/test1",methods=["GET"])
+# @is_login
+def aaa():
+    print("main thread")
+    t1 = threading.Thread(target=DownThread,args=())
+    t1.setDaemon(True)
+    t1.start()
+    if request.method is "GET":
+        DownThread.terminate()
+        print("End")
+    # else:
+    #     print("Run")
+    #     while 1:
+    #         pass
+    return redirect("/")
+
+# @app.route("/test2")
+# def nnn():
+#     return redirect(url_for(ww()))
+# @app.route("/kkkkkkkkkk")
+# def ww():
+#     global www
+#     www=0
+#     return render_template("home.html")
+
+# @is_login
+def fun():
+    i=0
+    while 1:
+        i=i+1
+        print(i)
+        time.sleep(1)
+
+
+class DownThread:
+    def __init__(self):
+        self._running = True
+
+    def terminate(self):
+        self._running = False
+
+    def run(self, n):
+        i = 0
+        while 1:
+            i = i + 1
+            print(i)
+            time.sleep(1)
+
 
 ######################## InfluxDB 共用函数 #############################
 @app.route("/influxDB",methods=("POST","GET"))
 @is_login
 def influxDB(influxdbip,token,measurement,cycle):
-    print("11111111111111111111111111")
+    print("influxDB写入")
     a=1
     bucket = "test"
     token="HTvG6oIApfABybjjYd_6Jehf8AEWkLStYw0qftanx9ijF05-UsLZ9pVqI604PwuRlhv8IkuIZshYaqVFTC0DXA=="
     client = InfluxDBClient(url=influxdbip,token=token,org="su")
     write_api = client.write_api(write_options=SYNCHRONOUS)
-    query_api = client.query_api()
-    cycle=int(cycle)
-    cycle=(cycle/1000)
+    # query_api = client.query_api()
+    cycle=(int(cycle)/1000) #单位ms
+    # cycle=(cycle)
     flash("开始写入influxDB","influx")
     while 1:
         try:
@@ -563,8 +620,10 @@ def influxDB(influxdbip,token,measurement,cycle):
             p = Point(measurement).tag("location", "108厂房").field("温度", ss)
             q = Point(measurement).tag("location", "beijing").field("2", xx)
             write_api.write(bucket=bucket, org="su", record=[p,q])
-            print("2222")
+            # print("2222")
             time.sleep(cycle)
+        except a==0:
+            pass # Stop writing
 
         except Exception as e:
             print(e)

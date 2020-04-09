@@ -153,8 +153,9 @@
 					<h6>
 						没有账号? 请联系设备管理员 <a href="register">注册</a>
 					</h6>
+					
 
-					<form action="{{ url_for('login') }}" method="POST">
+					<form action="{{ url_for('login_.login') }}" method="POST">
 						<div class="form-group">
 							<label for="exam eInputEmail1">用户名</label>
 							<input name='username' type="text" class="form-control" id="exampleInputEmail1"
@@ -206,6 +207,7 @@
 
 				</div>
 			</div>
+
 			<div class="container-fluid">
 				<footer class="footer">
 
