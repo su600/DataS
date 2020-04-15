@@ -84,8 +84,18 @@ def rockwellread():    #'读取函数'
         ttt=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         print(aa)
         for a in aa:
-            tagname.settingsend(a.TagName)
-            tagvalue.settingsend(a.Value)
+            tagname.append(a.TagName)
+            # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 todo IO长度不一定 暂定按16个 且形式不确定
+            if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
+                if a.Value < 0:
+                    a.Value = 65536 + a.Value
+                b = ('{:016b}'.format(a.Value))[::-1] #转二进制并 高位补零 IO逆序输出
+                b=list(b)
+                b.insert(4, '/')
+                b.insert(9, '/')
+                b.insert(14, '/')
+                a.Value = ''.join(b)
+            tagvalue.append(a.Value)
         # 输出到前端页面
         rockwelldata=dict(zip(tagname,tagvalue))
         print(rockwelldata)
@@ -99,9 +109,15 @@ def rockwellreadexcel(file):
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
     # data2=data2.dropna() ##剔除异常的nan
-    data2 = data2[data2['TagType'].isin(["BOOL"])] ##可以读取的类型 ["BOOL", "TIMER", "REAL"]
-    ##剔除程序名和已知类型之外的数据
+    data2 = data2[data2['TagType'].isin(["BOOL", "REAL", "AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"])]
+    ##可以读取的类型 ["BOOL", "TIMER", "REAL","AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"]
+    ##剔除程序名,IO,和已知类型之外的数据
     data2 = data2['TagName']
+    # print(data2)
+    # 添加IO变量
+    data2.replace("Local:1:I", "Local:1:I.Data", inplace=True)
+    data2.replace("Local:1:O", "Local:1:O.Data", inplace=True)
+
     print(data2)
     global taglist
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
@@ -117,8 +133,8 @@ def rockwellscan():
         devicename = []
         devices = comm.Discover()
         for device in devices.Value:
-            deviceip.settingsend(device.IPAddress)
-            devicename.settingsend(device.ProductName + ' ' + device.IPAddress)
+            deviceip.append(device.IPAddress)
+            devicename.append(device.ProductName + ' ' + device.IPAddress)
         global rockwell_device_list
         rockwell_device_list = dict(zip(devicename, deviceip))  # 创建设备字典 写入全局变量
         scanresult="扫描到"+str(len(rockwell_device_list))+"台设备"
@@ -219,8 +235,8 @@ def rockwell_get_all_vars(): #
                 tagtype=[]
                 head=["TagName","TagType"]
                 for t in tags.Value:
-                    tagname.settingsend(t.TagName)
-                    tagtype.settingsend(t.DataType)
+                    tagname.append(t.TagName)
+                    tagtype.append(t.DataType)
                 taglist = pd.DataFrame({'tagname': tagname, 'tagtype': tagtype}) #采用Pandas格式化
                 # print(taglist)
                 tt = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S') #时间标识符

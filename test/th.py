@@ -2,19 +2,29 @@
 import time
 import threading
 
-
 def fun():
-    print("start fun")
-    time.sleep(2)
-    print("end fun")
+    for i in range(5):
+        # print("start fun")
+        time.sleep(1)
+        print("fun1")
+
+def fun2():
+    while 1:
+        time.sleep(1)
+        print("end fun2")
 
 def main():
-    print("main thread")
+    # print("main thread")
     t1 = threading.Thread(target=fun,args=())
-    t1.setDaemon(True)
+    t2 = threading.Thread(target=fun2, args=())
+    # t1.setDaemon(False)
+    t2.setDaemon(True)
     t1.start()
-    time.sleep(1)
-    print("main thread end")
+    t2.start()
+    # time.sleep(2)
+    # t1.join()
+    # t2.join()
+    # print("main thread end")
 
 if __name__ == '__main__':
     main()
