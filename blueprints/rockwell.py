@@ -56,9 +56,8 @@ def rockwell():
 @rockwell_.route("/rockwellread")
 @is_login
 def rockwellread():    #'读取函数'
-    print("readlist")
+    # print("readlist")
     print(taglist)
-
     ### 分批读取函数 每次读取10个变量
     def readten(tags_list):
         l = len(tags_list)  # 变量表长度，如果大于10 必须分批读取保证不报错
@@ -85,7 +84,8 @@ def rockwellread():    #'读取函数'
         print(aa)
         for a in aa:
             tagname.append(a.TagName)
-            # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 todo IO长度不一定 暂定按16个 且形式不确定
+            # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 #
+            # todo IO长度不一定 暂定按16个 且形式不确定 IO模块数据类型复杂 考虑先不读取
             if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
                 if a.Value < 0:
                     a.Value = 65536 + a.Value
@@ -98,10 +98,12 @@ def rockwellread():    #'读取函数'
             tagvalue.append(a.Value)
         # 输出到前端页面
         rockwelldata=dict(zip(tagname,tagvalue))
-        print(rockwelldata)
+        # return rockwelldata
+        # print(rockwelldata)
         # return redirect("#data")
-    return render_template("rockwell.html",rockwelldata=rockwelldata,ttt=ttt)
-    # return render_template("rockwell.html")
+        # global influxdata
+        # influxdata=rockwelldata
+    return render_template("rockwell.html",rockwelldata=rockwelldata,ttt=ttt),rockwelldata
 
 def rockwellreadexcel(file):
     print("readexcel"+file.filename)
@@ -109,14 +111,14 @@ def rockwellreadexcel(file):
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
     # data2=data2.dropna() ##剔除异常的nan
-    data2 = data2[data2['TagType'].isin(["BOOL", "REAL", "AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"])]
-    ##可以读取的类型 ["BOOL", "TIMER", "REAL","AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"]
-    ##剔除程序名,IO,和已知类型之外的数据
+    data2 = data2[data2['TagType'].isin(["INT","DINT","BOOL", "REAL"]) | data2['TagName'].str.contains("Local:") & ~data2['TagName'].str.contains(":C")  ]
+    ## ["INT","DINT","BOOL",  "REAL","AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"] "COUNTER","TIMER","DWORD"
+    ##剔除程序名,C变量 和已知类型之外的数据，保留IO变量
     data2 = data2['TagName']
     # print(data2)
-    # 添加IO变量
-    data2.replace("Local:1:I", "Local:1:I.Data", inplace=True)
-    data2.replace("Local:1:O", "Local:1:O.Data", inplace=True)
+
+    # 添加IO变量.Data
+    data2[data2.str.contains("Local:")] = data2[data2.str.contains("Local:")] + ".Data"
 
     print(data2)
     global taglist
@@ -197,7 +199,7 @@ def rockwellscan2():
                 token = forminfo["token"]
                 measurement = forminfo["measurement"]
                 cycle = forminfo["cycle"]
-                influxDB(influxdbip, token, measurement, cycle)
+                influxDB(influxdbip, token, measurement, cycle) #todo 调用报错
             # flash(forminfo,"connect1")
         # return redirect("#")
         # flash(rockwell_device_list,"dev_list") # flash只能传递字符串

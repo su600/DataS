@@ -10,5 +10,8 @@ def index():
 from blueprinttest.viewdd import *
 app.register_blueprint(ss)
 
+from blueprinttest.view22 import *
+app.register_blueprint(ss2)
+
 if __name__=='__main__':
     app.run()

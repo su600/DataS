@@ -1,5 +1,6 @@
 from flask import render_template
 from blueprints.influxdb import *
+from blueprints.influxdb import influxDB
 
 siemens_ = Blueprint("siemens_",__name__)
 

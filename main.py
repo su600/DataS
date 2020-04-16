@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file
 from flask_bootstrap import Bootstrap
+
 import random, datetime
 from functools import wraps
 import time
@@ -57,11 +58,10 @@ from blueprints.opcua import *
 app.register_blueprint(opcua_)
 
 ## influxDB
+# global influxdata
 from blueprints.influxdb import *
 
 app.register_blueprint(influxdb_)
-
-
 
 
 ################### app 主程序 （测试用） 部署版本采用nginx托管 ##########################

@@ -14,6 +14,10 @@ from struct import pack, unpack_from # Pylogix 结构体解析
 from flask import Blueprint
 from blueprints.login import is_login
 
+# from blueprints.siemens import s7read
+from blueprints.rockwell import rockwellread
+from blueprints.opcua import *
+
 influxdb_ = Blueprint("influxdb_",__name__)
 
 '''
@@ -30,8 +34,8 @@ import time
 @is_login
 def influxDB(influxdbip,token,measurement,cycle):
     print("influxDB写入")
-    a=1
-    bucket = "test"
+    # a=1
+    bucket = "data"
     token="HTvG6oIApfABybjjYd_6Jehf8AEWkLStYw0qftanx9ijF05-UsLZ9pVqI604PwuRlhv8IkuIZshYaqVFTC0DXA=="
     client = InfluxDBClient(url=influxdbip,token=token,org="su")
     write_api = client.write_api(write_options=SYNCHRONOUS)
@@ -41,16 +45,18 @@ def influxDB(influxdbip,token,measurement,cycle):
     flash("开始写入influxDB","influx")
     while 1:
         try:
-            ss=1
-            xx=2
-            p = Point(measurement).tag("location", "108厂房").field("温度", ss)
-            q = Point(measurement).tag("location", "beijing").field("2", xx)
-            write_api.write(bucket=bucket, org="su", record=[p,q])
-            # print("2222")
-            time.sleep(cycle)
-        except a==0:
-            pass # Stop writing
-
+            # todo 不同品牌的设备 如何区分
+            while 1:
+                data = rockwellread()[1]
+                # print(data, type(data))
+                aa = list(range(0, len(data)))
+                n = 0
+                for i in data:
+                    aa[n] = Point(measurement).tag("location", "108厂房").field(i, data[i])
+                    n += 1
+                # print(aa)
+                write_api.write(bucket=bucket, org="su", record=aa)
+                time.sleep(cycle)
         except Exception as e:
             print(e)
             break
