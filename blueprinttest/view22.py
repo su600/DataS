@@ -5,5 +5,6 @@ ss2 = Blueprint("ss2",__name__)
 #2注册路由
 #@app.route('/edit')改为
 @ss2.route('/22')
-def edit():
+def edit2():
+    print("2222222222")
     return '22'

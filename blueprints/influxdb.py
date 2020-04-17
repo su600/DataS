@@ -1,6 +1,7 @@
-from flask import Flask,render_template,request,redirect, url_for, flash, session, send_from_directory,send_file
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
 from flask_bootstrap import Bootstrap
-import random,datetime
+
+import random, datetime
 from functools import wraps
 import time
 import functools
@@ -9,14 +10,17 @@ from werkzeug.utils import secure_filename
 import csv
 import pandas as pd
 import numpy as np
-from struct import pack, unpack_from # Pylogix 结构体解析
+from struct import pack, unpack_from  # Pylogix 结构体解析
 
 from flask import Blueprint
 from blueprints.login import is_login
 
 # from blueprints.siemens import s7read
-from blueprints.rockwell import rockwellread
-from blueprints.opcua import *
+# from blueprints.rockwell import rockwellread
+# from blueprints.opcua import *
+import blueprints.rockwell
+# from main import *
+# from blueprints.rockwell import *
 
 influxdb_ = Blueprint("influxdb_",__name__)
 
@@ -47,7 +51,8 @@ def influxDB(influxdbip,token,measurement,cycle):
         try:
             # todo 不同品牌的设备 如何区分
             while 1:
-                data = rockwellread()[1]
+                data = blueprints.rockwell.rockwellread()[1]
+                # data2=data
                 # print(data, type(data))
                 aa = list(range(0, len(data)))
                 n = 0
@@ -55,8 +60,14 @@ def influxDB(influxdbip,token,measurement,cycle):
                     aa[n] = Point(measurement).tag("location", "108厂房").field(i, data[i])
                     n += 1
                 # print(aa)
+                # todo 添加数据判断 有更新则输出
+                # aa0 = set(aa)
+                # bb=aaa
+                # cc=list(set(aa)^aa0)
+
+                # todo 写入的实时性待测试 ，此时间戳实际是写入时刻并非采集时刻
                 write_api.write(bucket=bucket, org="su", record=aa)
                 time.sleep(cycle)
         except Exception as e:
-            print(e)
+            print("influxDB写入出错了",e)
             break

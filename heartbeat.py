@@ -7,8 +7,8 @@ with PLC() as plc:
     while 1:
         try:
             c=plc.GetPLCTime()
-            print(c)
-            time.sleep(1)
+            print(c.Status)
+            time.sleep(30)
         except Exception as c:
             print(c)
         else:

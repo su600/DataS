@@ -1,6 +1,18 @@
-from flask import render_template
-from blueprints.influxdb import *
-from blueprints.influxdb import influxDB
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
+from flask_bootstrap import Bootstrap
+
+import random, datetime
+from functools import wraps
+import time
+import functools
+import os
+from werkzeug.utils import secure_filename
+import csv
+import pandas as pd
+import numpy as np
+from struct import pack, unpack_from  # Pylogix 结构体解析
+from blueprints.login import is_login
+
 
 siemens_ = Blueprint("siemens_",__name__)
 
@@ -11,7 +23,7 @@ siemens_ = Blueprint("siemens_",__name__)
 import snap7.client as client
 from snap7.util import *
 from snap7.snap7types import *
-from blueprints.login import is_login
+
 
 ###################### 西门子 #######################################
 

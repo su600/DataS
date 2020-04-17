@@ -1,5 +1,22 @@
-from blueprints.influxdb import *
+# from blueprints.influxdb import *
+# from main import *
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
+from flask_bootstrap import Bootstrap
+
+import random, datetime
+from functools import wraps
+import time
+import functools
+import os
+from werkzeug.utils import secure_filename
+import csv
+import pandas as pd
+import numpy as np
+from struct import pack, unpack_from  # Pylogix 结构体解析
 from blueprints.login import is_login
+
+from blueprints.influxdb import influxDB
+
 
 rockwell_ = Blueprint("rockwell_",__name__)
 
@@ -53,7 +70,7 @@ def rockwell():
     ## Rockwell AB PLC # #108厂房设备
     return render_template("rockwell.html")
 
-@rockwell_.route("/rockwellread")
+@rockwell_.route("/rockwellread",methods=["POST","GET"])
 @is_login
 def rockwellread():    #'读取函数'
     # print("readlist")
@@ -156,6 +173,7 @@ def rockwellscan2():
             # 该页面的表单信息，只要submit都传到这里
             # forminfo=request.form.get('devicelist') # 获取到的value是str字符串
             # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
+            # todo 根据action value区分表单
             print(forminfo)
             # print(type(forminfo))
             # aa=type(forminfo)
