@@ -8,15 +8,15 @@ def fun():
         time.sleep(1)
         print("fun1")
 
-def fun2():
+def fun2(a):
     while 1:
         time.sleep(1)
-        print("end fun2")
+        print(a,"end fun2")
 
 def main():
     # print("main thread")
     t1 = threading.Thread(target=fun,args=())
-    t2 = threading.Thread(target=fun2, args=())
+    t2 = threading.Thread(target=fun2, args=(2,))
     # t1.setDaemon(False)
     t2.setDaemon(True)
     t1.start()

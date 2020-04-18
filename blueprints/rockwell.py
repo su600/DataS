@@ -1,6 +1,6 @@
 # from blueprints.influxdb import *
 # from main import *
-from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint,current_app
 from flask_bootstrap import Bootstrap
 
 import random, datetime
@@ -17,6 +17,7 @@ from blueprints.login import is_login
 
 from blueprints.influxdb import influxDB
 
+import threading
 
 rockwell_ = Blueprint("rockwell_",__name__)
 
@@ -174,7 +175,7 @@ def rockwellscan2():
             # forminfo=request.form.get('devicelist') # 获取到的value是str字符串
             # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
             # todo 根据action value区分表单
-            print(forminfo)
+            # print(forminfo)
             # print(type(forminfo))
             # aa=type(forminfo)
 
@@ -192,7 +193,7 @@ def rockwellscan2():
 
             # if (forminfo)=={}:  # 上传变量表 #
             if len(forminfo)==2: #### 是excel就调用readexcel
-                print("22222222222")
+                # print("22222222222")
                 try:
                     file = request.files.get('file')
                     file.save('D:/' + secure_filename(file.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
@@ -217,8 +218,16 @@ def rockwellscan2():
                 token = forminfo["token"]
                 measurement = forminfo["measurement"]
                 cycle = forminfo["cycle"]
-                influxDB(influxdbip, token, measurement, cycle) #todo 调用报错
-            # flash(forminfo,"connect1")
+                flash("写入InfluxDB", "influx")
+                # 添加线程 todo 上下文处理
+
+                # current_app.app_context().push()
+                with current_app.test_request_context('/rockwellscan2', method='GET'):
+                    t1 = threading.Thread(target= influxDB, args=(influxdbip, token, measurement, cycle,))
+                # t1.setDaemon(True)
+                    t1.start()
+                # influxDB(influxdbip, token, measurement, cycle)
+
         # return redirect("#")
         # flash(rockwell_device_list,"dev_list") # flash只能传递字符串
         # return jsonify()
@@ -243,7 +252,7 @@ def rockwell_get_all_vars(): #
             print(rockwellip)
             comm.IPAddress = rockwellip #全局变量
             # comm.IPAddress="192.168.100.200"
-            print("2222222222")
+            # print("2222222222")
             try:
                 tags = comm.GetTagList() #输出是Response结构体类型需要解析
                 comm.Close()

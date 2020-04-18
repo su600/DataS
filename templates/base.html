@@ -70,9 +70,9 @@
 				<input type="text" name="measurement" id="measurement" class="form-control" placeholder="设备名称"
 					aria-describedby="InfluxDB">
 				<label for="cycle">
-					<h5>采集周期（ms）</h5>
+					<h5>采集周期（秒）</h5>
 				</label>
-				<input type="text" name="cycle" id="cycle" class="form-control" placeholder="100">
+				<input type="text" name="cycle" id="cycle" class="form-control" placeholder="1">
 
 				<button class="btn btn-primary form-control" href="#influxdbsetting"
 					style="padding-block :30px; margin: 10px; " type="submit" id="startinfluxdb"> 开始写入 </button>
@@ -83,7 +83,7 @@
 				{% if messages %}
 				{% for message in messages %}
 				{% if message%}
-				<p><span class="badge badge-success">开始写入</span></p>
+				<p><span class="badge badge-success">InfluxDB Running</span></p>
 				{% endif %}
 				{% endfor %}
 				{% endif %}

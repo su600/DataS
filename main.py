@@ -15,7 +15,7 @@ from struct import pack, unpack_from  # Pylogix 结构体解析
 app = Flask(__name__)
 Bootstrap(app)
 
-from blueprints.login import is_login
+# from blueprints.login import is_login
 
 ## 设置密钥可以有效防止跨站请求伪造的攻击
 app.config['SECRET_KEY'] = 'myproject'
@@ -65,5 +65,7 @@ app.register_blueprint(influxdb_)
 
 
 ################### app 主程序 （测试用） 部署版本采用nginx托管 ##########################
+# 其中debug的作用是方便调试用，利用nohup command &在后台启动程序，然后源代码修改后，自动加载。
+# host设定为0.0.0.0是为了能够非本机访问，默认127.0.0.1，只能本机使用localhost访问。
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, threaded=True)

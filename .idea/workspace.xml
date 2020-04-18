@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="rockwell influxdb Point/taglist contains IO">
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="fix Blueprint import error/update influxdb for rockwell only">
+      <change afterPath="$PROJECT_DIR$/test/compareold.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/beckoff.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/beckoff.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blueprints/influxdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/influxdb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/login.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blueprints/rockwell.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/rockwell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/siemens.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/siemens.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/view22.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprinttest/view22.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/viewdd.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprinttest/viewdd.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/heartbeat.py" beforeDir="false" afterPath="$PROJECT_DIR$/heartbeat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/th.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/th.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +72,29 @@
       <recent name="C:\Users\su514\Desktop\DataS\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="dataf" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.compareold">
+    <configuration name="02_read_simple" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../车间物联网数据采集/AB PLC/pylogix0.6.2/examples" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../车间物联网数据采集/AB PLC/pylogix0.6.2/examples/02_read_simple.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="compareold" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -87,28 +106,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/dataf.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="excelsubmit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/excelsubmit.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/compareold.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -138,27 +136,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/blueprinttest" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/blueprinttest/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -180,20 +157,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="th" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/th.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.excelsubmit" />
       <item itemvalue="Python.heartbeat" />
-      <item itemvalue="Python.dataf" />
-      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.02_read_simple" />
+      <item itemvalue="Python.th" />
+      <item itemvalue="Python.compareold" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.compareold" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.th" />
         <item itemvalue="Python.heartbeat" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.dataf" />
-        <item itemvalue="Python.excelsubmit" />
+        <item itemvalue="Python.02_read_simple" />
       </list>
     </recent_temporary>
   </component>
@@ -366,7 +364,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587027310572</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fix Blueprint import error/update influxdb for rockwell only">
+      <created>1587090633744</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1587090633745</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -394,6 +399,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update pylogix rockwell" />
     <MESSAGE value="add rockwell devices scan" />
@@ -414,20 +420,21 @@
     <MESSAGE value="Add archive/delete" />
     <MESSAGE value="Add rockwell IO read" />
     <MESSAGE value="rockwell influxdb Point/taglist contains IO" />
-    <option name="LAST_COMMIT_MESSAGE" value="rockwell influxdb Point/taglist contains IO" />
+    <MESSAGE value="fix Blueprint import error/update influxdb for rockwell only" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix Blueprint import error/update influxdb for rockwell only" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585816483089">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585816483089" />
-    <state x="373" y="22" width="609" height="764" key="CommitChangelistDialog2" timestamp="1587027309454">
+    <state x="373" y="22" width="609" height="764" key="CommitChangelistDialog2" timestamp="1587090632770">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="373" y="22" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587027309454" />
+    <state x="373" y="22" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587090632770" />
     <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899930835" />
     <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1585212700201" />
     <state x="251" y="-904" width="989" height="504" key="DiffContextDialog" timestamp="1584694860944">
@@ -439,68 +446,68 @@
     </state>
     <state x="2508" y="-576" key="FileChooserDialogImpl/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586332116820" />
     <state x="2508" y="158" key="FileChooserDialogImpl/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424245581" />
-    <state width="1528" height="227" key="GridCell.Tab.0.bottom" timestamp="1587087682002">
+    <state width="1528" height="227" key="GridCell.Tab.0.bottom" timestamp="1587222343657">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
-    <state width="1528" height="227" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587087682002" />
+    <state width="1528" height="227" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587110435717" />
     <state width="1189" height="162" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586768236887" />
     <state width="1331" height="213" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1189" height="162" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1586871858070" />
-    <state width="1528" height="227" key="GridCell.Tab.0.center" timestamp="1587087682001">
+    <state width="1528" height="227" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1587222343657" />
+    <state width="1528" height="227" key="GridCell.Tab.0.center" timestamp="1587222343657">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.center/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
-    <state width="1528" height="227" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587087682001" />
+    <state width="1528" height="227" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587110435716" />
     <state width="1189" height="162" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586768236883" />
     <state width="1331" height="213" key="GridCell.Tab.0.center/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1189" height="162" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1586871858070" />
-    <state width="1528" height="227" key="GridCell.Tab.0.left" timestamp="1587087682001">
+    <state width="1528" height="227" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1587222343657" />
+    <state width="1528" height="227" key="GridCell.Tab.0.left" timestamp="1587222343657">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315647" />
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.left/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
-    <state width="1528" height="227" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587087682001" />
+    <state width="1528" height="227" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587110435716" />
     <state width="1189" height="162" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586768236879" />
     <state width="1331" height="213" key="GridCell.Tab.0.left/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1189" height="162" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1586871858070" />
-    <state width="1528" height="227" key="GridCell.Tab.0.right" timestamp="1587087682002">
+    <state width="1528" height="227" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1587222343657" />
+    <state width="1528" height="227" key="GridCell.Tab.0.right" timestamp="1587222343657">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.right/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
-    <state width="1528" height="227" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587087682002" />
+    <state width="1528" height="227" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587110435717" />
     <state width="1189" height="162" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586768236885" />
     <state width="1331" height="213" key="GridCell.Tab.0.right/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1189" height="162" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1586871858070" />
-    <state width="1191" height="131" key="GridCell.Tab.1.bottom" timestamp="1587004688301">
+    <state width="1528" height="227" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1587222343657" />
+    <state width="1528" height="233" key="GridCell.Tab.1.bottom" timestamp="1587106645104">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
-    <state width="1191" height="131" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587004688301" />
+    <state width="1528" height="233" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587106645104" />
     <state width="1528" height="175" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876772" />
     <state width="1182" height="223" key="GridCell.Tab.1.bottom/0.0.1549.840@0.0.1549.840" timestamp="1586266712552" />
-    <state width="1191" height="131" key="GridCell.Tab.1.center" timestamp="1587004688300">
+    <state width="1528" height="233" key="GridCell.Tab.1.center" timestamp="1587106645104">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
-    <state width="1191" height="131" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587004688300" />
+    <state width="1528" height="233" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587106645104" />
     <state width="1528" height="175" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876770" />
     <state width="1182" height="223" key="GridCell.Tab.1.center/0.0.1549.840@0.0.1549.840" timestamp="1586266712550" />
-    <state width="1191" height="131" key="GridCell.Tab.1.left" timestamp="1587004688300">
+    <state width="1528" height="233" key="GridCell.Tab.1.left" timestamp="1587106645104">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
-    <state width="1191" height="131" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587004688300" />
+    <state width="1528" height="233" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587106645104" />
     <state width="1528" height="175" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876768" />
     <state width="1182" height="223" key="GridCell.Tab.1.left/0.0.1549.840@0.0.1549.840" timestamp="1586266712550" />
-    <state width="1191" height="131" key="GridCell.Tab.1.right" timestamp="1587004688301">
+    <state width="1528" height="233" key="GridCell.Tab.1.right" timestamp="1587106645104">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
-    <state width="1191" height="131" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587004688301" />
+    <state width="1528" height="233" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587106645104" />
     <state width="1528" height="175" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876771" />
     <state width="1182" height="223" key="GridCell.Tab.1.right/0.0.1549.840@0.0.1549.840" timestamp="1586266712552" />
     <state x="2552" y="-591" key="RollbackChangesDialog" timestamp="1586762326909">
@@ -515,12 +522,12 @@
     <state x="2194" y="-679" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585892944484" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424238393" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1584204338230" />
-    <state x="422" y="135" key="Vcs.Push.Dialog.v2" timestamp="1587027315261">
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2" timestamp="1587090636007">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
-    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587027315261" />
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587090636007" />
     <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899934944" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1585212707919" />
     <state x="3075" y="-626" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586761532187">
@@ -533,12 +540,13 @@
     <state x="2478" y="-150" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590087152" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587014900100" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840@0.0.1549.840" timestamp="1585059790685" />
-    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup" timestamp="1587024041336">
+    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup" timestamp="1587217431187">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="469" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585123356568" />
-    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587024041336" />
+    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587107798447" />
     <state x="2390" y="-573" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586761194707" />
     <state x="2389" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424797388" />
+    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840@0.0.1549.840" timestamp="1587217431187" />
   </component>
 </project>
