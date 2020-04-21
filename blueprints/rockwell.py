@@ -108,21 +108,59 @@ def rockwellread():    #'读取函数'
         for a in aa:
             tagname.append(a.TagName)
             # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 #
-            # todo IO长度不一定 暂定按16个 且形式不确定 IO模块数据类型复杂 考虑先不读取
-            if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
-                if a.Value < 0:
+            # IO长度不一定 暂定按16个 且形式不确定 IO模块数据类型复杂
+            # todo 原版程序 根据500T IO解析列表，分情况处理 主要是长度不同
+            ##############################
+            # if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
+            #     if  a.Value < 0 :
+            #         a.Value = 65536 + a.Value
+            #     b = ('{:016b}'.format(a.Value))[::-1] #转二进制并 高位补零 IO逆序输出
+            #     b=list(b)
+            #     b.insert(4, '/')
+            #     b.insert(9, '/')
+            #     b.insert(14, '/')
+            #     a.Value = ''.join(b)
+            # tagvalue.append(a.Value)
+            ##############################
+
+            # todo 测试用 仅包含IO变量 （原版在上面）
+            # if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
+            # todo 需要区分数字量还是模拟量 数字量格式化为二进制 模拟量不格式化
+
+            # todo 仅针对数字量
+            if  a.Value <= 32767 and a.Value >= -32768:
+                if a.Value <0:
                     a.Value = 65536 + a.Value
                 b = ('{:016b}'.format(a.Value))[::-1] #转二进制并 高位补零 IO逆序输出
                 b=list(b)
                 b.insert(4, '/')
                 b.insert(9, '/')
                 b.insert(14, '/')
-                a.Value = ''.join(b)
+                # a.Value = ''.join(b)
+            elif a.Value <= 2147483647 and a.Value >=-2147483648:
+                if a.Value <0:
+                    a.Value = 4294967296 + a.Value
+                b = ('{:032b}'.format(a.Value))[::-1]  # 转二进制并 高位补零 IO逆序输出
+                b = list(b)
+                b.insert(4, '/')
+                b.insert(9, '/')
+                b.insert(14, '/')
+                b.insert(19, '/')
+                b.insert(24, '/')
+                b.insert(29, '/')
+                b.insert(34, '/')
+            a.Value = ''.join(b)
             tagvalue.append(a.Value)
+
+            ######################################
+            # todo 仅针对IO变量 读取不做格式化 模拟量用不用取正值？
+            # tagvalue.append(a.Value)
+            ######################################3
+
         # 输出到前端页面
         rockwelldata=dict(zip(tagname,tagvalue))
         # return rockwelldata
-        # print(rockwelldata)
+        print(rockwelldata)
         # return redirect("#data")
         # global influxdata
         # influxdata=rockwelldata
@@ -134,14 +172,18 @@ def rockwellreadexcel(file):
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
     # data2=data2.dropna() ##剔除异常的nan
-    data2 = data2[data2['TagType'].isin(["INT","DINT","BOOL", "REAL"]) | data2['TagName'].str.contains("Local:") & ~data2['TagName'].str.contains(":C")  ]
+
+    # todo 测试IO用 注释掉了
+    # data2 = data2[data2['TagType'].isin(["INT","DINT","BOOL", "REAL"]) | data2['TagName'].str.contains("Local:") & ~data2['TagName'].str.contains(":C")  ]
+
     ## ["INT","DINT","BOOL",  "REAL","AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"] "COUNTER","TIMER","DWORD"
     ##剔除程序名,C变量 和已知类型之外的数据，保留IO变量
     data2 = data2['TagName']
     # print(data2)
 
     # 添加IO变量.Data
-    data2[data2.str.contains("Local:")] = data2[data2.str.contains("Local:")] + ".Data"
+    # todo 测试IO用 注释掉了
+    # data2[data2.str.contains("Local:")] = data2[data2.str.contains("Local:")] + ".Data"
 
     print(data2)
     global taglist

@@ -7,6 +7,10 @@ def s7read():
     # print(ip,rack,slot)
     plc.connect("192.168.100.111", 0, 1)
     ss = ""  # 标识I/Q/M
+
+    # "PE" > Input
+    # "PA" > Ouput
+    # "MK" > Memory
     t = areas["PE"]
     variable = []
     data = []
