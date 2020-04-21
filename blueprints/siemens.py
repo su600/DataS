@@ -76,7 +76,6 @@ def siemens():
         c = (int((address2 - b) * 10))
 
         # print(t,b,c)
-        # todo try需要测试
         try:
             variable.append(ss + address)
             # print(variable)
@@ -90,7 +89,6 @@ def siemens():
             siemensdata0 = dict(zip(variable, data))
             # print(siemens0)
             return siemensdata0,tt0
-            # todo 返回值显示
     
     if request.method =="POST":
         # flash("run", "run")
@@ -148,44 +146,3 @@ def siemens():
         # return render_template("siemens.html")
     return render_template("siemens.html")
     # return render_template("rockwell.html")
-
-# @siemens_.route("/s7read",methods=["POST","GET"])
-# @is_login
-def s7read(plc,iqm,address):
-
-    ss=""  # 标识I/Q/M
-    t=areas[iqm]
-    variable=[]
-    data=[]
-    # print(address)
-    if address=='':
-        address2=0.0
-    else:
-        address2=(float(address))
-    if t ==129:
-        ss = "I "
-    if t == 130:
-        ss = "Q "
-    if t == 131:
-        ss = "M "
-
-    b = (int(address2))
-    c = (int((address2-b)*10))
-
-    # print(t,b,c)
-    # todo try需要测试
-    try:
-        variable.append(ss + address)
-        # print(variable)
-        # timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        result=plc.read_area(t,0,b,8)  ## 变量类型，0，地址起始，固定8位
-        data.append(get_bool(result, 0, c) ) ## 地址偏移值
-        ttt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    except Exception as e:
-        print(e)
-    else:
-        siemensdata = dict(zip(variable, data))
-        print(siemensdata)
-        # todo 返回值显示
-        # return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
-    # return render_template("siemens.html")
