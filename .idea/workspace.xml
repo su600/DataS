@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="influxdb data deadband">
-      <change afterPath="$PROJECT_DIR$/sssssss.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/email22.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/ss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/influxdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/influxdb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/rockwell.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/rockwell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/siemens.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/siemens.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/excelsubmit.py" beforeDir="false" afterPath="$PROJECT_DIR$/excelsubmit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rockwell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rockwell.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/siemens.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/siemens.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/sssssss.py" beforeDir="false" />
-    </list>
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="fix multi submit action" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -382,7 +368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587223417433</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="fix multi submit action">
+      <created>1587435373390</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1587435373390</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -433,20 +426,21 @@
     <MESSAGE value="rockwell influxdb Point/taglist contains IO" />
     <MESSAGE value="fix Blueprint import error/update influxdb for rockwell only" />
     <MESSAGE value="influxdb data deadband" />
-    <option name="LAST_COMMIT_MESSAGE" value="influxdb data deadband" />
+    <MESSAGE value="fix multi submit action" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix multi submit action" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585816483089">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1585816483089" />
-    <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2" timestamp="1587223416142">
+    <state x="373" y="22" width="609" height="764" key="CommitChangelistDialog2" timestamp="1587435392195">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="373" y="22" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587090632770" />
+    <state x="373" y="22" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587435392195" />
     <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899930835" />
     <state x="352" y="50" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1587223416142" />
     <state x="251" y="-904" width="989" height="504" key="DiffContextDialog" timestamp="1584694860944">
@@ -534,12 +528,12 @@
     <state x="2194" y="-679" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585892944484" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424238393" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1584204338230" />
-    <state x="367" y="153" key="Vcs.Push.Dialog.v2" timestamp="1587223419773">
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2" timestamp="1587435381301">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
-    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587090636007" />
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587435381301" />
     <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899934944" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1587223419773" />
     <state x="3075" y="-626" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586761532187">
