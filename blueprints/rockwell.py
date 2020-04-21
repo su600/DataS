@@ -216,7 +216,6 @@ def rockwellscan():
             #     data = s7read(plc, forminfo["iqm"], forminfo["address"])
             #     print(data)
             #     # return data
-
             if forminfo["Action"]=="influxdb":  # influxdb连接信息
                 print(forminfo)
                 influxdbip = forminfo["influxdb"]

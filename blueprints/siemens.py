@@ -54,6 +54,44 @@ def siemens():
         else:
             flash("已断开连接", "connect1")  ## connect1 操作成功提示
 
+    def s7read(plc, iqm, address):
+
+        ss = ""  # 标识I/Q/M
+        t = areas[iqm]
+        variable = []
+        data = []
+        # print(address)
+        if address == '':
+            address2 = 0.0
+        else:
+            address2 = (float(address))
+        if t == 129:
+            ss = "I "
+        if t == 130:
+            ss = "Q "
+        if t == 131:
+            ss = "M "
+
+        b = (int(address2))
+        c = (int((address2 - b) * 10))
+
+        # print(t,b,c)
+        # todo try需要测试
+        try:
+            variable.append(ss + address)
+            # print(variable)
+            # timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            result = plc.read_area(t, 0, b, 8)  ## 变量类型，0，地址起始，固定8位
+            data.append(get_bool(result, 0, c))  ## 地址偏移值
+            tt0 = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        except Exception as e:
+            print(e)
+        else:
+            siemensdata0 = dict(zip(variable, data))
+            # print(siemens0)
+            return siemensdata0,tt0
+            # todo 返回值显示
+    
     if request.method =="POST":
         # flash("run", "run")
         # print("222222222")
@@ -77,7 +115,6 @@ def siemens():
                 # try:
                 #     f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
                 # except Exception as e:
-                #     print(e)
                 #     flash(e, "uploadstatus")
                 # else:
                 #     flash("变量表上传成功","uploadstatus")
@@ -94,9 +131,9 @@ def siemens():
 
         if  forminfo["Action"] == "s7read": #变量地址
             # print(forminfo)
-            s7read(plc,forminfo["iqm"],forminfo["address"])
+            siemensdata,ttt=s7read(plc,forminfo["iqm"],forminfo["address"])
             # print(data)
-                # return data
+            return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
 
         if forminfo["Action"] == "influxdb": # influxdb连接信息
             print(forminfo)
@@ -112,13 +149,8 @@ def siemens():
     return render_template("siemens.html")
     # return render_template("rockwell.html")
 
-# @siemens_.route("/s7disconnect",methods=("POST","GET"))
+# @siemens_.route("/s7read",methods=["POST","GET"])
 # @is_login
-#
-#     return redirect('#jumbotron')
-
-@siemens_.route("/s7read",methods=("POST","GET"))
-@is_login
 def s7read(plc,iqm,address):
 
     ss=""  # 标识I/Q/M
@@ -144,7 +176,7 @@ def s7read(plc,iqm,address):
     # todo try需要测试
     try:
         variable.append(ss + address)
-        print(variable)
+        # print(variable)
         # timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         result=plc.read_area(t,0,b,8)  ## 变量类型，0，地址起始，固定8位
         data.append(get_bool(result, 0, c) ) ## 地址偏移值
@@ -155,5 +187,5 @@ def s7read(plc,iqm,address):
         siemensdata = dict(zip(variable, data))
         print(siemensdata)
         # todo 返回值显示
-        return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
-    return render_template("siemens.html")
+        # return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
+    # return render_template("siemens.html")
