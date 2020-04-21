@@ -11,7 +11,7 @@
 
 {% block content %}
 
-<div class="container-fluid" style="">
+<div class="container-fluid" style="" id="jumbotron">
 	<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
 		<div class="row">
 			<div class="col-md-5" style="text-align: justify;">
@@ -55,14 +55,15 @@
 			<option>2</option>
 			<option>3</option>
 		</select>
-		<button type="submit" onclick="aa()" class="btn btn-primary form-control" style="margin: 10px;">开始连接</button>
+		<button type="submit" name="Action" value="s7connect" class="btn btn-primary form-control" style="margin: 10px;">开始连接</button>
 		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-		<a href="dis" type="button" class="btn btn-danger form-control" style="margin: 10px;">断开连接</a>
+		<button type="submit" name="Action" value="s7disconnect" class="btn btn-danger form-control" style="margin: 10px;">断开连接</button>
+		<!-- <a href="s7disconnect" type="button" class="btn btn-danger form-control" style="margin: 10px;">断开连接</a> -->
 
 		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
 		{% if messages %}
 		{% for message in messages %}
-		<div class="alert alert-success alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px;"
+		<div class="alert alert-success alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px; padding-top:5px"
 			role="alert">
 			<strong>{{message}}</strong>
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -107,7 +108,7 @@
 		<label for="address">地址：</label>
 		<input type="number" step="0.1" placeholder="0.0" name="address" class="form-control required" id="address">
 
-		<button type="submit" id="read" class="btn btn-outline-primary">S7 Read</button>
+		<button type="submit" name="Action" value="s7read" id="read" class="btn btn-outline-primary">S7 Read</button>
 		<button type="button" id="write" class="btn btn-outline-secondary" disabled>S7 Write</button>
 		<button type="button" class="btn" style="background-color: teal; color: white; margin-left: 10px;">加入列表</button>
 		<!-- <script>
@@ -121,7 +122,7 @@
 	</form>
 
 	<div>
-		<label for="file">导入变量表</label>
+		<label for="file">导入变量表（TagName,TagType)</label>
 		<form method="POST" action="">
 			<div class="row">
 				<div class="col-md-4">
@@ -163,8 +164,8 @@
 				<thead class="thead-dark">
 					<tr>
 						<th style="width: 240px;">Time</th>
-						<th style="width: 300px;">Tagname</th>
-						<th style="width: 100px;">Value</th>
+						<th style="width: 340px;">Tagname</th>
+						<th style="width: 120px;">Value</th>
 					</tr>
 				</thead>
 				<tbody>

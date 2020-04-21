@@ -29,7 +29,7 @@
 <div class="container-fluid" style="">
 	<form class="form-inline" method="POST">
 
-		<a button type="button" href='rockwellscan' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
+		<a button type="button" href='rockwells' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
 		<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
 			{% for dev in dev_list %}
 			<option value="{{dev}}">{{dev}}</option>
@@ -37,7 +37,7 @@
 			<!-- <option value="192.168.100.1">111111</option>
 					<option value="192.168.100.12">2222222</option> -->
 		</select>
-		<button type="submit" class="btn btn-primary">开始连接</button>
+		<button type="submit" name="Action" value="rockwellip" class="btn btn-primary">开始连接</button>
 		<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
 		<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
 		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
@@ -91,7 +91,7 @@
 
 
 <div class="container-fluid" style="">
-	<label for="file">导入变量表</label>
+	<label for="file">导入变量表（TagName,TagType)</label>
 	<!-- <p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p> -->
 
 	<form method="POST" action="" enctype=multipart/form-data>
@@ -102,7 +102,7 @@
 			</div>
 			<div class="col-md-6">
 
-				<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+				<input type="submit" name="Action" value="file" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
 					value="上传"></input>
 				<a button href="rockwellread" style="padding-left: 40px;padding-right: 40px;"
 					class=" btn btn-primary">批量读取</a>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint,current_app
 from flask_bootstrap import Bootstrap
 
 import random, datetime
@@ -33,10 +33,13 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import random
 import time
 
+# from main import app
+
 ######################## InfluxDB 共用函数 #############################
 @influxdb_.route("/influxDB",methods=("POST","GET"))
 @is_login
 def influxDB(influxdbip,token,measurement,cycle):
+    # with current_app.app_context():
     print("influxDB写入")
     # a=1
     bucket = "data"
@@ -46,6 +49,7 @@ def influxDB(influxdbip,token,measurement,cycle):
     # query_api = client.query_api()
     # cycle=(int(cycle)/1000) #单位ms
     cycle = (int(cycle) )  # 单位s 对于热成型设备 设备本身刷新周期近似于1秒
+    # print(cycle)
     # cycle=(cycle)
     flash("开始写入influxDB","influx")
     while 1:

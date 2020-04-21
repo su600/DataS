@@ -15,9 +15,12 @@ import numpy as np
 from struct import pack, unpack_from  # Pylogix 结构体解析
 from blueprints.login import is_login
 
-from blueprints.influxdb import influxDB
+import blueprints.influxdb
 
 import threading
+
+from flask import copy_current_request_context
+import gevent
 
 rockwell_ = Blueprint("rockwell_",__name__)
 
@@ -63,7 +66,9 @@ def get_bit(value, bit_number):
 global rockwellip,rockwell_device_list,taglist
 rockwellip=''
 rockwelldata=()
+rockwell_device_list=[]
 ttt=''
+taglist=[]
 
 @rockwell_.route("/rockwell",methods=["POST","GET"])
 @is_login
@@ -144,9 +149,9 @@ def rockwellreadexcel(file):
     # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
     print(taglist)
 
-@rockwell_.route("/rockwellscan",methods=["POST","GET"])
+@rockwell_.route("/rockwells",methods=["POST","GET"])
 @is_login
-def rockwellscan():
+def rockwells():
     with PLC() as comm:
         # 设备扫描
         deviceip = []
@@ -160,28 +165,29 @@ def rockwellscan():
         scanresult="扫描到"+str(len(rockwell_device_list))+"台设备"
         print(scanresult)
         flash(scanresult,"scanresult") #扫描完成flash提示
-        return redirect(("rockwellscan2"))
+        return redirect("rockwellscan")
         # dev_list=str(device_dict)
         # return redirect(url_for(rockwell)) # url_for函数跳转
         # flash(device_dict,"device_dict") #设备扫描结果显示到前端页面下拉列表
 
-@rockwell_.route("/rockwellscan2",methods=["POST","GET"])
+# 考虑开始连接会再次扫描设备，因此将s和scan分开 s扫描 之后跳转scan进行选择和表单操作 url为/rockwellscan
+@rockwell_.route("/rockwellscan",methods=["POST","GET"])
 @is_login
-def rockwellscan2():
+def rockwellscan():
         if request.method == "POST":
             flash("run", "run")
             forminfo=request.form.to_dict() ## to_dict()加括号
             # 该页面的表单信息，只要submit都传到这里
             # forminfo=request.form.get('devicelist') # 获取到的value是str字符串
             # 还包括变量地址信息以及influxdb配置信息，通过字典长度区分各个表单
-            # todo 根据action value区分表单
+            # 已更新为 根据action value区分表单
             # print(forminfo)
             # print(type(forminfo))
             # aa=type(forminfo)
 
             ######## 每次“开始连接”实际只是获取选择的设备ip并写入全局变量
             # 程序逻辑调整为rockwellscan运行后跳转rockwellscan2 但是页面会整体刷新造成列表变化~~~~~~~~~~~
-            if len(forminfo)==1 : # AB PLC 连接信息 只需要IP
+            if forminfo["Action"]=="rockwellip" : # AB PLC 连接信息 只需要IP
                 print(forminfo)
                 aa=(forminfo["devicelist"]).split(" ")
                 aa=aa[len(aa)-1] #获取ip
@@ -192,14 +198,14 @@ def rockwellscan2():
                 # print(rockwellip)
 
             # if (forminfo)=={}:  # 上传变量表 #
-            if len(forminfo)==2: #### 是excel就调用readexcel
+            if forminfo["Action"]=="file" : #### 是excel就调用readexcel
                 # print("22222222222")
                 try:
                     file = request.files.get('file')
                     file.save('D:/' + secure_filename(file.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
                     rockwellreadexcel(file)
                 except Exception as e:
-                    print(e)
+                    # print(e)
                     flash(e, "uploadstatus")
                 else:
                     # 保存测试
@@ -211,25 +217,36 @@ def rockwellscan2():
             #     print(data)
             #     # return data
 
-            elif len(forminfo) == 4:  # influxdb连接信息
-                # print("11111111111")
+            if forminfo["Action"]=="influxdb":  # influxdb连接信息
                 print(forminfo)
                 influxdbip = forminfo["influxdb"]
                 token = forminfo["token"]
                 measurement = forminfo["measurement"]
                 cycle = forminfo["cycle"]
                 flash("写入InfluxDB", "influx")
-                # 添加线程 todo 上下文处理
 
-                # current_app.app_context().push()
-                with current_app.test_request_context('/rockwellscan2', method='GET'):
-                    t1 = threading.Thread(target= influxDB, args=(influxdbip, token, measurement, cycle,))
+                # 添加线程 todo 上下文处理/线程的外部停止
+                # from flask import current_app
+                # from main import app
+                # app_ctx = app.app_context()
+                # app_ctx.push()
+                # with app.test_request_context("/rockwellscan"):
+                #     print(current_app.name)
+                    # influxdbip = forminfo["influxdb"]
+                    # token = forminfo["token"]
+                    # measurement = forminfo["measurement"]
+                    # cycle = forminfo["cycle"]
+                # print(current_app)
+                # app.app_context().push()
+
+                t1 = threading.Thread(target= blueprints.influxdb.influxDB, args=(influxdbip, token, measurement, cycle,))
                 # t1.setDaemon(True)
-                    t1.start()
+                t1.start()
+                # app_ctx.pop()
                 # influxDB(influxdbip, token, measurement, cycle)
 
         # return redirect("#")
-        # flash(rockwell_device_list,"dev_list") # flash只能传递字符串
+        # flash(rockwell_device_list,"dev_list") #flash只能传递字符串
         # return jsonify()
         # return redirect(url_for("rockwell"))
         return render_template("rockwell.html",dev_list=rockwell_device_list)#设备扫描结果显示到前端页面下拉列表
