@@ -84,6 +84,6 @@ if __name__=="__main__":
                 address = input()
                 t,b,c=ch(address)
                 # print(t,b,c)
-                print("地址 %s的值是"%address,"%s"%read(plc,b,c,t))
+                print("地址 %s的值是"%address,"%s"% read(plc,b,c,t))
                 print("\n")
                 # break
