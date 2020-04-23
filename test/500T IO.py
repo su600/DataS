@@ -158,61 +158,92 @@ def rockwellreadexcel():
     # todo 存在重复筛选的问题 应该可以简化为一次
     # 筛选变量 根据IO性质，剔除无用OI变量 （I的剔除O O的剔除I）
     # 也可以写为 data2.TagType 不过看起来不够明显，修改不方便
-    data2 = data2[(data2['TagType'].str.contains("IF")   & ~data2['TagType'].str.contains("O"))
-                  | (data2['TagType'].str.contains("OF") & ~data2['TagType'].str.contains("I"))
-                  | (data2['TagType'].str.contains("DI") & ~data2['TagType'].str.contains("O"))
-                  | (data2['TagType'].str.contains("DO") & ~data2['TagType'].str.contains("I"))
-                  | (data2['TagType'].str.contains("IT") & ~data2['TagType'].str.contains("O"))]
+    data2 = data2[(data2['TagType'].str.contains("I")   & ~data2['TagType'].str.contains("O"))
+                  | (data2['TagType'].str.contains("O") & ~data2['TagType'].str.contains("I"))]
     # print(list(range(data2.shape[0])))
     # print(data2)
-    data2=data2.reset_index(drop=True)  # todo 实际数据列表的数据删除了 但是索引依然存在 需要重新生成索引
+    data2=data2.reset_index(drop=True)  # todo 实际数据列表的数据删除了 但是旧的索引依然存在 需要重新生成索引
     # print(data2)
-    # todo 添加一列作为IOType 以下所有操作根据IOType进行 减少匹配和筛选 ======
 
-    # todo 函数复用
+    # todo 生成IOtype列 以下所有操作根据IOType进行 减少匹配和筛选
+    # 函数复用
     import re #正则表达式
-    ccc=re.findall(r'_(.+?):', str(data2[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagType']))
-    ccc=re.findall(r'\d+',str(ccc))
-    print(ccc,type(ccc))
-    # data2[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]
-    # (data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O"))
-    # print(data2.shape[0])
-    IF=data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagName']
-    # data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")] = [IF.loc[0]['TagName'] + '.Ch' + '0' + 'Data',IF.loc[0]['TagType']]
-    print(IF,type(IF))
-    print(IF[0])
+    IOtype=data2['TagType'].to_numpy().tolist()
+    # print(IOtype)
+    IOtype=re.findall(r'_(.+?):', str(IOtype))
+    # print(IOtype)
+    # ccc=re.findall(r'_(.+?):', str(data2[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagType']))
+    data2.insert(2,'IOtype',IOtype) #添加一列作为IOType
+    # print(data2)
 
-    # todo IF的大小和ccc的大小是一样的
+    # # todo 根据IOtype筛选 简化筛选过程 O剔除I I剔除O IOtype生成还没有剔除IO 根据IOtype来剔除会误筛选 还是放到前面筛选
+    # data2 = data2[(data2['IOtype'].str.contains("I")   & ~data2['TagName'].str.contains(":O"))
+    #               | (data2['IOtype'].str.contains("O") & ~data2['TagName'].str.contains(":I"))]
+    # data2 = data2.reset_index(drop=True)  # 实际数据列表的数据删除了 但是旧的索引依然存在 需要重新生成索引
+    # print(data2)
 
-    # todo 在嵌套循环里会多次循环 结果不对
-    for i in range(int(ccc[0]) - 1):
-        # print(i)
-        if i == 0:
-            data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Ch' + str(i) + 'Data'
+    # IOtype0=data2.IOtype.str[0].to_numpy().tolist()
+    # print("IOtype0是")
+    # print(IOtype0)
 
-    # todo 两个一样的模块 需要分别对应处理  已实现 嵌套循环 添加.ChXData
-    for n in range(len(ccc)):
-        for i in range(int(ccc[0])-1):
+    # 提取IOType 判断多路还是一路
+    def IOTYPE(IOtype):
+        Ch=[]
+        # ccc=[]
+        for i in IOtype:
             # print(i)
-            # if i==0:
-            #     data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Ch' + str(i) + 'Data'
-            data2.loc[data2.shape[0]+n*(int(ccc[0])-1)] = [IF[n]+'.Ch' + str(i+1) + 'Data','BOOL']
-                # [data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagName'] + '.Ch' + str(i+1) + 'Data'
-                # ,data2[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagType']]
+            ccc = (''.join(re.findall(r'\d+', str(i))))# 点数 16位或 32位 或路数 返回值为列表 用join去除[]
+            # print(ccc,type(ccc))
+            if i[0] == "I" or i[0] == "O": # 判断是否是多路 第一位是I,O就是多路
+                Ch.append(ccc)
+            else:
+                Ch.append('one'+str(ccc))
+        # 考虑one32，Ch所有值统一为字符串 否则筛选会报错
+        return Ch
 
+    Ch=IOTYPE(IOtype)
+    # print(Ch)
+    data2.insert(3,'Ch',Ch) #添加一列作为IOType
+    # print(data2)
+
+    IF = data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagName']
+
+    # 根据索引修改特定行 首先确定索引正确
+    # print(data2.loc[data2['IOtype'].str[0] == 'I'])
+    # 第一位是I或O是多路
+
+    # data2=data2.mask(data2.IOtype.str[0] == 'I' , other="sss", inplace=False, axis=None, level=None, errors='raise', try_cast=False)
+    # data2=data2.mask(data2.IOtype.str[0] == 'O' , other="OOO", inplace=False, axis=None, level=None, errors='raise', try_cast=False)
+
+    # data2.loc[data2['IOtype'].str[0] == 'I'] = "IIII"
+    # data2.loc[data2['IOtype'].str[0] == 'O'] = "OOOO"
+    # data2 = data2.dropna()  ##剔除异常的nan
+    # data2.loc[data2['Ch'].str.contains("one")]
+    # print(sss,type(sss))
+    data2.loc[data2.Ch.str.contains("one"),'TagName'] += '.Data'
+    data2.loc[~data2.Ch.str.contains("one"),'TagName'] += ".Ch0Data"
     print(data2)
 
-    i=str(5)
-    data2.loc[data2.TagType.str.contains("OF") & ~data2.TagType.str.contains("I"), 'TagName'] += '.Ch' + i + 'Data'
-    data2.loc[data2.TagType.str.contains("DI") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Data'
-    data2.loc[data2.TagType.str.contains("DO") & ~data2.TagType.str.contains("I"), 'TagName'] += '.Data'
-    data2.loc[data2.TagType.str.contains("IT") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Ch' + i + 'Data'
+    # # todo 两个一样的模块 需要分别对应处理  已实现 嵌套循环 添加.ChXData
+    ii=0
+    for n in Ch: # 此处的Ch暂时是列表 不是数据表中的Ch列
+        if ('one' in n) ==False :
+            for i in range(1,int(n)): # range(1,8)=1~7 不包含8
+                data2.loc[data2.shape[0]] = (data2.loc[ii,'TagName']).replace('0', str(i)) # 根据Ch0修改通道号
+        ii += 1  # n的索引 对应各个Ch0Data
 
-    # print(data2)
-    # print(data2,type(data2))
+    print(data2)
+    #################
+    # i=str(5)
+    # data2.loc[data2.TagType.str.contains("OF") & ~data2.TagType.str.contains("I"), 'TagName'] += '.Ch' + i + 'Data'
+    # data2.loc[data2.TagType.str.contains("DI") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Data'
+    # data2.loc[data2.TagType.str.contains("DO") & ~data2.TagType.str.contains("I"), 'TagName'] += '.Data'
+    # data2.loc[data2.TagType.str.contains("IT") & ~data2.TagType.str.contains("O"), 'TagName'] += '.Ch' + i + 'Data'
+
+    # todo 仅提取TagName
     global taglist
+    data2=data2['TagName']
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
-    # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
-    # print(taglist)
+    print(taglist)
 
 rockwellreadexcel()
