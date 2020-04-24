@@ -109,7 +109,7 @@ def rockwellread():    #'读取函数'
             tagname.append(a.TagName)
             # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 #
             # IO长度不一定 暂定按16个 且形式不确定 IO模块数据类型复杂
-            # todo 原版程序 根据500T IO解析列表，分情况处理 主要是长度不同
+            # todo 原版程序 根据500T IO解析列表，分情况处理 主要是长度不同 变量名也不同
             ##############################
             # if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
             #     if  a.Value < 0 :
@@ -126,20 +126,29 @@ def rockwellread():    #'读取函数'
             # todo 测试用 仅包含IO变量 （原版在上面）
             # if a.TagName == "Local:1:I.Data" or a.TagName == "Local:1:O.Data" :
             # todo 需要区分数字量还是模拟量 数字量格式化为二进制 模拟量不格式化
-
+            # todo 位数不同处理不同 16位和32位有交集 不应该从数字大小判断位数长度 根据位数长度 选择对应的变换函数
             # todo 仅针对数字量
-            if  a.Value <= 32767 and a.Value >= -32768:
-                if a.Value <0:
-                    a.Value = 65536 + a.Value
+            # if a.Value >= -32768 and a.Value <= 32767:
+
+            ## 16位DIO变换函数
+            def DIO16(a):
+                if a.Value < 0:
+                    # print(a)
+                    a.Value = 32767 - a.Value
                 b = ('{:016b}'.format(a.Value))[::-1] #转二进制并 高位补零 IO逆序输出
                 b=list(b)
                 b.insert(4, '/')
                 b.insert(9, '/')
                 b.insert(14, '/')
-                # a.Value = ''.join(b)
-            elif a.Value <= 2147483647 and a.Value >=-2147483648:
-                if a.Value <0:
-                    a.Value = 4294967296 + a.Value
+                a.Value = ''.join(b)
+                return a.Value
+
+            # elif a.Value >= -2147483648 and a.Value <= 2147483647:
+
+            ## 32位DIO变换函数
+            def DIO32(a):
+                if a.Value < 0:
+                    a.Value = 2147483647 - a.Value
                 b = ('{:032b}'.format(a.Value))[::-1]  # 转二进制并 高位补零 IO逆序输出
                 b = list(b)
                 b.insert(4, '/')
@@ -149,7 +158,17 @@ def rockwellread():    #'读取函数'
                 b.insert(24, '/')
                 b.insert(29, '/')
                 b.insert(34, '/')
-            a.Value = ''.join(b)
+                a.Value = ''.join(b)
+                return a.Value
+
+            # # todo 根据iotype进行转换 变量表中也需要判断解析 生成相应的表变量名
+            # if IOtype是16位
+            #     a.Value=DIO16(a)
+            # if IOtype是32位
+            #     a.Value=DIO32()
+            # if IOtype是AIO
+            #     不用转二进制
+
             tagvalue.append(a.Value)
 
             ######################################
@@ -171,21 +190,62 @@ def rockwellreadexcel(file):
     # data = pd.DataFrame(pd.read_excel(file))
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
-    # data2=data2.dropna() ##剔除异常的nan
+    data2 = data2.dropna()  ##剔除异常的nan
 
-    # todo 测试IO用 注释掉了
-    # data2 = data2[data2['TagType'].isin(["INT","DINT","BOOL", "REAL"]) | data2['TagName'].str.contains("Local:") & ~data2['TagName'].str.contains(":C")  ]
+    # 变量筛选 不算是完全通用的筛选方式  ##剔除程序名,C变量 和已知类型之外的数据，保留IO变量
+    # isin()删选非IO变量  data2['TagType'].isin(["INT","DINT","BOOL", "REAL","COUNTER","TIMER","DWORD"]) 变量筛选
+    data2 = data2[data2['TagType'].isin(["INT", "DINT", "BOOL", "REAL"])
+                  | data2['TagName'].str.contains("Local:")
+                  & ~data2['TagName'].str.contains(":C")
+                  & ~data2['TagType'].str.contains("ASCII|MODULE")]
 
-    ## ["INT","DINT","BOOL",  "REAL","AB:Embedded_DiscreteIO:O:0","AB:Embedded_DiscreteIO:I:0"] "COUNTER","TIMER","DWORD"
-    ##剔除程序名,C变量 和已知类型之外的数据，保留IO变量
-    data2 = data2['TagName']
+    # todo 变量表中需要判断解析 生成相应的表变量名
+    # 筛选变量 根据IO性质，剔除无用OI变量 （I的剔除O O的剔除I） 也可以写为 data2.TagType 不过看起来不够明显，修改不方便
+    data2 = data2[(data2['TagType'].str.contains("I") & ~data2['TagType'].str.contains("O"))
+                  | (data2['TagType'].str.contains("O") & ~data2['TagType'].str.contains("I"))]
+
+    data2 = data2.reset_index(drop=True)  # todo 实际数据列表的数据删除了 但是旧的索引依然存在 需要重新生成索引
+
+    # todo 生成IOtype列 以下所有操作根据IOType进行 减少匹配和筛选
+    import re  # 正则表达式库
+    IOtype = data2['TagType'].to_numpy().tolist()
+    IOtype = re.findall(r'_(.+?):', str(IOtype))
+    data2.insert(2, 'IOtype', IOtype)  # 添加一列作为IOType
+
+    # todo 提取IOType 判断多路还是一路
+    def IOTYPE(IOtype):
+        Ch = []
+        for i in IOtype:
+            ccc = (''.join(re.findall(r'\d+', str(i))))  # 点数 16位或 32位 或路数 返回值为列表 用join去除[]
+            if i[0] == "I" or i[0] == "O":  # 判断是否是多路 第一位是I,O就是多路
+                Ch.append(ccc)
+            else:
+                Ch.append('one' + str(ccc))
+        # 考虑one32，Ch所有值统一为字符串 否则筛选会报错
+        return Ch
+
+    Ch = IOTYPE(IOtype)
+    data2.insert(3, 'Ch', Ch)  # 添加一列作为IOType
+
+    data2.loc[data2.Ch.str.contains("one"), 'TagName'] += '.Data'
+    data2.loc[~data2.Ch.str.contains("one"), 'TagName'] += ".Ch0Data"
     # print(data2)
 
-    # 添加IO变量.Data
-    # todo 测试IO用 注释掉了
-    # data2[data2.str.contains("Local:")] = data2[data2.str.contains("Local:")] + ".Data"
+    ## todo 两个一样的模块 需要分别对应处理 嵌套循环 添加.ChXData
+    ii = 0
+    for n in Ch:  # 此处的Ch暂时是列表 不是数据表中的Ch列
+        if ('one' in n) == False:
+            for i in range(1, int(n)):  # range(1,8)=1~7 不包含8
+                # 这里误替换了编号“10” 里面的0 修改替换字段位'Ch0'
+                data2.loc[data2.shape[0]] = [(data2.loc[ii, 'TagName']).replace('Ch0', 'Ch' + str(i)),
+                                             data2.loc[ii, 'TagType'], data2.loc[ii, 'IOtype'], data2.loc[ii, 'Ch']]
+        ii += 1  # n的索引 对应各个Ch0Data
 
-    print(data2)
+    print(data2) #最终处理的变量表
+
+    # todo 生成以后 需要保留Ch值，用于后续16位和32位的区分 最好可以省略
+    data2 = data2['TagName']
+    # print(data2)
     global taglist
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
     # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list

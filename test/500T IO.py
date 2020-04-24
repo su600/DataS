@@ -134,6 +134,8 @@ def rockwellread():    #'读取函数'
 
 def rockwellreadexcel():
     # print("readexcel"+file.filename)
+    start = time.time()
+
     file="D:\IO原始列表.xlsx"
     # data = pd.DataFrame(pd.read_excel(file))
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
@@ -206,7 +208,7 @@ def rockwellreadexcel():
     data2.insert(3,'Ch',Ch) #添加一列作为IOType
     # print(data2)
 
-    IF = data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagName']
+    # IF = data2.loc[data2.TagType.str.contains("IF") & ~data2.TagType.str.contains("O")]['TagName']
 
     # 根据索引修改特定行 首先确定索引正确
     # print(data2.loc[data2['IOtype'].str[0] == 'I'])
@@ -222,17 +224,25 @@ def rockwellreadexcel():
     # print(sss,type(sss))
     data2.loc[data2.Ch.str.contains("one"),'TagName'] += '.Data'
     data2.loc[~data2.Ch.str.contains("one"),'TagName'] += ".Ch0Data"
-    print(data2)
+    # print(data2)
 
-    # # todo 两个一样的模块 需要分别对应处理  已实现 嵌套循环 添加.ChXData
+    # # todo 两个一样的模块 需要分别对应处理  嵌套循环 添加.ChXData
     ii=0
     for n in Ch: # 此处的Ch暂时是列表 不是数据表中的Ch列
-        if ('one' in n) ==False :
+        if ('one' in n) == False :
             for i in range(1,int(n)): # range(1,8)=1~7 不包含8
-                data2.loc[data2.shape[0]] = (data2.loc[ii,'TagName']).replace('0', str(i)) # 根据Ch0修改通道号
+                # 根据Ch0修改通道号 这里误替换了编号“10” 里面的0
+                data2.loc[data2.shape[0]] = [(data2.loc[ii,'TagName']).replace('Ch0', 'Ch'+str(i)) ,
+                                data2.loc[ii,'TagType'], data2.loc[ii,'IOtype'],data2.loc[ii,'Ch']]
         ii += 1  # n的索引 对应各个Ch0Data
 
-    print(data2)
+    end = time.time()
+
+    print(f'处理耗时 {end - start} 秒')
+
+    # print(data2)
+    data2.to_excel('D:/Pandas_New_IO.xlsx',encoding='utf-8', index=False)  # 写入excel
+    print("写入 D:/Pandas_New_IO.xlsx 完成")
     #################
     # i=str(5)
     # data2.loc[data2.TagType.str.contains("OF") & ~data2.TagType.str.contains("I"), 'TagName'] += '.Ch' + i + 'Data'
@@ -244,6 +254,8 @@ def rockwellreadexcel():
     global taglist
     data2=data2['TagName']
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
-    print(taglist)
+    # print(taglist)
 
 rockwellreadexcel()
+
+
