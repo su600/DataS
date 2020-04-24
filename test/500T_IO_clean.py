@@ -4,9 +4,10 @@ Pandas处理AB PLC IO变量表 精简版程序 仅处理并生成新的变量表
 '''
 
 import pandas as pd
+import time
 
 def rockwellreadexcel():
-
+    start = time.time()
     file="D:\IO原始列表.xlsx"
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
@@ -50,7 +51,7 @@ def rockwellreadexcel():
 
     data2.loc[data2.Ch.str.contains("one"),'TagName'] += '.Data'
     data2.loc[~data2.Ch.str.contains("one"),'TagName'] += ".Ch0Data"
-    print(data2)
+    # print(data2)
 
     ## todo 两个一样的模块 需要分别对应处理 嵌套循环 添加.ChXData
     ii=0
@@ -62,7 +63,15 @@ def rockwellreadexcel():
                                              data2.loc[ii, 'TagType'], data2.loc[ii, 'IOtype'], data2.loc[ii, 'Ch']]
         ii += 1  # n的索引 对应各个Ch0Data
 
+    end = time.time()
+    print(f'处理耗时 {end - start} 秒')
+
     print(data2)
     data2.to_excel('D:/Pandas_New_IO.xlsx', encoding='utf-8', index=False) #写入excel
 
+start = time.time()
+
 rockwellreadexcel()
+
+end = time.time()
+print(f'处理耗时 {end - start} 秒')

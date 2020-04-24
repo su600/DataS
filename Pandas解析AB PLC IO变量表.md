@@ -8,7 +8,7 @@
 
 <img src="C:\Users\su514\AppData\Roaming\Typora\typora-user-images\image-20200424081449217.png" alt="image-20200424081449217" style="zoom: 40%;" />
 
-<img src="C:\Users\su514\AppData\Roaming\Typora\typora-user-images\image-20200424082420834.png" alt="image-20200424082420834" style="zoom: 25%;" />GitHub https://github.com/pandas-dev/pandas  <img src="C:\Users\su514\AppData\Roaming\Typora\typora-user-images\image-20200424082320212.png" alt="image-20200424082320212" style="zoom: 20%;" />Pandas中文网 https://www.pypandas.cn/ 
+<img src="C:\Users\su514\AppData\Roaming\Typora\typora-user-images\image-20200424082420834.png" alt="image-20200424082420834" style="zoom: 20%;" />GitHub https://github.com/pandas-dev/pandas <img src="C:\Users\su514\AppData\Roaming\Typora\typora-user-images\image-20200424082320212.png" alt="image-20200424082320212" style="zoom: 15%;" />Pandas中文网 https://www.pypandas.cn/ 
 
 > Pandas是一个强大的**分析结构化数据的工具集**,它的使用基础是Numpy（提供高性能的矩阵运算）；用于数据**挖掘和数据分析**，同时也提供**数据清洗**功能。Pandas是一个开源的、强大的 Python 数据分析支持库，BSD许可的库，为Python提供高性能、易于使用的数据结构和数据分析工具。
 

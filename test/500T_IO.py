@@ -136,7 +136,8 @@ def rockwellreadexcel():
     # print("readexcel"+file.filename)
     start = time.time()
 
-    file="D:\IO原始列表.xlsx"
+    # file="D:\IO原始列表.xlsx"
+    file ="C:/Users/su514/Desktop/IO测试列表.xlsx"
     # data = pd.DataFrame(pd.read_excel(file))
     # data2 = pd.read_excel(file, usecols=[0], header=None)  ##第一列 无表头 输出为DataFrame格式 带索引
     data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
