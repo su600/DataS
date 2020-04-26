@@ -18,9 +18,13 @@ program you specified.
 from pylogix import PLC
 
 with PLC() as comm:
-    comm.IPAddress = '192.168.1.9'
-    tags = comm.GetProgramTagList('Program:MiscHMI')
-    
-    for t in tags.Value:
-        print(t.TagName, t.DataType)
+    comm.IPAddress = '192.168.100.200'
+    tags = comm.GetModuleProperties(slot=3)
+    aa=comm.GetDeviceProperties()
+    # print(aa)
+    print(tags.TagName)
+    print(tags.Value)
+    print(tags.Status)
+    # for t in tags.Value:
+    #     print(t.TagName, t.DataType)
 
