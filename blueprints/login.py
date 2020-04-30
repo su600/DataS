@@ -12,6 +12,10 @@ import pandas as pd
 import numpy as np
 from struct import pack, unpack_from  # Pylogix 结构体解析
 
+# from flask_wtf.csrf import CsrfProtect
+# csrf = CsrfProtect()
+
+
 from flask import Blueprint
 # from blueprints.login import is_login
 
@@ -71,7 +75,7 @@ def is_admin(f):
 
     return wrapper
 
-
+# @csrf.exempt
 @login_.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -89,7 +93,7 @@ def register():
 
     return render_template('register.html')
 
-
+# @csrf.exempt
 @login_.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -111,13 +115,13 @@ def login():
             return redirect("#idlogin")
     return render_template("home.html")
 
-
+# @csrf.exempt
 @login_.route('/list')
 @is_login
 def list():
     return render_template('list.html', users=users)
 
-
+# @csrf.exempt
 @login_.route('/logout')
 def logout():
     #  将用户存储到session中的信息删除;
@@ -125,7 +129,7 @@ def logout():
     flash('注销成功....')
     return render_template('home.html')
 
-
+# @csrf.exempt
 @login_.route('/delete/<string:username>/')
 def delete(username):
     for user in users:

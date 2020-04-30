@@ -54,31 +54,40 @@
 	<div class="container-fluid " style="color: white;" id="influxdbsetting">
 		<div class="container-fluid" style="margin:0px;padding:30px ; background:rgb(2, 70, 148);">
 			<form class="form-inline " style="padding: 20px" method="POST">
-				<label for="influxdb">
-					<h5>InfluxDB地址：</h5>
+				<div class='form-row'>
+										
+					<label for="influxdb">
+						<h5>InfluxDB地址：</h5>
+					</label>
+					<input type="text" name="influxdb" id="influxdb" class="form-control" placeholder=""
+						aria-describedby="InfluxDB">
+
+					<label for="token">
+						<h5>Token：</h5>
+					</label>
+					<input type="password" name="token" id="token" class="form-control" placeholder=""
+						aria-describedby="InfluxDB">
+
+					<label for="measurement">
+						<h5>Measurement：</h5>
+					</label>
+					<input type="text" name="measurement" id="measurement" class="form-control" placeholder="设备名称"
+						aria-describedby="InfluxDB">
+				</div>
+
+				<div class='form-row' >
+				<label for="cycle" >
+					<h5>采集周期(秒)：</h5>
 				</label>
-				<input type="text" name="influxdb" id="influxdb" class="form-control" placeholder=""
-					aria-describedby="InfluxDB">
-				<label for="token">
-					<h5>Token：</h5>
-				</label>
-				<input type="password" name="token" id="token" class="form-control" placeholder=""
-					aria-describedby="InfluxDB">
-				<label for="measurement">
-					<h5>Measurement：</h5>
-				</label>
-				<input type="text" name="measurement" id="measurement" class="form-control" placeholder="设备名称"
-					aria-describedby="InfluxDB">
-				<label for="cycle">
-					<h5>采集周期（秒）</h5>
-				</label>
-				<input type="text" name="cycle" id="cycle" class="form-control" placeholder="1">
+				<input style="padding-block :30px; margin: 10px 0px; " type="text" name="cycle" id="cycle" class="form-control" placeholder="1">
 
 				<button class="btn btn-primary form-control" href="#influxdbsetting"
-					style="padding-block :30px; margin: 10px; " type="submit"  name="Action" value="influxdb" id="startinfluxdb"> 开始写入 </button>
+					style="padding-block :30px; margin: 10px; " type="submit" name="Action" value="influxdb"
+					id="startinfluxdb"> 开始写入 </button>
 				<!-- 开始写入后应禁用写入按钮 在页面上方显示运行状态 根据表单字典长度区分表单提交按钮-->
-				<a class="btn btn-danger form-control" style="padding-block: 30px; margin: 10px; "
-					type="button" role="button"> 停止写入 </a>
+				<a class="btn btn-danger form-control" style="padding-block: 30px; margin: 10px; " type="button"
+					role="button"> 停止写入 </a>
+				</div>
 				{% with messages = get_flashed_messages(category_filter=["influx"]) %}
 				{% if messages %}
 				{% for message in messages %}

@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update rockwell.py">
-      <change afterPath="$PROJECT_DIR$/test/Rockwell_Module_Scan.py" afterDir="false" />
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update rockwell IO/Module_Scan">
+      <change afterPath="$PROJECT_DIR$/blueprints/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/snooper_debug.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/rockwell.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/rockwell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/rockwell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/rockwell.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/get_program_tags_to_excel.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/get_program_tags_to_excel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blueprints/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blueprints/opcua.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/opcua.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/basic_server.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opcua-influxdb-grafana-dummy-master/server.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/opcua.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/opcua.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,10 +64,12 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/su514/Desktop/DataS/qq.py" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -73,28 +87,7 @@
       <recent name="C:\Users\su514\Desktop\DataS\test" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Rockwell_Module_Scan">
-    <configuration name="500T IO" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/500T IO.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.main">
     <configuration name="Rockwell_Module_Scan" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -108,48 +101,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/Rockwell_Module_Scan.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="get_program_tags_to_excel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/get_program_tags_to_excel.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="listcount" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/listcount.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,20 +130,83 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="server-example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Git clone/opcua-asyncio/examples" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Git clone/opcua-asyncio/examples/server-example.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="server-minimal (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Git clone/python-opcua-modbus-driver" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Git clone/python-opcua-modbus-driver/server-minimal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="server-minimal" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../Git clone/opcua-asyncio/examples" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../Git clone/opcua-asyncio/examples/server-minimal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.500T IO" />
-      <item itemvalue="Python.listcount" />
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.get_program_tags_to_excel" />
       <item itemvalue="Python.Rockwell_Module_Scan" />
+      <item itemvalue="Python.server-minimal" />
+      <item itemvalue="Python.server-example" />
+      <item itemvalue="Python.server-minimal (1)" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Rockwell_Module_Scan" />
-        <item itemvalue="Python.get_program_tags_to_excel" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.500T IO" />
-        <item itemvalue="Python.listcount" />
+        <item itemvalue="Python.server-minimal (1)" />
+        <item itemvalue="Python.server-example" />
+        <item itemvalue="Python.Rockwell_Module_Scan" />
+        <item itemvalue="Python.server-minimal" />
       </list>
     </recent_temporary>
   </component>
@@ -456,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587717203034</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="update rockwell IO/Module_Scan">
+      <created>1587876781799</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1587876781799</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -486,7 +507,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix excel-read/tabledisplay,iOS homescreen App" />
     <MESSAGE value="美化表格/添加滚动条/True False颜色" />
     <MESSAGE value="fix True/False color(js)" />
     <MESSAGE value="update Siemens read/table display" />
@@ -511,22 +531,23 @@
     <MESSAGE value="add Pandas解析AB PLC IO变量表.md" />
     <MESSAGE value="fix Local:10.O.Ch0Data误替换0/add 执行时间/Update md file" />
     <MESSAGE value="update rockwell.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="update rockwell.py" />
+    <MESSAGE value="update rockwell IO/Module_Scan" />
+    <option name="LAST_COMMIT_MESSAGE" value="update rockwell IO/Module_Scan" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587702852042">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587702852042" />
-    <state x="442" y="23" width="609" height="764" key="CommitChangelistDialog2" timestamp="1587717202220">
+    <state x="442" y="23" width="609" height="764" key="CommitChangelistDialog2" timestamp="1588000844935">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="469" y="16" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587709157128" />
+    <state x="469" y="16" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876780982" />
     <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899930835" />
-    <state x="442" y="23" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1587717202220" />
+    <state x="442" y="23" width="609" height="764" key="CommitChangelistDialog2/0.0.1549.840@0.0.1549.840" timestamp="1588000844935" />
     <state x="251" y="-904" width="989" height="504" key="DiffContextDialog" timestamp="1584694860944">
       <screen x="0" y="-1080" width="1549" height="840" />
     </state>
@@ -536,92 +557,92 @@
     </state>
     <state x="2508" y="-576" key="FileChooserDialogImpl/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586332116820" />
     <state x="2508" y="158" key="FileChooserDialogImpl/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424245581" />
-    <state width="1528" height="162" key="GridCell.Tab.0.bottom" timestamp="1587876692008">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="167" key="GridCell.Tab.0.bottom" timestamp="1588233908794">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1008" height="154" key="GridCell.Tab.0.bottom/0.0.1033.614@0.0.1033.614" timestamp="1587716485733" />
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
-    <state width="1528" height="162" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876692008" />
-    <state width="1192" height="227" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1587352540317" />
+    <state width="1528" height="167" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1588035528939" />
+    <state width="1528" height="167" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588233908794" />
     <state width="1331" height="213" key="GridCell.Tab.0.bottom/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1528" height="221" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1587570041743" />
-    <state width="1528" height="162" key="GridCell.Tab.0.center" timestamp="1587876692008">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="224" key="GridCell.Tab.0.bottom/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="167" key="GridCell.Tab.0.center" timestamp="1588233908793">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1008" height="154" key="GridCell.Tab.0.center/0.0.1033.614@0.0.1033.614" timestamp="1587716485733" />
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.center/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
-    <state width="1528" height="162" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876692008" />
-    <state width="1192" height="227" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1587352540317" />
+    <state width="1528" height="167" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1588035528939" />
+    <state width="1528" height="167" key="GridCell.Tab.0.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588233908793" />
     <state width="1331" height="213" key="GridCell.Tab.0.center/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1528" height="221" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1587570041743" />
-    <state width="1528" height="162" key="GridCell.Tab.0.left" timestamp="1587876692008">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="224" key="GridCell.Tab.0.center/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="167" key="GridCell.Tab.0.left" timestamp="1588233908793">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1008" height="154" key="GridCell.Tab.0.left/0.0.1033.614@0.0.1033.614" timestamp="1587716485733" />
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315647" />
     <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.left/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602053" />
-    <state width="1528" height="162" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876692008" />
-    <state width="1192" height="227" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1587352540317" />
+    <state width="1528" height="167" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1588035528939" />
+    <state width="1528" height="167" key="GridCell.Tab.0.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588233908793" />
     <state width="1331" height="213" key="GridCell.Tab.0.left/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1528" height="221" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1587570041743" />
-    <state width="1528" height="162" key="GridCell.Tab.0.right" timestamp="1587876692008">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="224" key="GridCell.Tab.0.left/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="167" key="GridCell.Tab.0.right" timestamp="1588233908793">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state width="1008" height="154" key="GridCell.Tab.0.right/0.0.1033.614@0.0.1033.614" timestamp="1587716485733" />
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585299315648" />
     <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585278194134" />
     <state width="1152" height="134" key="GridCell.Tab.0.right/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584608602054" />
-    <state width="1528" height="162" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876692008" />
-    <state width="1192" height="227" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1587352540317" />
+    <state width="1528" height="167" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1588035528939" />
+    <state width="1528" height="167" key="GridCell.Tab.0.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588233908793" />
     <state width="1331" height="213" key="GridCell.Tab.0.right/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584427146063" />
-    <state width="1528" height="221" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1587570041743" />
-    <state width="1528" height="231" key="GridCell.Tab.1.bottom" timestamp="1587874082375">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="224" key="GridCell.Tab.0.right/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="224" key="GridCell.Tab.1.bottom" timestamp="1588228427632">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
-    <state width="1528" height="231" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587874082375" />
-    <state width="1528" height="175" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876772" />
-    <state width="1528" height="233" key="GridCell.Tab.1.bottom/0.0.1549.840@0.0.1549.840" timestamp="1587481056646" />
-    <state width="1528" height="231" key="GridCell.Tab.1.center" timestamp="1587874082375">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="270" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587977820154" />
+    <state width="1528" height="224" key="GridCell.Tab.1.bottom/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588228427632" />
+    <state width="1528" height="224" key="GridCell.Tab.1.bottom/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="224" key="GridCell.Tab.1.center" timestamp="1588228427632">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
-    <state width="1528" height="231" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587874082375" />
-    <state width="1528" height="175" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876770" />
-    <state width="1528" height="233" key="GridCell.Tab.1.center/0.0.1549.840@0.0.1549.840" timestamp="1587481056646" />
-    <state width="1528" height="231" key="GridCell.Tab.1.left" timestamp="1587874082375">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="270" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587977820154" />
+    <state width="1528" height="224" key="GridCell.Tab.1.center/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588228427632" />
+    <state width="1528" height="224" key="GridCell.Tab.1.center/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="224" key="GridCell.Tab.1.left" timestamp="1588228427632">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
-    <state width="1528" height="231" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587874082375" />
-    <state width="1528" height="175" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876768" />
-    <state width="1528" height="233" key="GridCell.Tab.1.left/0.0.1549.840@0.0.1549.840" timestamp="1587481056646" />
-    <state width="1528" height="231" key="GridCell.Tab.1.right" timestamp="1587874082375">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state width="1528" height="270" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587977820154" />
+    <state width="1528" height="224" key="GridCell.Tab.1.left/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588228427632" />
+    <state width="1528" height="224" key="GridCell.Tab.1.left/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
+    <state width="1528" height="224" key="GridCell.Tab.1.right" timestamp="1588228427632">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
-    <state width="1528" height="231" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587874082375" />
-    <state width="1528" height="175" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586757876771" />
-    <state width="1528" height="233" key="GridCell.Tab.1.right/0.0.1549.840@0.0.1549.840" timestamp="1587481056646" />
+    <state width="1528" height="270" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587977820154" />
+    <state width="1528" height="224" key="GridCell.Tab.1.right/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588228427632" />
+    <state width="1528" height="224" key="GridCell.Tab.1.right/0.0.1549.840@0.0.1549.840" timestamp="1588000534663" />
     <state x="2552" y="-591" key="RollbackChangesDialog" timestamp="1586762326909">
       <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state x="2552" y="-591" key="RollbackChangesDialog/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586762326909" />
-    <state x="306" y="75" key="SettingsEditor" timestamp="1586508929546">
+    <state x="283" y="62" key="SettingsEditor" timestamp="1588000924853">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="2098" y="-455" key="SettingsEditor/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584585010543" />
     <state x="306" y="75" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1586508929546" />
     <state x="2194" y="-679" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585892944484" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424238393" />
-    <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1584204338230" />
-    <state x="422" y="135" key="Vcs.Push.Dialog.v2" timestamp="1587717205111">
+    <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1588000924853" />
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2" timestamp="1587876783373">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
-    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587709160653" />
+    <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876783373" />
     <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585899934944" />
     <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1587717205111" />
     <state x="3075" y="-626" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586761532187">
@@ -634,12 +655,12 @@
     <state x="2478" y="-150" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590087152" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587014900100" />
     <state x="558" y="350" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1549.840@0.0.1549.840" timestamp="1585059790685" />
-    <state x="470" y="161" width="672" height="678" key="search.everywhere.popup" timestamp="1587632837831">
-      <screen x="0" y="0" width="1549" height="840" />
+    <state x="2390" y="-573" width="672" height="678" key="search.everywhere.popup" timestamp="1588225684545">
+      <screen x="1920" y="-734" width="1549" height="840" />
     </state>
     <state x="469" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585123356568" />
     <state x="470" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587632837831" />
-    <state x="2390" y="-573" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1586761194707" />
+    <state x="2390" y="-573" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588225684545" />
     <state x="2389" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1584424797388" />
     <state x="470" y="161" width="672" height="678" key="search.everywhere.popup/0.0.1549.840@0.0.1549.840" timestamp="1587217431187" />
   </component>
