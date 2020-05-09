@@ -199,70 +199,62 @@ def rockwellreadexcel(file):
                   | data2['TagName'].str.contains("Local:")
                   & ~data2['TagName'].str.contains(":C")
                   & ~data2['TagType'].str.contains("ASCII|MODULE|Embedded")]
-    data2 = data2.reset_index(drop=True)  #
+    # data2 = data2.reset_index(drop=True)  #
 
-    def IO(data2):
-        '''
-            一般来说不需要读取IO值 写在函数里备用
-            对于实验室的PLC 没有IO模块 以下程序都不适用了
-            变量表中需要判断解析 生成相应的表变量名
-        :param data2: 筛选完的变量表
-        :return: 处理完的变量表 用于IO处理
-        '''
+    # todo 对于实验室的PLC 没有IO模块 以下程序都不适用了
+    # 变量表中需要判断解析 生成相应的表变量名
+    # 筛选变量 根据IO性质，剔除无用OI变量 （I的剔除O O的剔除I） 也可以写为 data2.TagType 不过看起来不够明显，修改不方便
+    data2 = data2[(data2['TagType'].str.contains("I") & ~data2['TagType'].str.contains("O"))
+                  | (data2['TagType'].str.contains("O") & ~data2['TagType'].str.contains("I"))]
 
-        # 筛选变量 根据IO性质，剔除无用OI变量 （I的剔除O O的剔除I） 也可以写为 data2.TagType 不过看起来不够明显，修改不方便
-        data2 = data2[(data2['TagType'].str.contains("I") & ~data2['TagType'].str.contains("O"))
-                      | (data2['TagType'].str.contains("O") & ~data2['TagType'].str.contains("I"))]
+    data2 = data2.reset_index(drop=True)  # 实际数据列表的数据删除了 但是旧的索引依然存在 需要重新生成索引
 
-        data2 = data2.reset_index(drop=True)  # 实际数据列表的数据删除了 但是旧的索引依然存在 需要重新生成索引
+    # 生成IOtype列 以下所有操作根据IOType进行 减少匹配和筛选
+    import re  # 正则表达式库
+    IOtype = data2['TagType'].to_numpy().tolist()
+    IOtype = re.findall(r'_(.+?):', str(IOtype))
+    # print(IOtype)
+    # todo 对于完整变量表 insert需要在对应的行操作而不是直接插入 否则行数不匹配 不能直接按顺序插入 考虑IO和非IO分开？
+    data2.insert(2, 'IOtype', IOtype)  # 添加一列作为IOType
 
-        # 生成IOtype列 以下所有操作根据IOType进行 减少匹配和筛选
-        import re  # 正则表达式库
-        IOtype = data2['TagType'].to_numpy().tolist()
-        IOtype = re.findall(r'_(.+?):', str(IOtype))
-        # print(IOtype)
-        # todo 对于完整变量表 insert需要在对应的行操作而不是直接插入 否则行数不匹配 不能直接按顺序插入 考虑IO和非IO分开？
-        data2.insert(2, 'IOtype', IOtype)  # 添加一列作为IOType
+    # 提取IOType 判断多路还是一路
+    def IOTYPE(IOtype):
+        Ch = []
+        for i in IOtype:
+            ccc = (''.join(re.findall(r'\d+', str(i))))  # 点数 16位或 32位 或路数 返回值为列表 用join去除[]
+            if i[0] == "I" or i[0] == "O":  # 判断是否是多路 第一位是I,O就是多路
+                Ch.append(ccc)
+            else:
+                Ch.append('one' + str(ccc))
+        # 考虑one32，Ch所有值统一为字符串 否则筛选会报错
+        return Ch
 
-        # 提取IOType 判断多路还是一路
-        def IOTYPE(IOtype):
-            Ch = []
-            for i in IOtype:
-                ccc = (''.join(re.findall(r'\d+', str(i))))  # 点数 16位或 32位 或路数 返回值为列表 用join去除[]
-                if i[0] == "I" or i[0] == "O":  # 判断是否是多路 第一位是I,O就是多路
-                    Ch.append(ccc)
-                else:
-                    Ch.append('one' + str(ccc))
-            # 考虑one32，Ch所有值统一为字符串 否则筛选会报错
-            return Ch
+    Ch = IOTYPE(IOtype)
+    data2.insert(3, 'Ch', Ch)  # 添加一列作为IOType
 
-        Ch = IOTYPE(IOtype)
-        data2.insert(3, 'Ch', Ch)  # 添加一列作为IOType
+    data2.loc[data2.Ch.str.contains("one"), 'TagName'] += '.Data'
+    data2.loc[~data2.Ch.str.contains("one"), 'TagName'] += ".Ch0Data"
+    # print(data2)
 
-        data2.loc[data2.Ch.str.contains("one"), 'TagName'] += '.Data'
-        data2.loc[~data2.Ch.str.contains("one"), 'TagName'] += ".Ch0Data"
-        # print(data2)
+    ##两个一样的模块 需要分别对应处理 嵌套循环 添加.ChXData
+    ii = 0
+    for n in Ch:  # 此处的Ch暂时是列表 不是数据表中的Ch列
+        if ('one' in n) == False:
+            for i in range(1, int(n)):  # range(1,8)=1~7 不包含8
+                # 这里误替换了编号“10” 里面的0 修改替换字段位'Ch0'
+                data2.loc[data2.shape[0]] = [(data2.loc[ii, 'TagName']).replace('Ch0', 'Ch' + str(i)),
+                                             data2.loc[ii, 'TagType'], data2.loc[ii, 'IOtype'], data2.loc[ii, 'Ch']]
+        ii += 1  # n的索引 对应各个Ch0Data
 
-        ##两个一样的模块 需要分别对应处理 嵌套循环 添加.ChXData
-        ii = 0
-        for n in Ch:  # 此处的Ch暂时是列表 不是数据表中的Ch列
-            if ('one' in n) == False:
-                for i in range(1, int(n)):  # range(1,8)=1~7 不包含8
-                    # 这里误替换了编号“10” 里面的0 修改替换字段位'Ch0'
-                    data2.loc[data2.shape[0]] = [(data2.loc[ii, 'TagName']).replace('Ch0', 'Ch' + str(i)),
-                                                 data2.loc[ii, 'TagType'], data2.loc[ii, 'IOtype'], data2.loc[ii, 'Ch']]
-            ii += 1  # n的索引 对应各个Ch0Data
-        return data2
-        # print(data2) #最终处理的变量表
+    # print(data2) #最终处理的变量表
 
-        # todo 生成以后 需要保留Ch值，用于后续16位和32位的区分 最好可以省略
-
+    # todo 生成以后 需要保留Ch值，用于后续16位和32位的区分 最好可以省略
     data2 = data2['TagName']
     # print(data2)
     global taglist
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
     # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
-    # print("处理完的变量表",taglist)
+    print("处理完的变量表",taglist)
 
 @rockwell_.route("/rockwells",methods=["POST","GET"])
 @is_login
@@ -336,8 +328,7 @@ def rockwellscan():
                 cycle = forminfo["cycle"]
                 flash("写入InfluxDB", "influx")
 
-                # 添加线程 fixme 上下文处理
-                #  fixme 自定义线程类 线程的外部停止
+                # 添加线程 fixme 上下文处理/线程的外部停止
                 # from flask import current_app
                 # from main import app
                 # app_ctx = app.app_context()
@@ -351,7 +342,7 @@ def rockwellscan():
                 # print(current_app)
                 # app.app_context().push()
 
-                t1 = threading.Thread(target= blue_prints.INFLUXDB.influxdb.influxDB, args=(influxdbip, token, measurement, cycle,))
+                t1 = threading.Thread(target= blue_prints.influxdb.influxDB, args=(influxdbip, token, measurement, cycle,))
                 # t1.setDaemon(True)
                 t1.start()
                 # app_ctx.pop()

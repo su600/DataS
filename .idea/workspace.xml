@@ -1,57 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update base.html/opcua">
-      <change afterPath="$PROJECT_DIR$/test/read_multi.py" afterDir="false" />
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update s7_multi_read (20 vars)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blue_prints/ROCKWELL/rockwell.py" beforeDir="false" afterPath="$PROJECT_DIR$/blue_prints/ROCKWELL/rockwell.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blue_prints/SIEMENS/siemens.py" beforeDir="false" afterPath="$PROJECT_DIR$/blue_prints/SIEMENS/siemens.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/SETTINGS/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/SETTINGS/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/opcua.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/opcua.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprints/siemens.py" beforeDir="false" afterPath="$PROJECT_DIR$/blueprints/siemens.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/routes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/site.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/True.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/feather.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/popper.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/static/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/partials/nav.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/partials/object_creation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/partials/variable_creation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/templates/server.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/index/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/myplc/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/OPCUA/myserver/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/SETTINGS/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/SETTINGS/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/beckoff.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/influxdb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/login.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/opcua.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/rockwell.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/settings.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/blueprints/siemens.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/view22.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blueprinttest/viewdd.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heartbeat.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sssssss.py" beforeDir="false" afterPath="$PROJECT_DIR$/sssssss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/opcua.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/opcua.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/siemens.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/siemens.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -517,7 +470,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588234456322</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="update s7_multi_read (20 vars)">
+      <created>1589008916016</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1589008916016</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -547,7 +507,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fix True/False color(js)" />
     <MESSAGE value="update Siemens read/table display" />
     <MESSAGE value="use flask template" />
     <MESSAGE value="new flask template" />
@@ -572,20 +531,21 @@
     <MESSAGE value="update rockwell.py" />
     <MESSAGE value="update rockwell IO/Module_Scan" />
     <MESSAGE value="update base.html/opcua" />
-    <option name="LAST_COMMIT_MESSAGE" value="update base.html/opcua" />
+    <MESSAGE value="update s7_multi_read (20 vars)" />
+    <option name="LAST_COMMIT_MESSAGE" value="update s7_multi_read (20 vars)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587702852042">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587702852042" />
-    <state x="2265" y="-703" width="609" height="764" key="CommitChangelistDialog2" timestamp="1589008855927">
+    <state x="2265" y="-703" width="609" height="764" key="CommitChangelistDialog2" timestamp="1589008914714">
       <screen x="1920" y="-718" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="2265" y="-703" key="CommitChangelistDialog2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589008855927" />
+    <state x="2265" y="-703" key="CommitChangelistDialog2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589008914714" />
     <state x="469" y="16" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876780982" />
     <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588234455184" />
     <state x="345" y="15" key="CommitChangelistDialog2/0.0.1549.840/1920.0.1549.840@0.0.1549.840" timestamp="1588731081391" />
@@ -695,11 +655,12 @@
     <state x="2194" y="-679" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585892944484" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1588734683808" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1588000924853" />
-    <state x="2287" y="-581" key="Vcs.Push.Dialog.v2" timestamp="1588234459077">
-      <screen x="1920" y="-734" width="1549" height="840" />
+    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2" timestamp="1589008920029">
+      <screen x="1920" y="-718" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
+    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589008920029" />
     <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876783373" />
     <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588234459077" />
     <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1587717205111" />
