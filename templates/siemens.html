@@ -18,7 +18,7 @@
 				<img class="img-fluid" src="/static/siemens.png" alt="Siemens">
 			</div>
 			<div class="col-md-6">
-				<strong>基于Python-Snap7，西门子S7协议采集，写入InfluxDB，或转换为OPC UA
+				<strong>基于Python-Snap7，西门子S7协议采集，写入InfluxDB，转换为OPC UA
 					{% with messages = get_flashed_messages(category_filter=["run"]) %}
 					{% if messages %}
 					{% for message in messages %}
@@ -55,16 +55,18 @@
 			<option>2</option>
 			<option>3</option>
 		</select>
-		<button type="submit" name="Action" value="s7connect" class="btn btn-primary form-control" style="margin: 10px;">开始连接</button>
+		<button type="submit" name="Action" value="s7connect" class="btn btn-primary form-control"
+			style="margin: 10px;">开始连接</button>
 		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
-		<button type="submit" name="Action" value="s7disconnect" class="btn btn-danger form-control" style="margin: 10px;">断开连接</button>
+		<button type="submit" name="Action" value="s7disconnect" class="btn btn-danger form-control"
+			style="margin: 10px;">断开连接</button>
 		<!-- <a href="s7disconnect" type="button" class="btn btn-danger form-control" style="margin: 10px;">断开连接</a> -->
 
 		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
 		{% if messages %}
 		{% for message in messages %}
-		<div class="alert alert-success alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px; padding-top:5px"
-			role="alert">
+		<div class="alert alert-success alert-dismissible fade show form-control"
+			style="margin:0px 0px 0px 10px; padding-top:5px" role="alert">
 			<strong>{{message}}</strong>
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
@@ -121,39 +123,40 @@
 
 	</form>
 
-	<div>
-		<label for="file">导入变量表（TagName,TagType)</label>
-		<form method="POST" action="">
+	<div class="container-fluid" style="">
+		<label for="file">导入变量表</label>
+		<!-- <p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p> -->
+	
+		<form method="POST" enctype=multipart/form-data>
 			<div class="row">
 				<div class="col-md-4">
 					<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
 						placeholder="" aria-describedby="fileHelpId">
 				</div>
 				<div class="col-md-6">
-					<input type="submit" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
-						value="上传"></input>
-					<a button href="s7multiread" style="padding-left: 40px;padding-right: 40px;"
-						class=" btn btn-primary">批量读取</a>
+	
+					<button type="submit" name="Action" value="file" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+						>上传</button>
+					<button type="submit" name="Action" value="s7multiread" style="padding-left: 40px;padding-right: 40px;"
+						class=" btn btn-primary">批量读取</button>
 				</div>
 			</div>
 		</form>
+		{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-primary alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				<span class="sr-only">Close</span>
+			</button>
+			<strong>{{message}}</strong>
+		</div>
+	
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
 	</div>
-
-	{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
-	{% if messages %}
-	{% for message in messages %}
-	<div class="alert alert-primary alert-dismissible fade show" style="margin: 10px;" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-		<strong>{{message}}</strong>
-	</div>
-	{% endfor %}
-	{% endif %}
-	{% endwith %}
-
-</div>
 
 <div class="container-fluid" style="margin-top:20px;" id="数据结果">
 	<div class="row">

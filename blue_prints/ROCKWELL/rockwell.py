@@ -80,7 +80,7 @@ def rockwell():
 @is_login
 def rockwellread():    #'读取函数'
     # print("readlist")
-    print(taglist)
+    print("taglist",taglist)
     ### 分批读取函数 每次读取10个变量
     def readten(tags_list):
         l = len(tags_list)  # 变量表长度，如果大于10 必须分批读取保证不报错
@@ -104,7 +104,7 @@ def rockwellread():    #'读取函数'
         comm.IPAddress=rockwellip
         aa=readten(taglist) #调用函数分批读取变量
         ttt=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        print(aa)
+        # print(aa)
         for a in aa:
             tagname.append(a.TagName)
             # 对于 IO 特殊处理 转换为0000/0000/0000/0000形式 #
@@ -172,7 +172,7 @@ def rockwellread():    #'读取函数'
             tagvalue.append(a.Value)
 
             ######################################
-            # todo 仅针对IO变量 读取不做格式化 模拟量用不用取正值？
+            # todo 仅针对IO变量 模拟量用不用取正值？
             # tagvalue.append(a.Value)
             ######################################3
 
@@ -213,7 +213,7 @@ def rockwellreadexcel(file):
     import re  # 正则表达式库
     IOtype = data2['TagType'].to_numpy().tolist()
     IOtype = re.findall(r'_(.+?):', str(IOtype))
-    print(IOtype)
+    # print(IOtype)
     # todo 对于完整变量表 insert需要在对应的行操作而不是直接插入 否则行数不匹配 不能直接按顺序插入 考虑IO和非IO分开？
     data2.insert(2, 'IOtype', IOtype)  # 添加一列作为IOType
 
@@ -254,7 +254,7 @@ def rockwellreadexcel(file):
     global taglist
     taglist = data2.to_numpy().tolist()  # 转数组 转列表
     # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
-    print(taglist)
+    print("处理完的变量表",taglist)
 
 @rockwell_.route("/rockwells",methods=["POST","GET"])
 @is_login
@@ -318,11 +318,8 @@ def rockwellscan():
                     # 保存测试
                     flash("变量表上传成功", "uploadstatus")
 
-            # if len(forminfo) == 2:  # 变量地址
-            #     print(forminfo)
-            #     data = s7read(plc, forminfo["iqm"], forminfo["address"])
-            #     print(data)
-            #     # return data
+            # todo 批量读取修改为采用POST方式 在本路由中
+
             if forminfo["Action"]=="influxdb":  # influxdb连接信息
                 print(forminfo)
                 influxdbip = forminfo["influxdb"]
@@ -331,7 +328,7 @@ def rockwellscan():
                 cycle = forminfo["cycle"]
                 flash("写入InfluxDB", "influx")
 
-                # 添加线程 todo 上下文处理/线程的外部停止
+                # 添加线程 fixme 上下文处理/线程的外部停止
                 # from flask import current_app
                 # from main import app
                 # app_ctx = app.app_context()
@@ -345,7 +342,7 @@ def rockwellscan():
                 # print(current_app)
                 # app.app_context().push()
 
-                t1 = threading.Thread(target= blueprints.influxdb.influxDB, args=(influxdbip, token, measurement, cycle,))
+                t1 = threading.Thread(target= blue_prints.influxdb.influxDB, args=(influxdbip, token, measurement, cycle,))
                 # t1.setDaemon(True)
                 t1.start()
                 # app_ctx.pop()
@@ -353,16 +350,14 @@ def rockwellscan():
 
         # return redirect("#")
         # flash(rockwell_device_list,"dev_list") #flash只能传递字符串
-        # return jsonify()
-        # return redirect(url_for("rockwell"))
+
         return render_template("rockwell.html",dev_list=rockwell_device_list)#设备扫描结果显示到前端页面下拉列表
     ## 定向页面逻辑，此处要在rockwellscan中处理POST请求
     ## 前端调用后台程序 href=“xx” 通过路由调用，还有没有别的方法 采用url_for()跳转 参考登录函数处理方法
-    # return redirect("#")
 
 @rockwell_.route("/rockwell_get_all_vars")
 @is_login
-#### 获取所有变量 并下载 # 待办，剔除程序名称，编写变量读取函数，连续获取变量表 时间不变bug
+#### 获取所有变量 并下载
 def rockwell_get_all_vars(): #
     # print("111111111111111")
     with PLC() as comm:
@@ -375,7 +370,6 @@ def rockwell_get_all_vars(): #
             print(rockwellip)
             comm.IPAddress = rockwellip #全局变量
             # comm.IPAddress="192.168.100.200"
-            # print("2222222222")
             try:
                 tags = comm.GetTagList() #输出是Response结构体类型需要解析
                 comm.Close()

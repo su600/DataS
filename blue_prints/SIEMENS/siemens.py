@@ -6,6 +6,8 @@ from functools import wraps
 import time
 import functools
 import os
+
+from snap7.client import Client
 from werkzeug.utils import secure_filename
 import csv
 import pandas as pd
@@ -20,11 +22,18 @@ siemens_ = Blueprint("siemens_",__name__)
 '''
 西门子库文件 python-snap7
 '''
-# import s7read
 import snap7.client as client
 from snap7.util import *
 from snap7.snap7types import *
+import ctypes
+import struct
+from snap7.common import check_error
+# from snap7.snap7types import S7DataItem, S7AreaDB, S7WLByte
+from snap7.snap7types import *
+from snap7 import util
 
+global tag_name,tag_type, tag_address,data_type,plc
+tag_name=[]
 
 ###################### 西门子 #######################################
 
@@ -46,9 +55,8 @@ def siemens():
 
     def s7disconnect():
         try:
-            # plc = client.Client()
-            # plc = client.Client()
             plc.disconnect()
+            plc.destroy()
         except Exception:
             flash("断开失败", "connect0")  ##connect0 失败提醒
         else:
@@ -56,7 +64,9 @@ def siemens():
 
     # todo 仅支持BOOL，暂未添加其它数据类型
     def s7read(plc, iqm, address):
-
+        '''
+        单个地址变量读取
+        '''
         ss = ""  # 标识I/Q/M
         t = areas[iqm]
         variable = []
@@ -90,59 +100,170 @@ def siemens():
             siemensdata0 = dict(zip(variable, data))
             # print(siemens0)
             return siemensdata0,tt0
-    
+
+    def s7_read_excel(file):
+        '''
+          上传变量表后调用 即开始读取excel 生成待读取的变量表
+       '''
+        data2 = pd.read_excel(file)  ##输出为DataFrame格式 后续剔除未知类型
+        # data2 = data2.dropna()  ##剔除异常的nan
+
+        # 变量表筛选 变量类型转换
+        data2 = data2[['Name', 'Data Type', 'Logical Address']]
+        data2['Logical Address'] = data2['Logical Address'].str.replace('%', '').str.replace('I', 'PE') \
+            .str.replace('Q', 'PA').str.replace('M', 'MK')
+
+        # 例如 AA I1.0 Bool
+        tag_name = data2['Name'].to_numpy().tolist() # AA
+        tag_type = data2['Logical Address'].str[:2].to_numpy().tolist()  # 类型 I
+        tag_address = data2['Logical Address'].str[2:].to_numpy().tolist()  # 地址 1.0
+        data_type = data2['Data Type'].to_numpy().tolist() # 数据类型
+        return tag_name,tag_type,tag_address,data_type
+
+    def s7_multi_read(plc, tag_type, tag_address, data_type, tag_name):
+        '''
+            从s7_read_excel处理完的变量表中批量读取变量
+        '''
+        taglens = len(tag_type)
+        data_items = (S7DataItem * taglens)()  # 括号 数组
+
+        # fixme 如果只有一个变量的情况 可能会有bug
+        # 生成 data_items 待读取的变量结构体
+        for i in range(taglens):
+            # print(i)
+            data_items[i].Area = areas[tag_type[i]]  # 数据类型
+            data_items[i].WordLen = ctypes.c_int32(S7WLByte)
+            data_items[i].Result = ctypes.c_int32(0)
+            data_items[i].DBNumber = ctypes.c_int32(0)  # DB块 非DB写0
+            data_items[i].Start = ctypes.c_int32(int(tag_address[i].split('.')[0]))  # byte地址
+            data_items[i].Amount = ctypes.c_int32(8)  # 读取8位
+
+        for di in data_items:
+            # create the buffer
+            buffer = ctypes.create_string_buffer(di.Amount)
+            # cast the pointer to the buffer to the required type
+            pBuffer = ctypes.cast(ctypes.pointer(buffer),ctypes.POINTER(ctypes.c_uint8))
+            di.pData = pBuffer
+
+        # fixme 分批读取 snap7单次20个以上报错 数组切片报错 暂时未使用
+        def readten(data_items):
+            """
+            :type data_items: object
+            """
+            # print(type(data_items))
+            # print(type(data_items[10:20]))
+            # a=plc.read_multi_vars(data_items[10:20])
+            # print(a)
+            l = len(data_items)  # 变量表长度，如果大于20 必须分批读取 snp7
+            x = l // 20  # 取整
+            y = l % 20  # 取余数
+            a = 0  # 每一组变量的上标
+            val = []  # 初始化列表 每一组变量值
+            for n in range(x):
+                if n < x:
+                    val = val + plc.read_multi_vars(data_items)
+                    a += 1
+                    n += 1
+                if n == x and y != 0:
+                    val = val + plc.read_multi_vars(data_items)
+            val2 = val
+            return val2
+
+        result, data_items = plc.read_multi_vars(data_items)
+        # print('读取的原始数据',data_items)
+        ttt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+        for di in data_items:
+            check_error(di.Result)
+
+        result_values = []
+        # function to cast bytes to match data_types[] above
+        # byte_to_value = [util.get_bool, util.get_real, util.get_int,util.get_dword,util.get_string]
+        # unpack and test the result of each read
+        # todo 做一个函数列表，合并循环。逻辑上需要先读取，后get_bool
+        for i in range(0, len(data_items)):
+
+            ddd = data_items[i]
+            d_bit = int(tag_address[i].split('.')[1])
+            if data_type[i] == 'Bool':
+                value = util.get_bool(ddd.pData, 0, d_bit)
+            elif data_type[i] == 'Real':
+                value = util.get_real(ddd.pData, d_bit)
+            elif data_type[i] == 'Int':
+                value = util.get_int(ddd.pData, d_bit)
+            elif data_type[i] == 'Dword':
+                value = util.get_dword(ddd.pData, d_bit)
+            elif data_type[i] == 'String':
+                value = util.get_string(ddd.pData, d_bit)
+            result_values.append(value)
+
+        # fixme
+        # client.disconnect()
+        # client.destroy()
+
+        siemensdata = dict(zip(tag_name, result_values))
+        # print(siemensdata)
+        return siemensdata, ttt
+
+    # global plc
+    # global tag_type, tag_address
+
     if request.method =="POST":
         forminfo = request.form.to_dict()
-        # print(forminfo)
 
         # 该页面的表单信息，只要submit都传到这里，其中包括plc的连接信息 ip[str] rack[int] slot[int]
         # 还包括变量地址信息以及influxdb配置信息，(通过字典长度区分各个表单) 已更新为以submit的value来区分提交按钮
-        global plc
+
         if forminfo["Action"]=="file" : ####
             try:
-                f = request.files.get('file') ## 获取文件
-                print(f.filename)
-                f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
+                file = request.files.get('file')
+                # print(file.filename)
+                # todo 保存目录 默认改为当前目录下的Excel文件夹内
+                file.save('D:/' + secure_filename(file.filename))  ## C盘写入权限受限Permission denied 暂存在D盘，linux中应该没问题
+                global tag_name,tag_type,tag_address,data_type
+                tag_name,tag_type,tag_address,data_type=s7_read_excel(file) # 上传变量表后即开始读取excel 生成变量表
             except Exception as e:
-                print(e)
+                # print(e)
                 flash(e,"uploadstatus")
+                # new_name=(secure_filename(file.filename)).split('.',[0])+'_1'+(secure_filename(file.filename)).split('.',[1])
+                # print(new_name)
+                # file.save('D:/' + secure_filename(new_name))
             else:
-                ## 保存测试
                 flash("变量表上传成功", "uploadstatus")
-                # try:
-                #     f.save('D:/' + secure_filename(f.filename))  ## C盘写入权限受限Permission denied
-                # except Exception as e:
-                #     flash(e, "uploadstatus")
-                # else:
-                #     flash("变量表上传成功","uploadstatus")
+
 
         if forminfo["Action"] == "s7connect": #PLC 连接信息
-            print(forminfo)
+            # print(forminfo)
+            global plc
             plc=s7connect(str(forminfo["ipaddress"]),int(forminfo["rack"]),int(forminfo["slot"])) #数据类型转换
             # ip=forminfo["ipaddress"]
 
         if forminfo["Action"] == "s7disconnect":  # PLC 连接信息
-            # print(forminfo)
-            # plc = s7connect(str(forminfo["ipaddress"]), int(forminfo["rack"]), int(forminfo["slot"]))  # 数据类型转换
             s7disconnect()
 
         if  forminfo["Action"] == "s7read": #变量地址
-            # print(forminfo)
+
             siemensdata,ttt=s7read(plc,forminfo["iqm"],forminfo["address"])
-            # print(data)
             return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
 
+        if  forminfo["Action"] == "s7multiread": #变量地址
+            try:
+                siemensdata,ttt=s7_multi_read(plc, tag_type, tag_address,data_type,tag_name)
+            except Exception as e:
+                flash(e,'uploadstatus')
+                # redirect('#')
+            else:
+                return render_template("siemens.html",siemensdata=siemensdata,ttt=ttt)
+
         if forminfo["Action"] == "influxdb": # influxdb连接信息
-            print(forminfo)
             influxdbip = forminfo["influxdb"]
             token = forminfo["token"]
             measurement = forminfo["measurement"]
             cycle=forminfo["cycle"]
-            # Blueprints 调用
-            # blueprints.influxdb.influxDB(influxdbip,token,measurement,cycle)
+            # Blueprints 调用 已import
             influxDB(influxdbip,token,measurement,cycle)
         # flash(forminfo,"connect1")
         # return redirect("#")
         # return render_template("siemens.html")
     return render_template("siemens.html")
-    # return render_template("rockwell.html")
+

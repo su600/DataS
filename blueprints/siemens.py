@@ -54,6 +54,7 @@ def siemens():
         else:
             flash("已断开连接", "connect1")  ## connect1 操作成功提示
 
+    # todo 仅支持BOOL，暂未添加其它数据类型
     def s7read(plc, iqm, address):
 
         ss = ""  # 标识I/Q/M
@@ -91,8 +92,6 @@ def siemens():
             return siemensdata0,tt0
     
     if request.method =="POST":
-        # flash("run", "run")
-        # print("222222222")
         forminfo = request.form.to_dict()
         # print(forminfo)
 

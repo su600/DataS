@@ -1,3 +1,7 @@
+'''
+fixme 老的主程序 未采用Blueprint的版本
+'''
+
 from flask import Flask,render_template,request,redirect, url_for, flash, session, send_from_directory,send_file
 from flask_bootstrap import Bootstrap
 import random,datetime
