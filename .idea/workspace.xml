@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="update rockwell.py (IO is no use for 500T)">
+    <list default="true" id="be6cdc69-85fe-457b-94ce-ab0e6b2e76c2" name="Default" comment="fix rockwell(分组读取，修复小于10个的情况)">
       <change afterPath="$PROJECT_DIR$/blue_prints/ROCKWELL/Rockwell_Module_Scan.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/test/2submit.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/test/a.html" afterDir="false" />
@@ -11,6 +11,7 @@
       <change afterPath="$PROJECT_DIR$/templates/test/gantt.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/test/rockwell old.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/templates/test/th.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/heart_beat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blue_prints/OPCUA/opcua.py" beforeDir="false" afterPath="$PROJECT_DIR$/blue_prints/OPCUA/opcua.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blue_prints/ROCKWELL/rockwell.py" beforeDir="false" afterPath="$PROJECT_DIR$/blue_prints/ROCKWELL/rockwell.py" afterDir="false" />
@@ -503,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589011401675</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="fix rockwell(分组读取，修复小于10个的情况)">
+      <created>1589523718176</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1589523718176</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -533,7 +541,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="use flask template" />
     <MESSAGE value="new flask template" />
     <MESSAGE value="fix 分批读取变量表" />
     <MESSAGE value="Add .gitattributes Language&gt;Python" />
@@ -558,20 +565,21 @@
     <MESSAGE value="update base.html/opcua" />
     <MESSAGE value="update s7_multi_read (20 vars)" />
     <MESSAGE value="update rockwell.py (IO is no use for 500T)" />
-    <option name="LAST_COMMIT_MESSAGE" value="update rockwell.py (IO is no use for 500T)" />
+    <MESSAGE value="fix rockwell(分组读取，修复小于10个的情况)" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix rockwell(分组读取，修复小于10个的情况)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1587702852042">
       <screen x="0" y="0" width="1549" height="840" />
     </state>
     <state x="570" y="226" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587702852042" />
-    <state x="2552" y="-688" width="609" height="764" key="CommitChangelistDialog2" timestamp="1589011400690">
+    <state x="2552" y="-688" width="609" height="764" key="CommitChangelistDialog2" timestamp="1589523717158">
       <screen x="1920" y="-718" width="1549" height="840" />
     </state>
     <state x="345" y="-1065" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297890661" />
     <state x="352" y="50" key="CommitChangelistDialog2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100157810" />
     <state x="2265" y="-485" width="816" height="810" key="CommitChangelistDialog2/0.0.1549.840/1920.-500.1549.840@1920.-500.1549.840" timestamp="1584590073803" />
-    <state x="2552" y="-688" key="CommitChangelistDialog2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589011400690" />
+    <state x="2552" y="-688" key="CommitChangelistDialog2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589523717158" />
     <state x="469" y="16" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876780982" />
     <state x="2265" y="-719" key="CommitChangelistDialog2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588234455184" />
     <state x="345" y="15" key="CommitChangelistDialog2/0.0.1549.840/1920.0.1549.840@0.0.1549.840" timestamp="1588731081391" />
@@ -681,12 +689,12 @@
     <state x="2194" y="-679" key="SettingsEditor/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1585892944484" />
     <state x="2098" y="45" key="SettingsEditor/0.0.1549.840/1920.0.1549.840@1920.0.1549.840" timestamp="1588734683808" />
     <state x="283" y="62" key="SettingsEditor/0.0.1549.840@0.0.1549.840" timestamp="1588000924853" />
-    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2" timestamp="1589011403575">
+    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2" timestamp="1589523720992">
       <screen x="1920" y="-718" width="1549" height="840" />
     </state>
     <state x="367" y="-927" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.-1080.1549.840" timestamp="1585297894034" />
     <state x="367" y="153" key="Vcs.Push.Dialog.v2/0.0.1549.840/0.-1080.1549.840@0.0.1549.840" timestamp="1585100171266" />
-    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589011403575" />
+    <state x="2287" y="-565" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-718.1549.840@1920.-718.1549.840" timestamp="1589523720992" />
     <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@0.0.1549.840" timestamp="1587876783373" />
     <state x="2287" y="-581" key="Vcs.Push.Dialog.v2/0.0.1549.840/1920.-734.1549.840@1920.-734.1549.840" timestamp="1588234459077" />
     <state x="422" y="135" key="Vcs.Push.Dialog.v2/0.0.1549.840@0.0.1549.840" timestamp="1587717205111" />
@@ -716,6 +724,11 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>jar://$USER_HOME$/Anaconda3/Lib/site-packages/s71200opc-0.1.dev0-py3.7.egg!/index/__init__.py</url>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../Gitclone/opcua-asyncio/examples/server-rockwell.py</url>
+          <line>166</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
