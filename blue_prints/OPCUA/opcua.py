@@ -10,7 +10,8 @@ opcua_ = Blueprint("opcua_",__name__)
 
 from blue_prints.forms import ServerCreateForm
 '''
-opcua库文件 本路由开发中 
+OPC UA 库文件
+参考自 Desktop\Gitclone\opcserver
 '''
 # from flask_wtf.csrf import CSRFProtect
 # csrf = CSRFProtect()
@@ -24,6 +25,10 @@ from myplc import MyPlc
 from snap7.snap7exceptions import Snap7Exception
 import time
 
+# 兼容多种设备的驱动
+# todo rockwell AB
+# todo s7
+# todo KUKA
 
 class Control(MyServer, MyPlc):
     def __init__(self):

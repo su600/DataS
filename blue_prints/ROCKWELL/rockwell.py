@@ -82,19 +82,21 @@ def rockwellread():    #'读取函数'
     # print("readlist")
     print("taglist",taglist)
     ### 分批读取函数 每次读取10个变量
-    def readten(tags_list):
-        l = len(tags_list)  # 变量表长度，如果大于10 必须分批读取保证不报错
-        x = l // 10  # 取整
-        y = l % 10  # 取余数
+    def readten(tag_list):
+        l = len(tag_list)  # 变量表长度，如果大于10 必须分批读取保证不报错
+        x,y=divmod(l,10) # Python内置函数返回 整除和余数
+        if x==0:x=1 # 如果变量不足一组，需赋值为1
+        # x = l // 10  # 取整
+        # y = l % 10  # 取余数
         a = 0  # 每一组变量的上标
         val = []  # 初始化列表 每一组变量值
         for n in range(x):
             if n < x:
-                val = val + comm.Read(tags_list[10 * a:10 * (a + 1)])
+                val = val + comm.Read(tag_list[10 * a:10 * (a + 1)])
                 a += 1
                 n += 1
             if n == x and y != 0:
-                val = val + comm.Read(tags_list[10 * a:10 * a + y])
+                val = val + comm.Read(tag_list[10 * a:10 * a + y])
         vall = val
         return vall
 
