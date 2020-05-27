@@ -292,7 +292,7 @@ def rockwells():
 @is_login
 def rockwellscan():
         if request.method == "POST":
-            flash("run", "run")
+            # flash("run", "run")
             forminfo=request.form.to_dict() ## to_dict()加括号
             # 该页面的表单信息，只要submit都传到这里
             # forminfo=request.form.get('devicelist') # 获取到的value是str字符串

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet LastModified="2020-05-26T14:30:11.749Z" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:si="http://www.siemens.com/OPCUA/2017/SimaticNodeSetExtensions">
+    <NamespaceUris>
+        <Uri>SS</Uri>
+    </NamespaceUris>
+    <Models>
+        <Model ModelUri="SS" PublicationDate="2020-05-26T00:00:00Z" Version="1.00">
+            <RequiredModel ModelUri="http://opcfoundation.org/UA/" PublicationDate="2018-05-15T00:00:00Z" Version="1.04"/>
+        </Model>
+    </Models>
+    <Aliases>
+        <Alias Alias="Boolean">i=1</Alias>
+        <Alias Alias="Organizes">i=35</Alias>
+        <Alias Alias="HasTypeDefinition">i=40</Alias>
+    </Aliases>
+    <Extensions>
+        <Extension>
+            <si:Generator Product="SiOME" Edition="Standard" Version="1.5.0"/>
+        </Extension>
+    </Extensions>
+    <UAVariable DataType="Boolean" NodeId="ns=1;s=ss" BrowseName="1:sss" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>sss</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+        </References>
+    </UAVariable>
+</UANodeSet>

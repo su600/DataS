@@ -58,6 +58,11 @@ from blue_prints.BECKOFF.beckoff import beckoff_
 
 app.register_blueprint(beckoff_)
 
+## KUKA
+from blue_prints.KUKA.kuka import kuka_
+
+app.register_blueprint(kuka_)
+
 ## OPC UA
 from blue_prints.OPCUA.opcua import opcua_
 
