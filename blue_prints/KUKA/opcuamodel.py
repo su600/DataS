@@ -54,6 +54,9 @@ async def main():
     await server.import_xml('www.xml')
     # # get Objects node, this is where we should put our nodes
     objects = server.get_objects_node()
+    aa = objects.get_child([f"{idx}:sss"])
+    aa.write_value(True)
+    # print(aa)
 
     # todo 对于变量固定的 适合用xml生成信息模型
     # kukaobj1=await objects.add_object(idx,'KUKA_ROBOT_1')

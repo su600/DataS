@@ -99,13 +99,18 @@ def rockwellread(IP,tag_list):    #'读取函数'
         val = []  # 初始化列表 每一组变量值
         # print(tag_list,'11111')
         for n in range(x):
-            if n < x:
-                # print(tag_list)
-                val = val + comm.Read(tag_list[10 * a:10 * (a + 1)])
-                a += 1
-                n += 1
-            if n == x and y != 0:
-                val = val + comm.Read(tag_list[10 * a:10 * a + y])
+            try:
+                if n < x:
+                    # print(tag_list)
+                    val = val + comm.Read(tag_list[10 * a:10 * (a + 1)])
+                    a += 1
+                    n += 1
+                if n == x and y != 0:
+                    val = val + comm.Read(tag_list[10 * a:10 * a + y])
+            except Exception as e:
+                _logger.info(e)
+                time.sleep(30)
+
         vall = val
         # print(vall)
         return vall
@@ -128,8 +133,22 @@ async def main():
     # setup our server
     server = Server()
     await server.init()
-    server.set_endpoint('opc.tcp://0.0.0.0:4840/freeopcua/server/')
+    server.default_timeout=60
+    # server.set_endpoint('opc.tcp://0.0.0.0:4840/freeopcua/server/')
+    server.set_endpoint('opc.tcp://192.168.100.170:4840/')
     # setup our own namespace, not really necessary but should as spec
+
+    # 设置加密和密钥后 prosys可以连接
+    await server.load_certificate("certificate-example.der")
+    await server.load_private_key("private-key-example.pem")
+
+    # set all possible endpoint policies for clients to connect through
+    server.set_security_policy([
+        ua.SecurityPolicyType.NoSecurity,
+        ua.SecurityPolicyType.Basic256Sha256_SignAndEncrypt,
+        ua.SecurityPolicyType.Basic256Sha256_Sign])
+
+
     uri = 'http://examples.freeopcua.github.io'
     idx = await server.register_namespace(uri)
 
@@ -145,12 +164,19 @@ async def main():
     device.IP = '192.168.100.200'
     device.tag_list = ['Program:MainProgram.run', 'Program:MainProgram.start', 'Program:MainProgram.EMG',
                        'Local:1:O.Data.0', 'Local:1:O.Data.1', 'Local:1:O.Data.2','Local:1:O.Data.3', 'Local:1:O.Data.4',
-                       'Local:1:O.Data.5','Local:1:O.Data.6', 'Local:1:O.Data.7']
+                       'Local:1:O.Data.5','Local:1:O.Data.6', 'Local:1:O.Data.7','Program:MainProgram.EP_Timer.PRE','Program:MainProgram.EP_Timer.ACC',
+                       'Program:MainProgram.EP_Timer.EN','Program:MainProgram.EP_Timer.TT','Program:MainProgram.EP_Timer.DN']
     # 初始化 创建 opc ua变量
     a=0
     for i in device.tag_list:
         suvar.append(i)
-        suvar[a]=await suobj.add_variable(idx,i,0) # fixme 初始化都写0
+        nodeid=(f'ns={idx};s={i}')
+        # print(nodeid,type(nodeid))
+        # i=i.replace(':','-')
+        # 添加变量，add_variable(NodeId(xxxx), QualifiedName(xxxx), DataValue(xxx))
+        # 加QualifiedName（）否则直接写字符串":"会分割字符串 报错
+        suvar[a]=await suobj.add_variable(ua.NodeId(nodeid),ua.QualifiedName(i),True)
+        # fixme 初始化需不需要特殊操作？ 暂时都写0 最好和后续变量类型一致
         await suvar[a].set_writable()
         a+=1
 
