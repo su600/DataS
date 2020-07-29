@@ -71,11 +71,11 @@ def siemens():
         t = areas[iqm]
         variable = []
         data = []
-        # print(address)
+        print(address)
         if address == '':
-            address2 = 0.0
+            address2 = "0.0"
         else:
-            address2 = (float(address))
+            address2 = (str(address))
         if t == 129:
             ss = "I "
         if t == 130:
@@ -83,20 +83,25 @@ def siemens():
         if t == 131:
             ss = "M "
 
-        b = (int(address2))
-        c = (int((address2 - b) * 10))
+        b = int(address2.split(".")[0])
+        c = int(address2.split(".")[1])
+        # 字符串解析 以"."分割
+        # 注意  强制类型转换精度不一致 （address2 - b） * 10 导致0.99999取整变0
 
-        # print(t,b,c)
+
+        print(t,b,c)
         try:
             variable.append(ss + address)
             # print(variable)
             # timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             result = plc.read_area(t, 0, b, 8)  ## 变量类型，0，地址起始，固定8位
             data.append(get_bool(result, 0, c))  ## 地址偏移值
+            print(get_bool(result, 0, c))
             tt0 = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         except Exception as e:
             print(e)
         else:
+            # print(data)
             siemensdata0 = dict(zip(variable, data))
             # print(siemens0)
             return siemensdata0,tt0
@@ -235,6 +240,7 @@ def siemens():
         if forminfo["Action"] == "s7connect": #PLC 连接信息
             # print(forminfo)
             global plc
+            print(str(forminfo))
             plc=s7connect(str(forminfo["ipaddress"]),int(forminfo["rack"]),int(forminfo["slot"])) #数据类型转换
             # ip=forminfo["ipaddress"]
 
