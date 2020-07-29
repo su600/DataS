@@ -51,7 +51,7 @@ async def main():
     uri = 'http://examples.freeopcua.github.io'
     idx = await server.register_namespace(uri)
 
-    await server.import_xml('kuka.xml')
+    await server.import_xml('kuka2.xml')
     ## get Objects node, this is where we should put our nodes
     # await server.start()
 

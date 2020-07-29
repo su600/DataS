@@ -1,0 +1,3 @@
+ip:localhost
+port:6008
+cycle:100

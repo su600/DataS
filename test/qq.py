@@ -42,3 +42,6 @@ data2 = data2.to_numpy().tolist()  # 转数组 转列表
 # taglist = sum(data2, [])  # 嵌套列表平铺 变量表list
 print(data2)
 # print(data2)
+
+
+print(t, b, c)
