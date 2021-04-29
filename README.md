@@ -17,9 +17,9 @@ For
 
 * [x] SIEMENS PLC
 * [x] ROCKWELL  AB PLC
-* [ ] BECKOFF PLC
-* [ ] OPC UA devices.
-* [ ] Modbus
+* [x] BECKOFF PLC
+* [x] OPC UA devices.
+* [x] Modbus
 * [ ] UR Robot
 * [ ] Kuka Robot
 
@@ -27,7 +27,7 @@ For
 
 ![setting](https://raw.githubusercontent.com/su600/DataS/master/Screen%20capture/setting.png)
 
-Include Flask, InfluxDB, Docker, Nginx, Pandas, Numpy, Bootstrap 4, Threading, Blueprints, Progressive Web App
+Include Flask, InfluxDB, Docker, Nginx, Pandas, Numpy, Bootstrap 4, Blueprints, Progressive Web App
 
 @Su600
 
