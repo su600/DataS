@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}AB PLC{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navlist %}
+<a class="btn btn-dark" href="/setting">Back to Setting</a>
+{% endblock navlist %}
+
+{% block content %}
+<div class="container-fluid" style="">
+	<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
+		<div class="row">
+			<div class="col-md-5" style="text-align: justify;">
+				<img class="img-fluid" src="static/rockwell.png" alt="Rockwell" />
+			</div>
+			<div class="col-md-6">
+				<strong>
+					基于PyLogix扫描AB PLC，获取变量表，读取变量表内容并写入InfluxDB数据库 </br>
+					支持EtherNet/IP转换为OPC UA
+				</strong>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid" style="">
+	<form class="form-inline" method="POST">
+
+		<a button type="button" href='rockwells' class="btn btn-primary" style="padding:6px 50px;">扫描设备</a>
+		<select name="devicelist" class="btn btn-outline-secondary form-control" style="width: 300px;">请选择设备
+			{% for dev in dev_list %}
+			<option value="{{dev}}">{{dev}}</option>
+			{% endfor %}
+			<!-- <option value="192.168.100.1">111111</option>
+					<option value="192.168.100.12">2222222</option> -->
+		</select>
+		<button type="submit" name="Action" value="rockwellip" class="btn btn-primary">开始连接</button>
+		<!-- 开始连接其实是获取下来列表选择的设备IP地址 -->
+		<!-- 如何回到Rockwell中进行post，post和按钮直接调用的区别？？ -->
+		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+		<a href="rockwelldis" type="button" class="btn btn-danger ">断开连接</a>
+		<a href="rockwell_get_all_vars" type="button" class="btn btn-outline-primary ">获取变量表(.xlsx)</a>
+
+	</form>
+
+	{% with messages = get_flashed_messages(category_filter=["scanresult"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-success alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<strong>{{message}}</strong>
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+
+	{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-success alert-dismissible fade show form-control"
+		style="width: 50%;margin:0px 0px 0px 10px;" role="alert">
+		<strong>{{message}}</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+
+	{% with messages = get_flashed_messages(category_filter=["connect0"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-danger alert-dismissible fade show form-control" style="width: 50%;margin:0px 0px 0px 10px;"
+		role="alert">
+		<strong>{{message}}</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+</div>
+
+
+<div class="container-fluid" style="">
+	<label for="file">导入变量表（TagName,TagType)</label>
+	<!-- <p>变量表格式 对于数组如何处理？列出每个元素太浪费了 读取效率低下 Pylogix 0.6.2批量读取的数量上限？之前是20个</p> -->
+
+	<form method="POST" action="" enctype=multipart/form-data>
+		<div class="row">
+			<div class="col-md-4">
+				<input type="file" class="form-control-file btn btn-outline-secondary" name="file" id="file"
+					placeholder="" aria-describedby="fileHelpId">
+			</div>
+			<div class="col-md-6">
+
+				<button type="submit" name="Action" value="file" class="btn btn-secondary " style="padding-left:60px;padding-right: 60px;"
+					>上传</button>
+				<a button href="rockwellread" style="padding-left: 40px;padding-right: 40px;"
+					class=" btn btn-primary">批量读取</a>
+				<!--  增加2个按钮 区分不同表单  file不算长度 -->
+				<input type="text" class="" name="len1" id="" style="visibility: hidden;" aria-describedby="helpId"
+					placeholder="">
+				<input type="text" class="" name="len2" id="" style="visibility: hidden;" aria-describedby="helpId"
+					placeholder="">
+			</div>
+		</div>
+	</form>
+	{% with messages = get_flashed_messages(category_filter=["uploadstatus"]) %}
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-primary alert-dismissible fade show" style="width: 50%;margin: 10px;" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<strong>{{message}}</strong>
+	</div>
+
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+</div>
+
+
+<div class="container-fluid" style="margin:10px;" id="data">
+	<div class="row">
+		<div class="col-md-6">
+			<h4>数据读取结果</h4>
+			<!-- <div class="card border-second"> -->
+			<table class="table table-responsive table-hover"
+				style="background: rgb(237, 238, 240);height: 300px;overflow-y: auto;" id="ii">
+				<thead class="thead-dark">
+					<tr>
+						<th style="width: 240px;">Time</th>
+						<th style="width: 340px;">Tagname</th>
+						<th style="width: 120px;">Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for data in rockwelldata %}
+					<tr>
+						<td>{{ttt}}</td>
+						<td>{{data}}</td>
+						<td>{{rockwelldata[data]}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<!-- </div> -->
+		</div>
+
+		<!-- Js设置 变量True False颜色不同 -->
+		<script type="text/javascript">
+			var table1 = document.getElementById("ii");
+			var len = table1.tBodies[0].rows.length;
+
+			for (i = 0; i < len; i++) {
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "red";
+				}
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "green";
+				}
+			}
+		</script>
+
+		<div class="col-md-6">
+			<h4>
+				批量读取列表
+			</h4>
+			<table class="table table-responsive  table-hover "
+				style="height: 300px;overflow-y: auto;background: rgb(237, 238, 240);color: rgb(0, 0, 0);">
+				<thead class="thead-dark">
+					<tr>
+						<th style="width:700px;">Variable</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for data in rockwelldata %}
+					<tr>
+						<td>{{data}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

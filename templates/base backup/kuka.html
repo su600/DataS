@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}KUKA{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navlist %}
+<a class="btn btn-dark" href="/setting">Back to Setting</a>
+{% endblock navlist %}
+
+{% block content %}
+<div class="container-fluid" style="">
+	<div class="jumbotron jumbotron-fluid" style="background-color: rgba(231, 231, 233, 0.746);padding:20px">
+		<div class="row">
+			<div class="col-md-5" style="text-align: justify;">
+				<img class="img-fluid" src="static/kuka.png" alt="Kuka" />
+			</div>
+			<div class="col-md-6">
+				<strong>
+					基于OPC DA和Socket通信，采集机器人状态，并写入InfluxDB数据库 </br>
+					将机器人状态转换为OPC UA
+				</strong>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid" id="connection">
+
+	<!-- form-control属性很重要 -->
+	<form class="form-inline" method="POST">
+		<!-- < class="form-inline"> -->
+		<label for="ipaddress">IP address：</label>
+		<input type="text" name="ipaddress" value="{{ipaddress}}" class="form-control required" id="ipaddress">
+		<label for="port">Port:</label>
+		<input type="text" name="port" value="{{port}}" class="form-control required" id="port">
+		<button type="submit" name="Action" value="connect" class="btn btn-primary form-control"
+			style="margin: 10px;">开始连接</button>
+		<!-- onclick事件调用的是js 用href通过路由可以调用python程序 -->
+		<button type="submit" name="Action" value="disconnect" class="btn btn-danger form-control"
+			style="margin: 10px;">断开连接</button>
+		<!-- <a href="s7disconnect" type="button" class="btn btn-danger form-control" style="margin: 10px;">断开连接</a> -->
+
+		{% with messages = get_flashed_messages(category_filter=["connect1"]) %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-success alert-dismissible fade show form-control"
+			style="margin:0px 0px 0px 10px; padding-top:5px" role="alert">
+			<strong>{{message}}</strong>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+
+		{% with messages = get_flashed_messages(category_filter=["connect0"]) %}
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-danger alert-dismissible fade show form-control" style="margin:0px 0px 0px 10px;"
+			role="alert">
+			<strong>{{message}}</strong>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+
+		<!-- <script>
+				window.setTimeout(function(){
+					  $('[data-dismiss="alert"]').alert('close');},4000);
+				</script> -->
+		<!-- 提示框定时消失 -->
+	</form>
+</div>
+
+
+<div class="container-fluid" style="margin:10px;" id="data">
+	<div class="row">
+		<div class="col-md-6">
+			<h4>数据读取结果</h4>
+		
+		</div>
+
+		<!-- Js设置 变量True False颜色不同 -->
+		<script type="text/javascript">
+			var table1 = document.getElementById("ii");
+			var len = table1.tBodies[0].rows.length;
+
+			for (i = 0; i < len; i++) {
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "False") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "red";
+				}
+				if (table1.tBodies[0].rows[i].cells[2].innerHTML == "True") {
+					table1.tBodies[0].rows[i].cells[2].style.color = "green";
+				}
+			}
+		</script>
+
+	</div>
+</div>
+{% endblock %}
