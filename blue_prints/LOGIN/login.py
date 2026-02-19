@@ -1,32 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, send_file,Blueprint
-from flask_bootstrap import Bootstrap
-
-import random, datetime
-from functools import wraps
-import time
 import functools
 import os
-from werkzeug.utils import secure_filename
-import csv
-import pandas as pd
-import numpy as np
-from struct import pack, unpack_from  # Pylogix 结构体解析
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 
-# from flask_wtf.csrf import CsrfProtect
-# csrf = CsrfProtect()
+login_ = Blueprint("login_", __name__)
 
 
-from flask import Blueprint
-# from blueprints.login import is_login
-
-login_ = Blueprint("login_",__name__)
-
-
-########登陆信息 暂时使用 还没启用数据库管
+# SECURITY WARNING: These are default credentials for development only
+# In production, use database-backed authentication with hashed passwords
+# TODO: Replace with proper authentication system (see OPTIMIZATION_NOTES.md)
 users = [
     {
-        'username': 'root',
-        'password': 'root'
+        'username': os.environ.get('DEFAULT_USER', 'root'),
+        'password': os.environ.get('DEFAULT_PASSWORD', 'root')  # WARNING: Not hashed!
     },
     {
         'username': 'username',
