@@ -132,31 +132,34 @@ def s7_multi_read(plc, tag_type, tag_address,data_type,tag_name):
         di.pData = pBuffer
         # di.Bit = di.Bit
 
-    # fixme 分批读取 snap7单次20个以上报错
-    def readten(data_items):
-        """
-        :type data_items: object
-        """
-        # print(type(data_items))
-        # print(type(data_items[10:20]))
-        # a=plc.read_multi_vars(data_items[10:20])
-        # print(a)
-        l = len(data_items)  # 变量表长度，如果大于20 必须分批读取 snp7
-        x = l // 20  # 取整
-        y = l % 20  # 取余数
-        a = 0  # 每一组变量的上标
-        val = []  # 初始化列表 每一组变量值
-        for n in range(x):
-            if n < x:
-                val = val + plc.read_multi_vars(data_items)
-                a += 1
-                n += 1
-            if n == x and y != 0:
-                val = val + plc.read_multi_vars(data_items)
-        val2 = val
-        return val2
-
-    result, data_items = plc.read_multi_vars(data_items)
+    # snap7 read_multi_vars has a limitation of ~20 variables per call
+    # When reading more than 20 variables, split into batches
+    BATCH_SIZE = 20
+    taglens = len(data_items)
+    
+    if taglens <= BATCH_SIZE:
+        # Read all at once if 20 or fewer variables
+        result, data_items = plc.read_multi_vars(data_items)
+    else:
+        # Read in batches for more than 20 variables
+        num_batches = (taglens + BATCH_SIZE - 1) // BATCH_SIZE  # Ceiling division
+        all_results = []
+        
+        for batch_num in range(num_batches):
+            start_idx = batch_num * BATCH_SIZE
+            end_idx = min(start_idx + BATCH_SIZE, taglens)
+            
+            # Create batch array
+            batch_items = (S7DataItem * (end_idx - start_idx))()
+            for i in range(end_idx - start_idx):
+                batch_items[i] = data_items[start_idx + i]
+            
+            # Read this batch
+            result, batch_results = plc.read_multi_vars(batch_items)
+            
+            # Copy results back to original data_items
+            for i in range(end_idx - start_idx):
+                data_items[start_idx + i] = batch_results[i]
     # print('读取的原始数据',data_items)
     ttt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
