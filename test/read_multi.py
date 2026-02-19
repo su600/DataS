@@ -135,7 +135,6 @@ def s7_multi_read(plc, tag_type, tag_address,data_type,tag_name):
     # snap7 read_multi_vars has a limitation of ~20 variables per call
     # When reading more than 20 variables, split into batches
     BATCH_SIZE = 20
-    taglens = len(data_items)
     
     if taglens <= BATCH_SIZE:
         # Read all at once if 20 or fewer variables
@@ -161,14 +160,19 @@ def s7_multi_read(plc, tag_type, tag_address,data_type,tag_name):
                 # If batch read fails, raise an error
                 raise Exception(f"Batch {batch_num + 1} read failed with error code: {result}")
             
-            # Copy results back to original data_items
+            # Copy results back to original data_items.
+            # Note: batch_items is a separate ctypes array created from data_items.
+            # read_multi_vars updates the S7DataItem structures (including Result field)
+            # in batch_items/batch_results, but the original data_items array is not
+            # updated automatically. We copy each updated S7DataItem back so that
+            # subsequent error checking sees the correct Result codes and data.
             for i in range(end_idx - start_idx):
                 data_items[start_idx + i] = batch_results[i]
     # print('读取的原始数据',data_items)
     ttt = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
-    # for di in data_items:
-    #     check_error(di.Result)
+    for di in data_items:
+        check_error(di.Result)
 
     result_values = []
     # function to cast bytes to match data_types[] above
