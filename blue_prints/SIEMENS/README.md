@@ -40,7 +40,7 @@ This batching is handled automatically by the `s7_multi_read()` function.
 
 - **Batch Size:** Default batch size is 20 variables per read operation
 - **Performance:** Reading 100 variables will require 5 separate read operations
-- **Error Handling:** Each batch is read independently; if one batch fails, it won't affect the others
+- **Error Handling:** Each batch is read sequentially; if any batch fails, an exception is raised and the operation stops
 - **Data Types:** Ensure the data type in your Excel matches the actual PLC data type
 
 ## Configuration
