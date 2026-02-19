@@ -33,25 +33,25 @@ def influxDB(influxdbip, token, measurement, cycle):
     cycle = int(cycle)
     
     flash("开始写入influxDB", "influx")
-    aa0 = []
+    previous_points = []
     
     while True:
         try:
             data = rockwellread()[1]
-            aa = []
+            current_points = []
             for field_name, field_value in data.items():
                 point = Point(measurement).tag("location", "#108 Plant").field(field_name, field_value)
-                aa.append(point)
+                current_points.append(point)
             
             # Compare with previous values and write only updated ones
-            aaa = set(aa)
-            bbb = set(aa0)
-            cc = list(aaa - bbb)
+            current_set = set(current_points)
+            previous_set = set(previous_points)
+            changed_points = list(current_set - previous_set)
             
-            if cc:
-                write_api.write(bucket=bucket, org=org, record=cc)
+            if changed_points:
+                write_api.write(bucket=bucket, org=org, record=changed_points)
             
-            aa0 = aa
+            previous_points = current_points
             time.sleep(cycle)
         except Exception as e:
             print(f"influxDB写入出错了: {e}")

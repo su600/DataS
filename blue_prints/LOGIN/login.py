@@ -8,10 +8,11 @@ login_ = Blueprint("login_", __name__)
 # SECURITY WARNING: These are default credentials for development only
 # In production, use database-backed authentication with hashed passwords
 # TODO: Replace with proper authentication system (see OPTIMIZATION_NOTES.md)
+# IMPORTANT: Set DEFAULT_USER and DEFAULT_PASSWORD environment variables
 users = [
     {
-        'username': os.environ.get('DEFAULT_USER', 'root'),
-        'password': os.environ.get('DEFAULT_PASSWORD', 'root')  # WARNING: Not hashed!
+        'username': os.environ.get('DEFAULT_USER', 'admin'),  # Changed from 'root'
+        'password': os.environ.get('DEFAULT_PASSWORD', 'CHANGE_ME_NOW')  # WARNING: Not hashed!
     },
     {
         'username': 'username',

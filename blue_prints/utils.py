@@ -54,8 +54,8 @@ def read_tags_in_batches(comm, tags_list, batch_size=10):
     num_batches, remainder = divmod(total, batch_size)
     
     values = []
-    for batch_idx in range(num_batches):
-        start = batch_idx * batch_size
+    for batch_number in range(num_batches):
+        start = batch_number * batch_size
         end = start + batch_size
         values.extend(comm.Read(tags_list[start:end]))
     

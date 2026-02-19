@@ -88,7 +88,7 @@ All configuration is done through environment variables. See `.env.example` for 
 | `INFLUXDB_URL` | InfluxDB server URL | `http://localhost:8086` |
 | `INFLUXDB_TOKEN` | InfluxDB authentication token | - |
 | `INFLUXDB_ORG` | InfluxDB organization | `su` |
-| `INFLUXDB_BUCKET` | InfluxDB bucket name | `test` |
+| `INFLUXDB_BUCKET` | InfluxDB bucket name | `data` |
 | `HOST` | Server host address | `0.0.0.0` |
 | `PORT` | Server port | `4000` |
 | `FLASK_DEBUG` | Enable debug mode | `False` |
