@@ -42,6 +42,12 @@ def read_tags_in_batches(comm, tags_list, batch_size=10):
     """
     Read PLC tags in batches to avoid errors from reading too many at once
     
+    This is useful for Rockwell/AB PLCs and other systems that have limitations
+    on the number of tags that can be read in a single request.
+    
+    Note: For Siemens PLCs using python-snap7, see the SIEMENS blueprint which
+    implements batching specifically for read_multi_vars() with a batch size of 20.
+    
     Args:
         comm: PLC communication object with Read() method
         tags_list: List of tag names to read
