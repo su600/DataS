@@ -161,7 +161,6 @@ def siemens():
         else:
             # Read in batches for more than 20 variables
             num_batches = (taglens + BATCH_SIZE - 1) // BATCH_SIZE  # Ceiling division
-            all_results = []
             
             for batch_num in range(num_batches):
                 start_idx = batch_num * BATCH_SIZE
@@ -174,6 +173,9 @@ def siemens():
                 
                 # Read this batch
                 result, batch_results = plc.read_multi_vars(batch_items)
+                if result != 0:
+                    # If batch read fails, raise an error
+                    raise Exception(f"Batch {batch_num + 1} read failed with error code: {result}")
                 
                 # Copy results back to original data_items
                 for i in range(end_idx - start_idx):
