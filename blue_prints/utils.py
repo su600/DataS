@@ -51,17 +51,17 @@ def read_tags_in_batches(comm, tags_list, batch_size=10):
         list: Combined list of all read values
     """
     total = len(tags_list)
-    num_batches, remainder = divmod(total, batch_size)
+    complete_batches, remainder = divmod(total, batch_size)
     
     values = []
-    for batch_number in range(num_batches):
+    for batch_number in range(complete_batches):
         start = batch_number * batch_size
         end = start + batch_size
         values.extend(comm.Read(tags_list[start:end]))
     
     # Read remaining tags if any
     if remainder > 0:
-        start = num_batches * batch_size
+        start = complete_batches * batch_size
         values.extend(comm.Read(tags_list[start:start + remainder]))
     
     return values
