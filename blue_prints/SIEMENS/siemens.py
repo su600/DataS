@@ -158,6 +158,8 @@ def siemens():
         if taglens <= BATCH_SIZE:
             # Read all at once if 20 or fewer variables
             result, data_items = plc.read_multi_vars(data_items)
+            if result != 0:
+                raise Exception(f"Read failed with error code: {result}")
         else:
             # Read in batches for more than 20 variables
             num_batches = (taglens + BATCH_SIZE - 1) // BATCH_SIZE  # Ceiling division
