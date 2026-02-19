@@ -204,5 +204,5 @@ Before deploying to production:
 ## Resources
 
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [Flask Security Documentation](https://flask.palletsprojects.com/en/2.3.x/security/)
+- [Flask Security Documentation](https://flask.palletsprojects.com/security/)
 - [Python Security Best Practices](https://python.readthedocs.io/en/stable/library/security_warnings.html)

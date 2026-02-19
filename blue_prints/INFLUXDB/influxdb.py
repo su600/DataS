@@ -33,7 +33,7 @@ def influxDB(influxdbip, token, measurement, cycle):
     cycle = int(cycle)
     
     flash("开始写入influxDB", "influx")
-    previous_data = {}
+    previous_field_values = {}
     
     while True:
         try:
@@ -43,7 +43,7 @@ def influxDB(influxdbip, token, measurement, cycle):
             points_to_write = []
             for field_name, field_value in data.items():
                 # Check if value changed or is new
-                if field_name not in previous_data or previous_data[field_name] != field_value:
+                if field_name not in previous_field_values or previous_field_values[field_name] != field_value:
                     point = Point(measurement).tag("location", "#108 Plant").field(field_name, field_value)
                     points_to_write.append(point)
             
@@ -51,7 +51,7 @@ def influxDB(influxdbip, token, measurement, cycle):
                 write_api.write(bucket=bucket, org=org, record=points_to_write)
             
             # Update previous data
-            previous_data = data.copy()
+            previous_field_values = data.copy()
             time.sleep(cycle)
         except Exception as e:
             print(f"influxDB写入出错了: {e}")
