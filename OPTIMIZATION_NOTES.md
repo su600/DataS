@@ -131,3 +131,49 @@ To use the optimized code:
    ```
 
 The application will now use environment variables for configuration, making it more secure and easier to deploy.
+
+## Files Not Modified (Future Work Recommended)
+
+The following files still contain security issues and should be addressed in future optimization work:
+
+### 1. Deprecated Files
+- **home.py** - Contains hardcoded SECRET_KEY and credentials
+  - Marked as "老的主程序 未采用Blueprint的版本" (old main program)
+  - **Action**: Delete if no longer used, or apply same optimizations as main.py
+
+### 2. Blueprint Subdirectories
+- **blueprints/opcua/index/__init__.py** 
+- **blue_prints/OPCUA/index/__init__.py**
+  - Both contain hardcoded SECRET_KEY: `'f1d9d48ec0e26e2a250839fa36ea2c602cc4f85ccfeb5c65'`
+  - **Action**: Apply same environment variable pattern as main.py
+
+### 3. Test Directory
+- **test/** directory files contain hardcoded credentials
+  - **Action**: Move to proper test framework with test fixtures
+  - Consider using pytest with environment-based test configuration
+
+### 4. Other Blueprints
+- Various blueprint files may have hardcoded D:/ paths for file uploads
+  - **Action**: Migrate to use `blue_prints/utils.py` functions
+
+### 5. Duplicate Blueprint Directories
+- Both `blueprints/` and `blue_prints/` directories exist
+  - Appears that `blue_prints/` is the active version
+  - **Action**: Consolidate into single directory and remove duplicates
+
+## Scope of Current Optimization
+
+This optimization focused on the **main application entry points and critical security issues**:
+- ✅ Main application (main.py)
+- ✅ Login blueprint  
+- ✅ InfluxDB blueprint
+- ✅ Documentation and configuration
+
+**Out of Scope** (recommended for future work):
+- Deprecated home.py file
+- OPC UA blueprint subdirectories
+- Test directory cleanup
+- Blueprint directory consolidation
+- Individual blueprint file optimizations (SIEMENS, ROCKWELL, BECKOFF, KUKA)
+
+The current changes follow the principle of **minimal modifications** while addressing the most critical security and code quality issues in the actively used codebase.
