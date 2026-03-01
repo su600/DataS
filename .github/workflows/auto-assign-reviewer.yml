@@ -1,0 +1,45 @@
+name: Auto Assign
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  request-review-on-copilot-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if latest commit is by Copilot
+        id: check_author
+        run: |
+          AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae')
+          AUTHOR_NAME=$(git log -1 --pretty=format:'%an')
+          echo "Latest commit author: $AUTHOR_NAME <$AUTHOR_EMAIL>"
+          if echo "$AUTHOR_EMAIL" | grep -iqE "copilot|github-copilot"; then
+            echo "is_copilot=true" >> $GITHUB_OUTPUT
+          elif echo "$AUTHOR_NAME" | grep -iqE "copilot"; then
+            echo "is_copilot=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_copilot=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Request review from su600
+        if: steps.check_author.outputs.is_copilot == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers: ['su600']
+            });
+            console.log('✅ Review requested from su600');
