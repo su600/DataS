@@ -2,7 +2,10 @@ name: Use Auto Assign
 
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened,synchronize]
+
+permissions: 
+  pull-requests: write
 
 jobs:
   auto-assign:
