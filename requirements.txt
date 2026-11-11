@@ -1,4 +1,4 @@
-﻿aiofiles==0.5.0
+aiofiles==0.5.0
 aiosqlite==0.12.0
 alabaster==0.7.12
 anaconda-client==1.7.2
@@ -142,7 +142,7 @@ patsy==0.5.1
 pep8==1.7.1
 photomosaic==0.3.1
 pickleshare==0.7.5
-Pillow==6.2.0
+Pillow==13.0.0
 pkginfo==1.5.0.1
 pluggy==0.13.0
 ply==3.11
